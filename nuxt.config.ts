@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   extends: ['@nuxt/ui-pro'],
-  modules: ['@vueuse/nuxt', '@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/ui'],
+  modules: ['@vueuse/nuxt', '@pinia/nuxt', '@nuxt/ui'],
   colorMode: {
     preference: 'dark'
   }
