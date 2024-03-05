@@ -16,7 +16,12 @@ const links = [
 <template>
   <!-- UDashboardLayout: https://ui.nuxt.com/pro/components/dashboard-layout -->
   <UDashboardLayout>
-    <UDashboardPanel>
+    <!-- UDashboardPanel: 可以滑動左側欄寬度 -->
+    <UDashboardPanel
+      :width="250"
+      :resizable="{ min: 200, max: 300 }"
+      collapsible
+    >
       <UDashboardNavbar />
 
       <UDashboardSidebar>
