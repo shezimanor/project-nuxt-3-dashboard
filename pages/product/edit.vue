@@ -2,7 +2,7 @@
 
 <template>
   <UDashboardPage>
-    <UDashboardPanel grow>
+    <UDashboardPanel id="productEdit" grow>
       <UDashboardNavbar title="編輯產品"></UDashboardNavbar>
     </UDashboardPanel>
   </UDashboardPage>

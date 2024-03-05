@@ -14,19 +14,19 @@ const links = [
   {
     id: 'home',
     label: '首頁',
-    icon: 'i-heroicons-home-16-solid',
+    icon: 'i-heroicons-home-solid',
     to: '/'
   },
   {
-    id: 'prductList',
+    id: 'product-list',
     label: '產品列表',
     icon: 'i-heroicons-table-cells-16-solid',
     to: '/product/list'
   },
   {
-    id: 'prductBuild',
+    id: 'product-build',
     label: '建立產品',
-    icon: 'i-heroicons-plus-circle-16-solid',
+    icon: 'i-heroicons-plus-circle-20-solid',
     to: '/product/build'
   }
 ];
