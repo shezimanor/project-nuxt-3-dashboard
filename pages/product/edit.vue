@@ -3,7 +3,7 @@
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <UDashboardNavbar title="首頁"></UDashboardNavbar>
+      <UDashboardNavbar title="編輯產品"></UDashboardNavbar>
     </UDashboardPanel>
   </UDashboardPage>
 </template>
