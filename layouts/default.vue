@@ -1,14 +1,33 @@
 <script lang="ts" setup>
+// When using with Nuxt 3, this function will NOT be auto imported in favor of Nitro's built-in useStorage(). Use explicit import if you want to use the function from VueUse.
+import { useStorage } from '@vueuse/core';
+// 用 useStorage 可以讓瀏覽器記憶個別使用者的偏好設定
+interface DashboardConfig {
+  leftPanelWidth: number;
+}
+const dashboardConfig: DashboardConfig = {
+  leftPanelWidth: 250
+};
+const dashboardConfigState = useStorage('dashboard_config', dashboardConfig);
+
 const links = [
   {
     id: 'home',
-    label: 'Home',
-    icon: 'i-heroicons-home',
-    to: '/',
-    tooltip: {
-      text: 'Home',
-      shortcuts: ['G', 'H']
-    }
+    label: '首頁',
+    icon: 'i-heroicons-home-16-solid',
+    to: '/'
+  },
+  {
+    id: 'prductList',
+    label: '產品列表',
+    icon: 'i-heroicons-table-cells-16-solid',
+    to: '/product/list'
+  },
+  {
+    id: 'prductBuild',
+    label: '建立產品',
+    icon: 'i-heroicons-plus-circle-16-solid',
+    to: '/product/build'
   }
 ];
 </script>
@@ -18,11 +37,15 @@ const links = [
   <UDashboardLayout>
     <!-- UDashboardPanel: 可以滑動左側欄寬度 -->
     <UDashboardPanel
-      :width="250"
+      :width="dashboardConfigState.leftPanelWidth"
       :resizable="{ min: 200, max: 300 }"
       collapsible
     >
-      <UDashboardNavbar />
+      <UDashboardNavbar class="!border-transparent" :ui="{ left: 'flex-1' }">
+        <template #left>
+          <LogoNav />
+        </template>
+      </UDashboardNavbar>
 
       <UDashboardSidebar>
         <UDashboardSidebarLinks :links="links" />
