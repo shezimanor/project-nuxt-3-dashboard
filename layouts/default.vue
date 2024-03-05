@@ -1,0 +1,31 @@
+<script lang="ts" setup>
+const links = [
+  {
+    id: 'home',
+    label: 'Home',
+    icon: 'i-heroicons-home',
+    to: '/',
+    tooltip: {
+      text: 'Home',
+      shortcuts: ['G', 'H']
+    }
+  }
+];
+</script>
+
+<template>
+  <!-- UDashboardLayout: https://ui.nuxt.com/pro/components/dashboard-layout -->
+  <UDashboardLayout>
+    <UDashboardPanel>
+      <UDashboardNavbar />
+
+      <UDashboardSidebar>
+        <UDashboardSidebarLinks :links="links" />
+      </UDashboardSidebar>
+    </UDashboardPanel>
+
+    <slot />
+  </UDashboardLayout>
+</template>
+
+<style scoped></style>
