@@ -1,0 +1,17 @@
+{
+  "list": [
+    {
+      "id": "b09f8877-be64-450b-8844-9da462be82af",
+      "title": "A",
+      "description": "A",
+      "owner_id": 1,
+      "size": "300x300",
+      "status": 0,
+      "preview_link": "a",
+      "created_at": "a",
+      "prototype_id": "4dc207f2-2229-451a-aa9d-e29bb44acf84",
+      "prototype_title": "A",
+      "prototype_version": "A"
+    }
+  ]
+}
