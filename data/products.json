@@ -2,15 +2,15 @@
   "list": [
     {
       "id": "b09f8877-be64-450b-8844-9da462be82af",
-      "title": "綿羊造型立方A",
-      "description": "A",
-      "owner_id": 1,
-      "size": "300x300",
-      "status": 0,
+      "title": "輝達牌綿花糖系列",
+      "description": "棉花糖新品多種口味",
+      "size": "300x200",
       "preview_link": "a",
       "prototype_id": "4dc207f2-2229-451a-aa9d-e29bb44acf84",
-      "prototype_title": "魔幻立方",
+      "prototype_title": "幻燈片原型",
       "prototype_version": "1.0.0",
+      "owner_id": 1,
+      "status": 0,
       "created_at": "2024/02/01 12:00:00"
     }
   ]

@@ -1,13 +1,15 @@
 {
   "list": [
     {
-      "id": "",
-      "title": "",
-      "features": [],
-      "version": "",
-      "sizes": [],
-      "updated_at": "",
-      "status": 0
+      "id": "4dc207f2-2229-451a-aa9d-e29bb44acf84",
+      "title": "幻燈片原型",
+      "version": "1.0.0",
+      "features": ["展示型", "多圖片", "經典"],
+      "sizes": ["300x200", "300x300", "600x600", "960x240"],
+      "schema": "",
+      "status": 0,
+      "created_at": "2024/01/11 12:02:30",
+      "updated_at": "2024/01/21 13:20:20"
     }
   ]
 }

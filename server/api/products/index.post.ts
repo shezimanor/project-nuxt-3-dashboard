@@ -15,8 +15,8 @@ export default defineEventHandler(async (event) => {
     });
   } else {
     const newProduct: Product = {
-      ...body,
       id: uuid(),
+      ...body,
       created_at: getCurrentFormattedDate()
     };
     productData.list.push(newProduct);
