@@ -25,7 +25,7 @@ export default function traverseSchemaToState(obj: any): any {
     } else {
       // items 底下"不是"物件結構時
       return obj.items.hasOwnProperty('default')
-        ? obj.items.default
+        ? [obj.items.default]
         : undefined;
     }
     // 如果不是 object 或 array 類型，則返回 default 值
