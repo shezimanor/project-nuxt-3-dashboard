@@ -1,4 +1,9 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import schemaJSON from '~/data/dev-schema.json';
+const schema = JSON.parse(JSON.stringify(schemaJSON));
+// 已經拿到 schema
+console.log('schema', schema);
+</script>
 
 <template>
   <UDashboardPage>
