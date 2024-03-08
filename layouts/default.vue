@@ -8,7 +8,7 @@ interface DashboardConfig {
 const dashboardConfig: DashboardConfig = {
   leftPanelWidth: 250
 };
-const dashboardConfigState = useStorage('dashboard_config', dashboardConfig);
+const dashboardConfigState = useStorage('dashboard-config', dashboardConfig);
 
 const links = [
   {

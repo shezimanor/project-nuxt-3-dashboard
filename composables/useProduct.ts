@@ -1,7 +1,8 @@
 import { useStorage } from '@vueuse/core';
-import productData from '~/data/products.json';
+import productRawData from '~/data/products.json';
 
 export const useProduct = () => {
-  const testList = useStorage('my-products', productData);
-  return { testList };
+  const productData = useStorage('my-product', productRawData);
+
+  return { productData };
 };
