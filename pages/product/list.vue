@@ -1,5 +1,8 @@
 <script lang="ts" setup>
-const { data: productData, pending } = await useFetch('/api/products');
+const { data: productData, pending } = await useLazyAsyncData(
+  'productData',
+  () => $fetch('/api/products')
+);
 
 const defaultColumns = [
   {
@@ -24,6 +27,7 @@ const defaultColumns = [
   }
 ];
 
+const refreshData = () => refreshNuxtData('productData');
 const updateItem = async () => {
   const reponse = await $fetch(
     '/api/products/b09f8877-be64-450b-8844-9da462be82af',
@@ -37,7 +41,7 @@ const updateItem = async () => {
       }
     }
   );
-  console.log('reponse:', reponse);
+  if (reponse.result) refreshData();
 };
 const addItem = async () => {
   const reponse = await $fetch('/api/products', {
@@ -54,8 +58,10 @@ const addItem = async () => {
       prototype_version: '1.0.0'
     }
   });
-  console.log('reponse:', reponse);
+  if (reponse.result) refreshData();
 };
+
+onMounted(() => {});
 </script>
 
 <template>
