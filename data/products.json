@@ -2,16 +2,16 @@
   "list": [
     {
       "id": "b09f8877-be64-450b-8844-9da462be82af",
-      "title": "A",
+      "title": "綿羊造型立方A",
       "description": "A",
       "owner_id": 1,
       "size": "300x300",
       "status": 0,
       "preview_link": "a",
-      "created_at": "a",
       "prototype_id": "4dc207f2-2229-451a-aa9d-e29bb44acf84",
-      "prototype_title": "A",
-      "prototype_version": "A"
+      "prototype_title": "魔幻立方",
+      "prototype_version": "1.0.0",
+      "created_at": "2024/02/01 12:00:00"
     }
   ]
 }

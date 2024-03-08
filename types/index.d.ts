@@ -6,10 +6,10 @@ export interface Product {
   size: string;
   status: number;
   preview_link: string;
-  created_at: string;
   prototype_id: string;
   prototype_title: string;
   prototype_version: string;
+  created_at: string;
 }
 
 export interface Prototype {
@@ -18,6 +18,7 @@ export interface Prototype {
   features: string[];
   version: string;
   sizes: string[];
-  updated_at: string;
   status: number;
+  created_at: string;
+  updated_at: string;
 }
