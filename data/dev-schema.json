@@ -1,102 +1,160 @@
 {
-  "basicJSON": {
-    "type": "object",
-    "properties": {
-      "title": {
-        "type": "string",
-        "default": "Empty Title",
-        "ui": {
-          "label": "產品標題",
-          "widget": "input",
-          "widgetConfig": {
-            "placeholder": "請輸入產品標題"
+  "type": "object",
+  "properties": {
+    "basicJSON": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "default": "Empty Title",
+          "ui": {
+            "label": "產品標題",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品標題"
+            }
+          },
+          "rules": {
+            "required": true,
+            "maxLength": 30
           }
         },
-        "rules": {
-          "required": true,
-          "maxLength": 30
+        "description": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "label": "產品標題",
+            "widget": "textarea",
+            "widgetConfig": {
+              "placeholder": "請輸入產品描述(非必填)"
+            }
+          },
+          "rules": {
+            "maxLength": 300
+          }
         }
       },
-      "description": {
-        "type": "string",
-        "default": "",
-        "ui": {
-          "label": "產品標題",
-          "widget": "textarea",
-          "widgetConfig": {
-            "placeholder": "請輸入產品描述(非必填)"
-          }
-        },
-        "rules": {
-          "maxLength": 300
-        }
-      }
+      "ui": {}
     },
-    "ui": {}
-  },
-  "prototypeJSON": {
-    "type": "object",
-    "properties": {
-      "productName": {
-        "type": "string",
-        "default": "Empty Title",
-        "ui": {
-          "label": "產品標題",
-          "widget": "input",
-          "widgetConfig": {
-            "placeholder": "請輸入產品標題"
+    "prototypeJSON": {
+      "type": "object",
+      "properties": {
+        "productName": {
+          "type": "string",
+          "default": "Empty Title",
+          "ui": {
+            "label": "產品標題",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品標題"
+            }
+          },
+          "rules": {
+            "required": true,
+            "maxLength": 30
           }
         },
-        "rules": {
-          "required": true,
-          "maxLength": 30
+        "productPrice": {
+          "type": "number",
+          "default": 100,
+          "ui": {
+            "label": "產品價格",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品價格"
+            }
+          },
+          "rules": {
+            "required": true,
+            "minimum": 1
+          }
+        },
+        "productQuantity": {
+          "type": "number",
+          "default": 10,
+          "ui": {
+            "label": "產品數量",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品數量"
+            }
+          },
+          "rules": {
+            "required": true,
+            "minimum": 1
+          }
+        },
+        "productOrigin": {
+          "type": "string",
+          "default": "台北市",
+          "ui": {
+            "label": "產品產地",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請選擇產地"
+            }
+          },
+          "rules": {
+            "required": true
+          }
+        },
+        "others": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "default": "等級一",
+                "ui": {
+                  "label": "等級",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入等級"
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              },
+              "comment": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "label": "評價",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入評價"
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              }
+            }
+          },
+          "ui": {}
+        },
+        "colors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "default": "紅",
+            "ui": {
+              "label": "顏色",
+              "widget": "input",
+              "widgetConfig": {
+                "placeholder": "請輸入顏色"
+              }
+            },
+            "rules": {
+              "required": true
+            }
+          },
+          "ui": {}
         }
       },
-      "productPrice": {
-        "type": "number",
-        "default": 100,
-        "ui": {
-          "label": "產品價格",
-          "widget": "input",
-          "widgetConfig": {
-            "placeholder": "請輸入產品價格"
-          }
-        },
-        "rules": {
-          "required": true,
-          "minimum": 1
-        }
-      },
-      "productQuantity": {
-        "type": "number",
-        "default": 100,
-        "ui": {
-          "label": "產品數量",
-          "widget": "input",
-          "widgetConfig": {
-            "placeholder": "請輸入產品數量"
-          }
-        },
-        "rules": {
-          "required": true,
-          "minimum": 1
-        }
-      },
-      "productOrigin": {
-        "type": "string",
-        "default": "台北市",
-        "ui": {
-          "label": "產品產地",
-          "widget": "input",
-          "widgetConfig": {
-            "placeholder": "請選擇產地"
-          }
-        },
-        "rules": {
-          "required": true
-        }
-      }
-    },
-    "ui": {}
+      "ui": {}
+    }
   }
 }

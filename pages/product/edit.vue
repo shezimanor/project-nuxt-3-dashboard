@@ -9,6 +9,7 @@ console.log('schema', schema);
   <UDashboardPage>
     <UDashboardPanel id="productEdit" grow>
       <UDashboardNavbar title="編輯產品"></UDashboardNavbar>
+      <MySchemaForm :schema="schema" />
     </UDashboardPanel>
   </UDashboardPage>
 </template>
