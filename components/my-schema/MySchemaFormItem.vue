@@ -1,9 +1,6 @@
 <!-- Component Name: MySchemaFormItem -->
 <script lang="ts" setup>
 import { isValidArraySchema, isValidObjectSchema } from '~/utils/schemaParser';
-const MySchemaLayoutObject = resolveComponent('MySchemaLayoutObject');
-const MySchemaLayoutArray = resolveComponent('MySchemaLayoutArray');
-const MySchemaFieldUnit = resolveComponent('MySchemaFieldUnit');
 
 // props
 const props = defineProps({
@@ -14,6 +11,10 @@ const props = defineProps({
   state: {
     type: [Object, Array, String, Number, Boolean],
     default: null
+  },
+  paths: {
+    type: Array,
+    default: () => []
   }
 });
 
@@ -51,22 +52,26 @@ onMounted(() => {
   <div class="flex flex-col">
     <!-- <h3>Form Item</h3> -->
     <!-- object -->
-    <component
+    <MySchemaLayoutObject
       v-if="MySchemaDynamicFormComponent === 'MySchemaLayoutObject'"
-      :is="MySchemaLayoutObject"
       :schema="schema"
-      :state="state"
+      :state="state as Record<string, any>"
+      :paths="paths"
     />
     <!-- array -->
-    <component
+    <MySchemaLayoutArray
       v-else-if="MySchemaDynamicFormComponent === 'MySchemaLayoutArray'"
-      :is="MySchemaLayoutArray"
       :schema="schema"
-      :state="state"
+      :state="state as Record<string, any>"
+      :paths="paths"
     />
     <!-- 基礎型別 -->
-    <component v-else :is="MySchemaFieldUnit" :schema="schema" :state="state">
-    </component>
+    <MySchemaFieldUnit
+      v-else
+      :schema="schema"
+      :state="state as string | number | boolean | unknown[] | undefined"
+      :paths="paths"
+    />
   </div>
 </template>
 

@@ -8,7 +8,11 @@ const props = defineProps({
   },
   state: {
     type: Object,
-    default: null
+    required: true
+  },
+  paths: {
+    type: Array,
+    default: () => []
   }
 });
 </script>

@@ -8,7 +8,11 @@ const props = defineProps({
   },
   state: {
     type: Object,
-    default: null
+    required: true
+  },
+  paths: {
+    type: Array,
+    default: () => []
   }
 });
 
@@ -30,8 +34,12 @@ const filteredProperties = computed(() => {
     <!-- <h3>Form Layout Object</h3> -->
     <div v-for="(property, key) in filteredProperties" :key="key">
       <!-- {{ property }} -->
-      <span>key:{{ state[key] }}</span>
-      <MySchemaFormItem :schema="property" :state="state[key]" />
+      <span>key:{{ key }}</span>
+      <MySchemaFormItem
+        :schema="property"
+        :state="state[key]"
+        :paths="paths.concat(key)"
+      />
     </div>
   </div>
 </template>
