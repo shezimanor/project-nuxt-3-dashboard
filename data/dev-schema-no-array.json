@@ -1,0 +1,168 @@
+{
+  "type": "object",
+  "properties": {
+    "basicJSON": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "default": "Empty Title",
+          "ui": {
+            "label": "產品標題",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品標題"
+            }
+          },
+          "rules": {
+            "required": true,
+            "maxLength": 30
+          }
+        },
+        "description": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "label": "產品標題",
+            "widget": "textarea",
+            "widgetConfig": {
+              "placeholder": "請輸入產品描述(非必填)"
+            }
+          },
+          "rules": {
+            "maxLength": 300
+          }
+        }
+      },
+      "ui": {}
+    },
+    "prototypeJSON": {
+      "type": "object",
+      "properties": {
+        "productName": {
+          "type": "string",
+          "default": "Empty Title",
+          "ui": {
+            "label": "產品標題",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品標題"
+            }
+          },
+          "rules": {
+            "required": true,
+            "maxLength": 30
+          }
+        },
+        "productPrice": {
+          "type": "number",
+          "default": 100,
+          "ui": {
+            "label": "產品價格",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品價格"
+            }
+          },
+          "rules": {
+            "required": true,
+            "minimum": 1
+          }
+        },
+        "productQuantity": {
+          "type": "number",
+          "ui": {
+            "label": "產品數量",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品數量"
+            }
+          },
+          "rules": {
+            "required": true,
+            "minimum": 1
+          }
+        },
+        "productOrigin": {
+          "type": "string",
+          "default": "台北市",
+          "ui": {
+            "label": "產品產地",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請選擇產地"
+            }
+          },
+          "rules": {
+            "required": true
+          }
+        },
+        "secondLayerObj": {
+          "type": "object",
+          "properties": {
+            "productName": {
+              "type": "string",
+              "default": "Empty Title",
+              "ui": {
+                "label": "產品標題",
+                "widget": "input",
+                "widgetConfig": {
+                  "placeholder": "請輸入產品標題"
+                }
+              },
+              "rules": {
+                "required": true,
+                "maxLength": 30
+              }
+            },
+            "productPrice": {
+              "type": "number",
+              "default": 100,
+              "ui": {
+                "label": "產品價格",
+                "widget": "input",
+                "widgetConfig": {
+                  "placeholder": "請輸入產品價格"
+                }
+              },
+              "rules": {
+                "required": true,
+                "minimum": 1
+              }
+            },
+            "productQuantity": {
+              "type": "number",
+              "ui": {
+                "label": "產品數量",
+                "widget": "input",
+                "widgetConfig": {
+                  "placeholder": "請輸入產品數量"
+                }
+              },
+              "rules": {
+                "required": true,
+                "minimum": 1
+              }
+            },
+            "productOrigin": {
+              "type": "string",
+              "default": "台北市",
+              "ui": {
+                "label": "產品產地",
+                "widget": "input",
+                "widgetConfig": {
+                  "placeholder": "請選擇產地"
+                }
+              },
+              "rules": {
+                "required": true
+              }
+            }
+          },
+          "ui": {}
+        }
+      },
+      "ui": {}
+    }
+  }
+}

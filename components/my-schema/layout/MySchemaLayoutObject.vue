@@ -27,10 +27,11 @@ const filteredProperties = computed(() => {
 
 <template>
   <div class="flex flex-col">
-    <h3>Form Layout Object</h3>
+    <!-- <h3>Form Layout Object</h3> -->
     <div v-for="(property, key) in filteredProperties" :key="key">
       <!-- {{ property }} -->
-      <MySchemaFormItem :schema="property" :state="state" />
+      <span>key:{{ state[key] }}</span>
+      <MySchemaFormItem :schema="property" :state="state[key]" />
     </div>
   </div>
 </template>

@@ -12,7 +12,7 @@ const props = defineProps({
     default: null
   },
   state: {
-    type: Object,
+    type: [Object, Array, String, Number, Boolean],
     default: null
   }
 });
@@ -43,13 +43,13 @@ const MySchemaDynamicFormComponent = computed(() => {
 });
 
 onMounted(() => {
-  console.log('MySchemaFormItem props.schema:', props.schema);
+  // console.log('MySchemaFormItem props.schema:', props.schema);
 });
 </script>
 
 <template>
   <div class="flex flex-col">
-    <h3>Form Item</h3>
+    <!-- <h3>Form Item</h3> -->
     <!-- object -->
     <component
       v-if="MySchemaDynamicFormComponent === 'MySchemaLayoutObject'"
