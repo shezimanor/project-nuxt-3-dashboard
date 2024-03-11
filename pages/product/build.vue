@@ -7,9 +7,11 @@ console.log('data:', data.value);
   <UDashboardPage>
     <UDashboardPanel id="productBuild" grow>
       <UDashboardNavbar title="建立產品"></UDashboardNavbar>
-      <div v-if="data && data.length > 0">
-        {{ data[0] }}
-      </div>
+      <UDashboardPanelContent>
+        <div v-if="data && data.length > 0">
+          {{ data[0] }}
+        </div>
+      </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>
 </template>

@@ -11,9 +11,9 @@ onMounted(() => {
 </script>
 <template>
   <div class="border border-rose-400 p-2">
-    <h1>HiComInner</h1>
+    <h1>HiComponentChild:</h1>
     <div class="border border-rose-400 p-2">
-      HiComInner:JOB:{{ schema.job }}
+      HiComponentChild:JOB:{{ schema.job }}
       <br />
     </div>
   </div>

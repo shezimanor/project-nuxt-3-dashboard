@@ -7,7 +7,8 @@ const obj = reactive({
 </script>
 <template>
   <div class="border border-blue-400 p-2">
-    <h1>HiCom</h1>
+    <h1>HiComponent</h1>
+    <span>HiComponent:JOB:{{ obj.job }}</span>
     <div class="border border-blue-400 p-2">
       <HiComponentChild :schema="obj" />
     </div>
