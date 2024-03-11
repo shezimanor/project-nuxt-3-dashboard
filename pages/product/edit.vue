@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import schemaJSON from '~/data/dev-schema.json';
-const schema = JSON.parse(JSON.stringify(schemaJSON));
+// schema在最上層就將他加入響應式系統
+const schema = reactive(JSON.parse(JSON.stringify(schemaJSON)));
 // 已經拿到 schema
 console.log('schema', schema);
 </script>
@@ -9,7 +10,9 @@ console.log('schema', schema);
   <UDashboardPage>
     <UDashboardPanel id="productEdit" grow>
       <UDashboardNavbar title="編輯產品"></UDashboardNavbar>
-      <MySchemaForm :schema="schema" />
+      <UDashboardPanelContent>
+        <MySchemaForm :schema="schema" />
+      </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>
 </template>
