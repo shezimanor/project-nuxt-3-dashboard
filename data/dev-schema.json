@@ -71,7 +71,6 @@
         },
         "productQuantity": {
           "type": "number",
-          "default": 10,
           "ui": {
             "label": "產品數量",
             "widget": "input",
@@ -133,25 +132,30 @@
               }
             }
           },
-          "ui": {}
+          "ui": {
+            "label": "其他說明",
+            "widget": "array-tabs"
+          }
         },
         "colors": {
           "type": "array",
-          "items": {
-            "type": "string",
-            "default": "紅",
-            "ui": {
-              "label": "顏色",
-              "widget": "input",
-              "widgetConfig": {
-                "placeholder": "請輸入顏色"
-              }
-            },
-            "rules": {
-              "required": true
+          "default": ["紅"],
+          "ui": {
+            "label": "顏色",
+            "widget": "select",
+            "widgetConfig": {
+              "placeholder": "請輸入顏色",
+              "options": ["紅", "橙", "黃", "綠", "藍"]
             }
           },
-          "ui": {}
+          "rules": {
+            "required": true,
+            "maxLength": 3,
+            "$eachPrimitiveItem": {
+              "required": true,
+              "string": true
+            }
+          }
         }
       },
       "ui": {}

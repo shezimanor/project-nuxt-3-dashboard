@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import traverseSchemaToRules from '~/utils/traverseSchemaToRules';
 import traverseSchemaToState from '~/utils/traverseSchemaToState';
 const props = defineProps({
   schema: {
@@ -8,7 +9,9 @@ const props = defineProps({
 });
 
 const state = traverseSchemaToState(props.schema);
+const rules = traverseSchemaToRules(props.schema);
 console.log('state:', state);
+console.log('rules:', rules);
 </script>
 
 <template>

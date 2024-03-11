@@ -1,8 +1,12 @@
+import getTypeDefault from './getTypeDefault';
+
+// 🔆 請注意這個版本的 items 底下不能接 `type: object` 以外的結構
+
 /**
  * 遞迴整個 shcema 物件，並輸出 state
  *
  * @description 用於遞迴整個 shcema 物件，並輸出 state
- * @param {Object} obj 被遞迴 schema
+ * @param {Object} obj 被遞迴 schema object
  * @returns {Object} state
  */
 export default function traverseSchemaToState(obj: any): any {
@@ -19,17 +23,17 @@ export default function traverseSchemaToState(obj: any): any {
   }
   // 處理 array 類型
   else if (obj.type === 'array' && obj.items) {
-    // 如果 items 是 object 類型，則遞歸調用 traverseSchemaToState 函數
+    // 如果 items 底下是 object 類型，則遞歸調用 traverseSchemaToState 函數
     if (obj.items.type === 'object') {
       return [traverseSchemaToState(obj.items)];
     } else {
-      // items 底下"不是"物件結構時
-      return obj.items.hasOwnProperty('default')
-        ? [obj.items.default]
-        : undefined;
+      // items 底下"不是" object 類型，就是錯誤的寫法
     }
-    // 如果不是 object 或 array 類型，則返回 default 值
-  } else {
-    return obj.hasOwnProperty('default') ? obj.default : undefined;
+  }
+  // 如果不是 object 或 array 類型，則返回 default 值
+  else {
+    return obj.hasOwnProperty('default')
+      ? obj.default
+      : getTypeDefault(obj.type);
   }
 }
