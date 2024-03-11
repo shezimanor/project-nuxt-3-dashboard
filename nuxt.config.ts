@@ -5,5 +5,11 @@ export default defineNuxtConfig({
   modules: ['@vueuse/nuxt', '@pinia/nuxt', '@nuxt/ui'],
   colorMode: {
     preference: 'dark'
-  }
+  },
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false
+    }
+  ]
 });
