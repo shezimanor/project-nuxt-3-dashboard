@@ -57,9 +57,12 @@ console.log('rules:', rules);
         <UToggle v-model="testModeProxy" />
       </UFormGroup>
     </div>
-    <pre>
-      {{ state }}
-    </pre>
+    <div
+      v-show="mySchemaStore.state.testMode"
+      class="border p-4 rounded-2xl mb-4"
+    >
+      <pre>{{ state }}</pre>
+    </div>
     <form v-if="schema && !isEmptyObject(schema)">
       <MySchemaFormItem :schema="schema" :state="state" :paths="paths" />
     </form>

@@ -1,5 +1,11 @@
 <!-- Component Name: MySchemaFieldUnit -->
 <script lang="ts" setup>
+import {
+  MySchemaInput,
+  MySchemaNumber,
+  MySchemaTextarea,
+  MySchemaToggle
+} from '#components';
 import { useMySchemaStore } from '~/stores/mySchemaStore';
 const mySchemaStore = useMySchemaStore();
 
@@ -18,11 +24,9 @@ const props = defineProps({
     default: () => []
   }
 });
-// 輸入值
-const modelValue = ref(getTypeDefault(props.schema.type));
 
 // 注入依賴 rootState
-const { rootState, updateState } = inject('rootState') as {
+const { rootState } = inject('rootState') as {
   [key: string]: any;
 };
 
@@ -33,15 +37,20 @@ const mappingRootState = computed(() => {
   }, rootState);
 });
 
-// modelValue 更新後，
-watch(modelValue, (newValue) => {
-  updateState(props.paths, newValue);
-});
-
-onMounted(() => {
-  // console.log('Unit props.state', props.state);
-  // 初始化
-  modelValue.value = props.state;
+// 需要被渲染的欄位元件：由 schema.type 與 schema.ui.widget 共同決定
+const fieldComponent = computed(() => {
+  if (!props.schema.ui || !props.schema.ui.widget) return MySchemaInput;
+  switch (props.schema.ui.widget) {
+    case 'number':
+      return MySchemaNumber;
+    case 'toggle':
+      return MySchemaToggle;
+    case 'textarea':
+      return MySchemaTextarea;
+    case 'input':
+    default:
+      return MySchemaInput;
+  }
 });
 </script>
 
@@ -51,19 +60,24 @@ onMounted(() => {
       v-if="mySchemaStore.state.testMode"
       title="Form Field Unit"
       description="欄位元件分配器"
-      :price="`${mappingRootState}`"
-      cycle="/ rootState"
-      discount=""
+      :price="`${schema.ui.widget}`"
+      cycle="(widget)"
       :highlight="true"
       :badge="{ label: '表單單位元件' }"
       orientation="horizontal"
       :features="[
         `Type: ${schema.type}`,
-        `widget: ${schema.ui.widget}`,
-        `Schema paths: ${paths.join('.')}`
+        `Schema paths: ${paths.join('.')}`,
+        `RootState Current Type: ${typeof mappingRootState}`,
+        `RootState: ${mappingRootState}`
       ]"
     />
-    <UInput v-model="modelValue" />
+    <component
+      :is="fieldComponent"
+      :schema="schema"
+      :state="state"
+      :paths="paths"
+    />
   </div>
 </template>
 

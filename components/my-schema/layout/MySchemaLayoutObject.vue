@@ -33,21 +33,32 @@ const filteredProperties = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-4">
+  <div class="flex flex-col">
     <!-- <h3>Form Layout Object</h3> -->
+    <UPageCard
+      v-show="mySchemaStore.state.testMode"
+      title="Form Layout Object"
+      description="物件排版元件：底下渲染各個 properties"
+      icon="i-heroicons-square-3-stack-3d-20-solid"
+    />
     <div
-      class="flex flex-col gap-y-4"
+      class="flex flex-col"
       v-for="(property, key) in filteredProperties"
       :key="key"
     >
-      <!-- {{ property }} -->
-      <UPageCard
-        v-if="mySchemaStore.state.testMode"
-        title="Form Layout Object"
-        :description="`Schema KeyName(AttrName): ${key}`"
-        icon="i-heroicons-square-3-stack-3d-20-solid"
-      />
-      <div class="p-4 pr-0 pb-4">
+      <div
+        class="flex flex-col p-4 pr-0 pb-4"
+        :class="{ 'gap-y-4': mySchemaStore.state.testMode }"
+      >
+        <div>
+          <UBadge
+            v-show="mySchemaStore.state.testMode"
+            color="amber"
+            variant="outline"
+            :ui="{ base: 'grow-0' }"
+            >KeyName: {{ key }}</UBadge
+          >
+        </div>
         <MySchemaFormItem
           :schema="property"
           :state="state[key]"

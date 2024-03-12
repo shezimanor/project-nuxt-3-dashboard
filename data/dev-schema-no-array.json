@@ -8,10 +8,10 @@
           "type": "string",
           "default": "Empty Title",
           "ui": {
-            "label": "產品標題",
+            "label": "標題",
             "widget": "input",
             "widgetConfig": {
-              "placeholder": "請輸入產品標題"
+              "placeholder": "請輸入標題"
             }
           },
           "rules": {
@@ -23,10 +23,10 @@
           "type": "string",
           "default": "",
           "ui": {
-            "label": "產品標題",
+            "label": "簡介",
             "widget": "textarea",
             "widgetConfig": {
-              "placeholder": "請輸入產品描述(非必填)"
+              "placeholder": "請輸入簡介(非必填)"
             }
           },
           "rules": {
@@ -41,7 +41,7 @@
       "properties": {
         "productName": {
           "type": "string",
-          "default": "Empty Title",
+          "default": "Product Name",
           "ui": {
             "label": "產品標題",
             "widget": "input",
@@ -59,7 +59,7 @@
           "default": 100,
           "ui": {
             "label": "產品價格",
-            "widget": "input",
+            "widget": "number",
             "widgetConfig": {
               "placeholder": "請輸入產品價格"
             }
@@ -73,7 +73,7 @@
           "type": "number",
           "ui": {
             "label": "產品數量",
-            "widget": "input",
+            "widget": "number",
             "widgetConfig": {
               "placeholder": "請輸入產品數量"
             }
@@ -95,6 +95,15 @@
           },
           "rules": {
             "required": true
+          }
+        },
+        "isOnSale": {
+          "type": "boolean",
+          "default": true,
+          "ui": {
+            "label": "上架狀態",
+            "widget": "toggle",
+            "widgetConfig": {}
           }
         },
         "secondLayerObj": {
@@ -120,7 +129,7 @@
               "default": 100,
               "ui": {
                 "label": "產品價格",
-                "widget": "input",
+                "widget": "number",
                 "widgetConfig": {
                   "placeholder": "請輸入產品價格"
                 }
@@ -134,7 +143,7 @@
               "type": "number",
               "ui": {
                 "label": "產品數量",
-                "widget": "input",
+                "widget": "number",
                 "widgetConfig": {
                   "placeholder": "請輸入產品數量"
                 }
