@@ -2,6 +2,8 @@
 
 > 使用 [Nuxt3](https://nuxt.com/docs/getting-started/introduction) 建置
 >
+> 使用 [NuxtUI](https://ui.nuxt.com/) 和付費版 [NuxtUI Pro](https://ui.nuxt.com/pro/pricing) 建置
+>
 > 紀錄使用 framework 的過程為目標，所以會有很多細微的 commit
 
 ## 注意事項
