@@ -3,7 +3,11 @@
 <template>
   <UDashboardPage>
     <UDashboardPanel id="productBuild" grow>
-      <UDashboardNavbar title="首頁"></UDashboardNavbar>
+      <UDashboardNavbar title="首頁">
+        <template #right>
+          <UColorModeToggle />
+        </template>
+      </UDashboardNavbar>
       <UDashboardPanelContent>
         <HiComponent />
       </UDashboardPanelContent>

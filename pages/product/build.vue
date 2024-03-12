@@ -6,7 +6,11 @@ console.log('data:', data.value);
 <template>
   <UDashboardPage>
     <UDashboardPanel id="productBuild" grow>
-      <UDashboardNavbar title="建立產品"></UDashboardNavbar>
+      <UDashboardNavbar title="建立產品">
+        <template #right>
+          <UColorModeToggle />
+        </template>
+      </UDashboardNavbar>
       <UDashboardPanelContent>
         <div v-if="data && data.length > 0">
           {{ data[0] }}

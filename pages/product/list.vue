@@ -67,7 +67,11 @@ onMounted(() => {});
 <template>
   <UDashboardPage>
     <UDashboardPanel id="productList" grow>
-      <UDashboardNavbar title="產品列表"></UDashboardNavbar>
+      <UDashboardNavbar title="產品列表">
+        <template #right>
+          <UColorModeToggle />
+        </template>
+      </UDashboardNavbar>
       <UTable
         v-if="productData"
         :rows="productData.list"
