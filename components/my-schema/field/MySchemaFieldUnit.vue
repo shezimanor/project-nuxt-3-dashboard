@@ -1,7 +1,7 @@
-<!-- Component Name: MySchemaFieldUnit -->
 <script lang="ts" setup>
 import {
   MySchemaInput,
+  MySchemaMultipleSelect,
   MySchemaNumber,
   MySchemaTextarea,
   MySchemaToggle
@@ -39,12 +39,13 @@ const mappingRootState = computed(() => {
 
 // 需要被渲染的欄位元件：由 schema.type 與 schema.ui.widget 共同決定
 const fieldComponent = computed(() => {
-  if (!props.schema.ui || !props.schema.ui.widget) return MySchemaInput;
   switch (props.schema.ui.widget) {
     case 'number':
       return MySchemaNumber;
     case 'toggle':
       return MySchemaToggle;
+    case 'multiple-select':
+      return MySchemaMultipleSelect;
     case 'textarea':
       return MySchemaTextarea;
     case 'input':

@@ -84,13 +84,22 @@
           }
         },
         "productOrigin": {
-          "type": "string",
-          "default": "台北市",
+          "type": "array",
+          "default": ["台北市"],
           "ui": {
             "label": "產品產地",
-            "widget": "input",
+            "widget": "multiple-select",
             "widgetConfig": {
-              "placeholder": "請選擇產地"
+              "options": [
+                "台北市",
+                "桃園市",
+                "新竹市",
+                "台中市",
+                "新北市",
+                "高雄市"
+              ],
+              "placeholder": "請選擇產地",
+              "searchablePlaceholder": "搜尋"
             }
           },
           "rules": {
