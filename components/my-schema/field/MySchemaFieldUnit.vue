@@ -58,8 +58,8 @@ const fieldComponent = computed(() => {
   <div class="flex flex-col gap-y-4">
     <UPricingCard
       v-if="mySchemaStore.state.testMode"
-      title="Form Field Unit"
-      description="欄位元件分配器"
+      :title="fieldComponent.__name"
+      description="From 欄位元件分配器"
       :price="`${schema.ui.widget}`"
       cycle="(widget)"
       :highlight="true"
