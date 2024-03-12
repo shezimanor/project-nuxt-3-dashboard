@@ -39,6 +39,68 @@
     "prototypeJSON": {
       "type": "object",
       "properties": {
+        "others": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "default": "等級一",
+                "ui": {
+                  "label": "等級",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入等級"
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              },
+              "comment": {
+                "type": "string",
+                "default": "良好",
+                "ui": {
+                  "label": "評價",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入評價"
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              }
+            }
+          },
+          "ui": {
+            "label": "其他說明",
+            "widget": "array-tabs"
+          }
+        },
+
+        "colors": {
+          "type": "array",
+          "default": ["紅"],
+          "ui": {
+            "label": "顏色",
+            "widget": "multiple-select",
+            "widgetConfig": {
+              "options": ["紅", "橙", "黃", "綠", "藍"],
+              "placeholder": "請輸入顏色",
+              "searchablePlaceholder": "搜尋顏色"
+            }
+          },
+          "rules": {
+            "required": true,
+            "maxLength": 3,
+            "$eachPrimitiveItem": {
+              "required": true,
+              "string": true
+            }
+          }
+        },
         "productName": {
           "type": "string",
           "default": "Empty Title",
@@ -95,66 +157,6 @@
           },
           "rules": {
             "required": true
-          }
-        },
-        "others": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "level": {
-                "type": "string",
-                "default": "等級一",
-                "ui": {
-                  "label": "等級",
-                  "widget": "input",
-                  "widgetConfig": {
-                    "placeholder": "請輸入等級"
-                  }
-                },
-                "rules": {
-                  "required": true
-                }
-              },
-              "comment": {
-                "type": "string",
-                "default": "",
-                "ui": {
-                  "label": "評價",
-                  "widget": "input",
-                  "widgetConfig": {
-                    "placeholder": "請輸入評價"
-                  }
-                },
-                "rules": {
-                  "required": true
-                }
-              }
-            }
-          },
-          "ui": {
-            "label": "其他說明",
-            "widget": "array-tabs"
-          }
-        },
-        "colors": {
-          "type": "array",
-          "default": ["紅"],
-          "ui": {
-            "label": "顏色",
-            "widget": "select",
-            "widgetConfig": {
-              "placeholder": "請輸入顏色",
-              "options": ["紅", "橙", "黃", "綠", "藍"]
-            }
-          },
-          "rules": {
-            "required": true,
-            "maxLength": 3,
-            "$eachPrimitiveItem": {
-              "required": true,
-              "string": true
-            }
           }
         }
       },

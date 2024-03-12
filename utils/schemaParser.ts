@@ -2,7 +2,7 @@
  * 判別 Schema 是否為合法的物件 Schema 結構
  *
  * @param {*} schema
- * @returns {computed} 合法的物件 Schema 結構會回傳 true，否則回傳 false
+ * @returns {boolean} 合法的物件 Schema 結構會回傳 true，否則回傳 false
  */
 const isValidObjectSchema = (schema: any): boolean => {
   return (
@@ -17,7 +17,7 @@ const isValidObjectSchema = (schema: any): boolean => {
  * 判別 Schema 是否為合法的陣列 Schema 結構
  *
  * @param {*} schema
- * @returns {computed} 合法的陣列 Schema 結構會回傳 true，否則回傳 false
+ * @returns {boolean} 合法的陣列 Schema 結構會回傳 true，否則回傳 false
  */
 const isValidArraySchema = (schema: any): boolean => {
   return (
@@ -28,4 +28,15 @@ const isValidArraySchema = (schema: any): boolean => {
   );
 };
 
-export { isValidArraySchema, isValidObjectSchema };
+/**
+ * 判別 Schema Path 是否為陣列
+ *
+ * @description 如果是陣列path，該字串只會有數字
+ * @param {string} str
+ * @returns {boolean} 回傳布林值結果
+ */
+const isValidArrayPath = (str: string): boolean => {
+  return /^\d+$/.test(str);
+};
+
+export { isValidArraySchema, isValidObjectSchema, isValidArrayPath };

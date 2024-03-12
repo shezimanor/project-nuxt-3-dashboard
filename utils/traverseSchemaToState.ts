@@ -25,6 +25,7 @@ export default function traverseSchemaToState(obj: any): any {
   else if (obj.type === 'array' && obj.items) {
     // 如果 items 底下是 object 類型，則遞歸調用 traverseSchemaToState 函數
     if (obj.items.type === 'object') {
+      //TODO: 沒有 default 時，需要直接回傳空陣列
       return [traverseSchemaToState(obj.items)];
     } else {
       // items 底下"不是" object 類型，就是錯誤的寫法

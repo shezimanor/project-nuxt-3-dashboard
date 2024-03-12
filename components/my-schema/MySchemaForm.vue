@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { isValidArrayPath } from '~/utils/schemaParser';
 import { useMySchemaStore } from '~/stores/mySchemaStore';
 import isEmptyObject from '~/utils/isEmptyObject';
 import traverseSchemaToRules from '~/utils/traverseSchemaToRules';
@@ -25,13 +26,14 @@ const paths: any[] = [];
 // update state
 function updateState(paths: any, newValue: any) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
+  // 當遇到陣列包物件的時候 path item會是 "[0]"
   const lastKeyIndex = paths.length - 1;
   const lastParent = paths
     .slice(0, lastKeyIndex)
-    .reduce(
-      (parentState: any, currentKey: any) => parentState[currentKey],
-      state
-    );
+    .reduce((parentState: any, currentKey: any) => {
+      if (!isValidArrayPath(currentKey)) return parentState[currentKey];
+      else return parentState[Number(currentKey)];
+    }, state);
 
   // 更新最後一個鍵的值
   lastParent[paths[lastKeyIndex]] = newValue;

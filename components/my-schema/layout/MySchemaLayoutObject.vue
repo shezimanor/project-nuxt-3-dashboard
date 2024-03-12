@@ -41,29 +41,25 @@ const filteredProperties = computed(() => {
       icon="i-heroicons-square-3-stack-3d-20-solid"
     />
     <div
-      class="flex flex-col"
       v-for="(property, key) in filteredProperties"
       :key="key"
+      class="flex flex-col p-4 pr-0 pb-4"
+      :class="{ 'gap-y-4': mySchemaStore.state.testMode }"
     >
-      <div
-        class="flex flex-col p-4 pr-0 pb-4"
-        :class="{ 'gap-y-4': mySchemaStore.state.testMode }"
-      >
-        <div>
-          <UBadge
-            v-show="mySchemaStore.state.testMode"
-            color="amber"
-            variant="outline"
-            :ui="{ base: 'grow-0' }"
-            >KeyName: {{ key }}</UBadge
-          >
-        </div>
-        <MySchemaFormItem
-          :schema="property"
-          :state="state[key]"
-          :paths="paths.concat(key)"
-        />
+      <div>
+        <UBadge
+          v-show="mySchemaStore.state.testMode"
+          color="amber"
+          variant="outline"
+          :ui="{ base: 'grow-0' }"
+          >KeyName: {{ key }}</UBadge
+        >
       </div>
+      <MySchemaFormItem
+        :schema="property"
+        :state="state[key]"
+        :paths="paths.concat(key)"
+      />
     </div>
   </div>
 </template>

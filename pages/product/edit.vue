@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import schemaJSON from '~/data/dev-schema-no-array.json';
+import schemaJSON from '~/data/dev-schema.json';
 // schema在最上層就將他加入響應式系統
 const schema = reactive(JSON.parse(JSON.stringify(schemaJSON)));
 // 已經拿到 schema
