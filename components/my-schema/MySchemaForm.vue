@@ -1,4 +1,3 @@
-<!-- Component Name: MySchemaForm -->
 <script lang="ts" setup>
 import { useMySchemaStore } from '~/stores/mySchemaStore';
 import isEmptyObject from '~/utils/isEmptyObject';

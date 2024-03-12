@@ -1,4 +1,3 @@
-<!-- Component Name: MySchemaLayoutObject -->
 <script lang="ts" setup>
 import { useMySchemaStore } from '~/stores/mySchemaStore';
 const mySchemaStore = useMySchemaStore();

@@ -1,4 +1,3 @@
-<!-- Component Name: MySchemaFieldUnit -->
 <script lang="ts" setup>
 // props
 const props = defineProps({

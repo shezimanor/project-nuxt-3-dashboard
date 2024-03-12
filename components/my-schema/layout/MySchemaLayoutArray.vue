@@ -1,4 +1,3 @@
-<!-- Component Name: MySchemaLayoutArray -->
 <script lang="ts" setup>
 // props
 const props = defineProps({

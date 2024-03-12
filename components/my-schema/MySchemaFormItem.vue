@@ -1,4 +1,3 @@
-<!-- Component Name: MySchemaFormItem -->
 <script lang="ts" setup>
 import { isValidArraySchema, isValidObjectSchema } from '~/utils/schemaParser';
 
