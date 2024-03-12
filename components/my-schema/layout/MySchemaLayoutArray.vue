@@ -18,7 +18,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col gap-y-4">
     <!-- <h3>Form Layout Array</h3> -->
     <MySchemaFormItem :schema="schema.items" :state="state" />
   </div>

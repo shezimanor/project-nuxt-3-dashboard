@@ -1,8 +1,13 @@
 <!-- Component Name: MySchemaForm -->
 <script lang="ts" setup>
+import { useMySchemaStore } from '~/stores/mySchemaStore';
 import isEmptyObject from '~/utils/isEmptyObject';
 import traverseSchemaToRules from '~/utils/traverseSchemaToRules';
 import traverseSchemaToState from '~/utils/traverseSchemaToState';
+
+const mySchemaStore = useMySchemaStore();
+
+// props
 const props = defineProps({
   schema: {
     type: Object,
@@ -10,8 +15,11 @@ const props = defineProps({
   }
 });
 
+console.log('testMode:', mySchemaStore.state.testMode);
+
 const state = reactive(traverseSchemaToState(props.schema));
 const rules = reactive(traverseSchemaToRules(props.schema));
+const testModeProxy = ref(mySchemaStore.state.testMode);
 // path 不需要響應式: 讓子元件可以接自己的路徑陣列，方便後續抓值
 const paths: any[] = [];
 
@@ -30,6 +38,10 @@ function updateState(paths: any, newValue: any) {
   lastParent[paths[lastKeyIndex]] = newValue;
 }
 
+watch(testModeProxy, (newValue) => {
+  mySchemaStore.updateTestMode(newValue);
+});
+
 // 提供依賴注入 rootState
 provide('rootState', { rootState: state, updateState });
 
@@ -40,6 +52,11 @@ console.log('rules:', rules);
 <template>
   <div class="flex flex-col">
     <h2>Schema Form</h2>
+    <div class="py-4">
+      <UFormGroup label="測試模式">
+        <UToggle v-model="testModeProxy" />
+      </UFormGroup>
+    </div>
     <pre>
       {{ state }}
     </pre>

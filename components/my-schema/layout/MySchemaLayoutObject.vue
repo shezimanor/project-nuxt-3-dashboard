@@ -1,5 +1,8 @@
 <!-- Component Name: MySchemaLayoutObject -->
 <script lang="ts" setup>
+import { useMySchemaStore } from '~/stores/mySchemaStore';
+const mySchemaStore = useMySchemaStore();
+
 // props
 const props = defineProps({
   schema: {
@@ -30,16 +33,27 @@ const filteredProperties = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col gap-y-4">
     <!-- <h3>Form Layout Object</h3> -->
-    <div v-for="(property, key) in filteredProperties" :key="key">
+    <div
+      class="flex flex-col gap-y-4"
+      v-for="(property, key) in filteredProperties"
+      :key="key"
+    >
       <!-- {{ property }} -->
-      <span>key:{{ key }}</span>
-      <MySchemaFormItem
-        :schema="property"
-        :state="state[key]"
-        :paths="paths.concat(key)"
+      <UPageCard
+        v-if="mySchemaStore.state.testMode"
+        title="Form Layout Object"
+        :description="`Schema KeyName(AttrName): ${key}`"
+        icon="i-heroicons-square-3-stack-3d-20-solid"
       />
+      <div class="p-4 pr-0 pb-4">
+        <MySchemaFormItem
+          :schema="property"
+          :state="state[key]"
+          :paths="paths.concat(key)"
+        />
+      </div>
     </div>
   </div>
 </template>

@@ -1,5 +1,8 @@
 <!-- Component Name: MySchemaFieldUnit -->
 <script lang="ts" setup>
+import { useMySchemaStore } from '~/stores/mySchemaStore';
+const mySchemaStore = useMySchemaStore();
+
 // props
 const props = defineProps({
   schema: {
@@ -23,12 +26,14 @@ const { rootState, updateState } = inject('rootState') as {
   [key: string]: any;
 };
 
+// 透過路徑取得目前欄位對應的 rootState 值
 const mappingRootState = computed(() => {
   return props.paths.reduce((deepState: any, currentPath: any) => {
     return deepState[currentPath];
   }, rootState);
 });
 
+// modelValue 更新後，
 watch(modelValue, (newValue) => {
   updateState(props.paths, newValue);
 });
@@ -41,11 +46,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <h3>Form Field Unit</h3>
-    <span>Schema Type: {{ schema.type }}</span>
-    <span>Schema paths: {{ paths.join(',') }}</span>
-    <span>Schema mappingRootState: {{ mappingRootState }}</span>
+  <div class="flex flex-col gap-y-4">
+    <UPricingCard
+      v-if="mySchemaStore.state.testMode"
+      title="Form Field Unit"
+      description="欄位元件分配器"
+      :price="`${mappingRootState}`"
+      cycle="/ rootState"
+      discount=""
+      :highlight="true"
+      :badge="{ label: '表單單位元件' }"
+      orientation="horizontal"
+      :features="[
+        `Type: ${schema.type}`,
+        `widget: ${schema.ui.widget}`,
+        `Schema paths: ${paths.join('.')}`
+      ]"
+    />
     <UInput v-model="modelValue" />
   </div>
 </template>

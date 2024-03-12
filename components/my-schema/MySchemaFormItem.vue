@@ -49,8 +49,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <!-- <h3>Form Item</h3> -->
+  <div>
     <!-- object -->
     <MySchemaLayoutObject
       v-if="MySchemaDynamicFormComponent === 'MySchemaLayoutObject'"
