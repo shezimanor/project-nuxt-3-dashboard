@@ -38,7 +38,9 @@ const MySchemaDynamicFormComponent = computed(() => {
   return isObjectLayout.value
     ? 'MySchemaLayoutObject'
     : isArrayLayout.value
-    ? 'MySchemaLayoutArray'
+    ? props.schema.ui.widget === 'array-tabs'
+      ? 'MySchemaLayoutArrayTabs'
+      : 'MySchemaLayoutArray'
     : 'MySchemaFieldUnit';
 });
 
@@ -56,9 +58,16 @@ onMounted(() => {
       :state="state as Record<string, any>"
       :paths="paths"
     />
-    <!-- array -->
+    <!-- array: array basic -->
     <MySchemaLayoutArray
       v-else-if="MySchemaDynamicFormComponent === 'MySchemaLayoutArray'"
+      :schema="schema"
+      :state="state as Record<string, any>"
+      :paths="paths"
+    />
+    <!-- array: array tabs -->
+    <MySchemaLayoutArrayTabs
+      v-else-if="MySchemaDynamicFormComponent === 'MySchemaLayoutArrayTabs'"
       :schema="schema"
       :state="state as Record<string, any>"
       :paths="paths"
