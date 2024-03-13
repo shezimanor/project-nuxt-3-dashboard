@@ -9,7 +9,7 @@ import getTypeDefault from './getTypeDefault';
  * @param {Object} obj 被遞迴 schema object
  * @returns {Object} state
  */
-export default function traverseSchemaToState(obj: any): any {
+export default function traverseSchemaToState(obj: Record<string, any>): any {
   // 檢查 obj 是否為 object 類型
   if (obj.type === 'object' && obj.properties) {
     // Add index signature to the result object
@@ -24,11 +24,15 @@ export default function traverseSchemaToState(obj: any): any {
   // 處理 array 類型
   else if (obj.type === 'array' && obj.items) {
     // 如果 items 底下是 object 類型，則遞歸調用 traverseSchemaToState 函數
-    if (obj.items.type === 'object') {
-      //TODO: 沒有 default 時，需要直接回傳空陣列
-      return [traverseSchemaToState(obj.items)];
+    if (obj.items.type === 'object' && obj.items.properties) {
+      // 有 default 值，繼續往下渲染
+      if (Array.isArray(obj.items.default) && obj.items.default.length > 0)
+        return [traverseSchemaToState(obj.items)];
+      // 無 default 值，直接回傳空陣列
+      else return [];
     } else {
       // items 底下"不是" object 類型，就是錯誤的寫法
+      throw new Error('錯誤的寫法！Array items 底下「只能」是 object 類型!');
     }
   }
   // 如果不是 object 或 array 類型，則返回 default 值

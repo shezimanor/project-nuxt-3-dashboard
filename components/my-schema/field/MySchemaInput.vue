@@ -18,7 +18,7 @@ const props = defineProps({
 const modelValue = ref(getTypeDefault(props.schema.type));
 modelValue.value = props.state;
 
-// 注入依賴 rootState(這裡沒用到) 和更新用 action: updateState
+// 注入依賴: rootState(這裡沒用到) 和更新用 action: updateState
 const { rootState, updateState } = inject('rootState') as {
   [key: string]: any;
 };

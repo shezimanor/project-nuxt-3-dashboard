@@ -34,7 +34,9 @@
           }
         }
       },
-      "ui": {}
+      "ui": {
+        "label": "基本資訊"
+      }
     },
     "prototypeJSON": {
       "type": "object",
@@ -71,6 +73,46 @@
                 "rules": {
                   "required": true
                 }
+              },
+              "manyThings": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "default": "你的名字",
+                      "ui": {
+                        "label": "名字",
+                        "widget": "input",
+                        "widgetConfig": {
+                          "placeholder": "請輸入名字"
+                        }
+                      },
+                      "rules": {
+                        "required": true
+                      }
+                    },
+                    "job": {
+                      "type": "string",
+                      "default": "工程師",
+                      "ui": {
+                        "label": "工作",
+                        "widget": "input",
+                        "widgetConfig": {
+                          "placeholder": "請輸入工作"
+                        }
+                      },
+                      "rules": {
+                        "required": true
+                      }
+                    }
+                  }
+                },
+                "ui": {
+                  "label": "陣列下層又是陣列",
+                  "widget": "array-tabs"
+                }
               }
             }
           },
@@ -79,7 +121,6 @@
             "widget": "array-tabs"
           }
         },
-
         "colors": {
           "type": "array",
           "default": ["紅"],
@@ -160,7 +201,9 @@
           }
         }
       },
-      "ui": {}
+      "ui": {
+        "label": "核心資料"
+      }
     }
   }
 }

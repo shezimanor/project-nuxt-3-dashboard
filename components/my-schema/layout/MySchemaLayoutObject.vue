@@ -33,7 +33,9 @@ const filteredProperties = computed(() => {
 
 <template>
   <div class="flex flex-col">
-    <!-- <h3>Form Layout Object</h3> -->
+    <h3 class="text-primary font-bold text-xl mb-1">
+      {{ schema.ui ? schema.ui.label : 'Layout Object(No Label)' }}
+    </h3>
     <UPageCard
       v-show="mySchemaStore.state.testMode"
       title="Form Layout Object"
@@ -46,15 +48,13 @@ const filteredProperties = computed(() => {
       class="flex flex-col p-4 pr-0 pb-4"
       :class="{ 'gap-y-4': mySchemaStore.state.testMode }"
     >
-      <div>
-        <UBadge
-          v-show="mySchemaStore.state.testMode"
-          color="amber"
-          variant="outline"
-          :ui="{ base: 'grow-0' }"
-          >KeyName: {{ key }}</UBadge
-        >
-      </div>
+      <UBadge
+        v-show="mySchemaStore.state.testMode"
+        color="amber"
+        variant="outline"
+        :ui="{ base: 'self-start' }"
+        >KeyName: {{ key }}</UBadge
+      >
       <MySchemaFormItem
         :schema="property"
         :state="state[key]"

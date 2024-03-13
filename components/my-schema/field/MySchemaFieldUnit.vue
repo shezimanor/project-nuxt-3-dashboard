@@ -25,7 +25,7 @@ const props = defineProps({
   }
 });
 
-// 注入依賴 rootState
+// 注入依賴: rootState
 const { rootState } = inject('rootState') as {
   [key: string]: any;
 };
@@ -68,8 +68,8 @@ const fieldComponent = computed(() => {
       orientation="horizontal"
       :features="[
         `Type: ${schema.type}`,
-        `Schema paths: ${paths.join('.')}`,
-        `RootState Current Type: ${typeof mappingRootState}`,
+        `Paths: ${paths.join('.')}`,
+        `Current Type: ${typeof mappingRootState}`,
         `RootState: ${mappingRootState}`
       ]"
     />

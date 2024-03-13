@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { isValidArrayPath } from '~/utils/schemaParser';
 import { useMySchemaStore } from '~/stores/mySchemaStore';
+import getLastParent from '~/utils/getLastParent';
 import isEmptyObject from '~/utils/isEmptyObject';
 import traverseSchemaToRules from '~/utils/traverseSchemaToRules';
 import traverseSchemaToState from '~/utils/traverseSchemaToState';
@@ -28,23 +28,66 @@ function updateState(paths: any, newValue: any) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
   // 當遇到陣列包物件的時候 path item會是 "[0]"
   const lastKeyIndex = paths.length - 1;
-  const lastParent = paths
-    .slice(0, lastKeyIndex)
-    .reduce((parentState: any, currentKey: any) => {
-      if (!isValidArrayPath(currentKey)) return parentState[currentKey];
-      else return parentState[Number(currentKey)];
-    }, state);
+  const lastParent = getLastParent(state, paths, lastKeyIndex);
 
   // 更新最後一個鍵的值
   lastParent[paths[lastKeyIndex]] = newValue;
+}
+// add array state
+function addArrayState(paths: any, newValue: any) {
+  // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
+  // 當遇到陣列包物件的時候 path item會是 "[0]"
+  const lastKeyIndex = paths.length - 1;
+  const lastParent = getLastParent(state, paths, lastKeyIndex);
+
+  // 法一：使用陣列 push 做新增, "陣列"要整個取代才會觸發檢查
+  // const newArray = lastParent[paths[lastKeyIndex]].slice();
+  // newArray.push(newValue);
+  // lastParent[paths[lastKeyIndex]] = newArray;
+  // 法二：直接 push
+  lastParent[paths[lastKeyIndex]].push(newValue);
+}
+
+// remove array state
+function removeArrayState(paths: any, arrayIndex: number) {
+  // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
+  // 當遇到陣列包物件的時候 path item會是 "[0]"
+  const lastKeyIndex = paths.length - 1;
+  const lastParent = getLastParent(state, paths, lastKeyIndex);
+
+  // 將項目移除
+  const newArray = lastParent[paths[lastKeyIndex]].slice();
+  newArray.splice(arrayIndex, 1);
+  lastParent[paths[lastKeyIndex]] = newArray;
+}
+
+// clear array state
+function clearArrayState(paths: any) {
+  // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
+  // 當遇到陣列包物件的時候 path item會是 "[0]"
+  const lastKeyIndex = paths.length - 1;
+  const lastParent = getLastParent(state, paths, lastKeyIndex);
+
+  // 使用陣列清空
+  lastParent[paths[lastKeyIndex]] = [];
 }
 
 watch(testModeProxy, (newValue) => {
   mySchemaStore.updateTestMode(newValue);
 });
 
+watch(state, () => {
+  console.log('State Watcher Trigger');
+});
+
 // 提供依賴注入 rootState
-provide('rootState', { rootState: state, updateState });
+provide('rootState', {
+  rootState: state,
+  updateState,
+  addArrayState,
+  removeArrayState,
+  clearArrayState
+});
 
 console.log('state:', state);
 console.log('rules:', rules);
