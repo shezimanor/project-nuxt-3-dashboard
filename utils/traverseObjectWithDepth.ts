@@ -8,7 +8,7 @@
  * @returns {number} 深度計數
  */
 export default function traverseObjectWithDepth(
-  obj: any,
+  obj: Record<string, any>,
   parentKey = '',
   depth = 0
 ): number {

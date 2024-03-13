@@ -6,7 +6,10 @@
  * @param {string} parentKey 父層的 key
  * @returns {void}
  */
-export default function traverseObject(obj: any, parentKey = '') {
+export default function traverseObject(
+  obj: Record<string, any>,
+  parentKey = ''
+) {
   // check if obj is not a object
   if (typeof obj !== 'object' || obj === null) {
     console.log(`Key: ${parentKey}, Type: ${typeof obj}, Value: ${obj}`);

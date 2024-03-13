@@ -6,7 +6,7 @@ import isEmptyObject from './isEmptyObject';
  * @param {Object} obj 被遞迴 schema object
  * @returns {Object} rules
  */
-export default function traverseSchemaToRules(obj: any): any {
+export default function traverseSchemaToRules(obj: Record<string, any>): any {
   // 檢查 obj 是否為 object 類型
   if (obj.type === 'object' && obj.properties) {
     // Add index signature to the result object

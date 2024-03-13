@@ -4,7 +4,7 @@
  * @param {*} schema
  * @returns {boolean} 合法的物件 Schema 結構會回傳 true，否則回傳 false
  */
-const isValidObjectSchema = (schema: any): boolean => {
+const isValidObjectSchema = (schema: Record<string, any>): boolean => {
   return (
     schema &&
     schema.type === 'object' &&
@@ -19,7 +19,7 @@ const isValidObjectSchema = (schema: any): boolean => {
  * @param {*} schema
  * @returns {boolean} 合法的陣列 Schema 結構會回傳 true，否則回傳 false
  */
-const isValidArraySchema = (schema: any): boolean => {
+const isValidArraySchema = (schema: Record<string, any>): boolean => {
   return (
     schema &&
     schema.type === 'array' &&
@@ -39,4 +39,4 @@ const isValidArrayPath = (str: string): boolean => {
   return /^\d+$/.test(str);
 };
 
-export { isValidArraySchema, isValidObjectSchema, isValidArrayPath };
+export { isValidArrayPath, isValidArraySchema, isValidObjectSchema };
