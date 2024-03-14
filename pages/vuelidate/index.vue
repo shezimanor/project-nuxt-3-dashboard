@@ -3,13 +3,13 @@
 <template>
   <UDashboardPage>
     <UDashboardPanel id="productBuild" grow>
-      <UDashboardNavbar title="首頁">
+      <UDashboardNavbar title="Vuelidate 實驗室">
         <template #right>
           <UColorModeToggle />
         </template>
       </UDashboardNavbar>
       <UDashboardPanelContent>
-        <HiComponent />
+        <VuelidateDemo1 />
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>
