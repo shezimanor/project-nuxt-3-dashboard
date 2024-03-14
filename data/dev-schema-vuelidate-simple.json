@@ -16,7 +16,8 @@
           },
           "rules": {
             "required": true,
-            "maxLength": 30
+            "minLength": 3,
+            "sameAs": "description"
           }
         },
         "description": {
@@ -30,7 +31,9 @@
             }
           },
           "rules": {
-            "maxLength": 300
+            "required": true,
+            "minLength": 3,
+            "sameAs": "title"
           }
         }
       },
@@ -53,7 +56,8 @@
           },
           "rules": {
             "required": true,
-            "maxLength": 30
+            "maxLength": 30,
+            "alphaNum": true
           }
         },
         "productPrice": {
@@ -69,7 +73,7 @@
           "rules": {
             "required": true,
             "integer": true,
-            "maxValue": 3000
+            "between": [30, 50]
           }
         },
         "productQuantity": {
@@ -85,8 +89,7 @@
           "rules": {
             "required": true,
             "integer": true,
-            "minValue": 10,
-            "maxValue": 100
+            "between": [10, 100]
           }
         },
         "productOrigin": {

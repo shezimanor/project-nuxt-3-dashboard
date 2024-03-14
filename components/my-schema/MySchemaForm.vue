@@ -118,7 +118,8 @@ console.log('rules:', rules);
       v-show="mySchemaStore.state.testMode"
       class="border p-4 rounded-2xl mb-4"
     >
-      <pre>{{ state }}</pre>
+      <pre>state: {{ state }}</pre>
+      <pre>v$: {{ v$ }}</pre>
     </div>
     <form v-if="schema && !isEmptyObject(schema)">
       <MySchemaFormItem :schema="schema" :state="state" :paths="paths" />

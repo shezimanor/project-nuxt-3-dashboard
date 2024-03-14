@@ -22,10 +22,53 @@ const v$ = useVuelidate(rules, state, {
 <template>
   <div class="border border-primary rounded-md p-2">
     <h1>Vuelidate Demo 1</h1>
-    <UInput v-model="state.basicJSON.title" />
-    <span class="text-rose" v-if="v$.basicJSON.title.required.$invalid">{{
-      v$.basicJSON.title.required.$message
-    }}</span>
+    <UFormGroup label="標題">
+      <UInput v-model="state.basicJSON.title" />
+      <span class="text-rose-500" v-if="v$.basicJSON.title.required.$invalid">{{
+        v$.basicJSON.title.required.$message
+      }}</span>
+      <span
+        class="text-rose-500"
+        v-else-if="v$.basicJSON.title.minLength.$invalid"
+        >{{ v$.basicJSON.title.minLength.$message }}</span
+      >
+      <span
+        class="text-rose-500"
+        v-else-if="v$.basicJSON.title.sameAs.$invalid"
+        >{{ v$.basicJSON.title.sameAs.$message }}</span
+      >
+    </UFormGroup>
+    <UFormGroup label="描述">
+      <UInput v-model="state.basicJSON.description" />
+      <span
+        class="text-rose-500"
+        v-if="v$.basicJSON.description.required.$invalid"
+        >{{ v$.basicJSON.description.required.$message }}</span
+      >
+      <span
+        class="text-rose-500"
+        v-else-if="v$.basicJSON.description.sameAs.$invalid"
+        >{{ v$.basicJSON.description.sameAs.$message }}</span
+      >
+    </UFormGroup>
+    <UFormGroup label="數量">
+      <UInput v-model="state.prototypeJSON.productQuantity" />
+      <span
+        class="text-rose-500"
+        v-if="v$.prototypeJSON.productQuantity.required.$invalid"
+        >{{ v$.prototypeJSON.productQuantity.required.$message }}</span
+      >
+      <span
+        class="text-rose-500"
+        v-else-if="v$.prototypeJSON.productQuantity.integer.$invalid"
+        >{{ v$.prototypeJSON.productQuantity.integer.$message }}</span
+      >
+      <span
+        class="text-rose-500"
+        v-else-if="v$.prototypeJSON.productQuantity.between.$invalid"
+        >{{ v$.prototypeJSON.productQuantity.between.$message }}</span
+      >
+    </UFormGroup>
     <h2>state:</h2>
     <pre>{{ state }}</pre>
     <h2>v$:</h2>
