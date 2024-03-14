@@ -10,4 +10,4 @@
 
 1. 使用 `vueuse` 要看一下[這裡](https://nuxt.com/modules/vueuse)，把 `@vueuse/core` 和 `@vueuse/nuxt` 直接裝在 `dependencies`。
 
-2. 使用 [Vuelidate](https://vuelidate-next.netlify.app/) 作為驗證工具(實驗階段)。
+2. 使用 [Vuelidate](https://vuelidate-next.netlify.app/) 作為驗證工具(實驗階段)，一邊進行功能測試、一邊直接安裝在 MySchemaForm。

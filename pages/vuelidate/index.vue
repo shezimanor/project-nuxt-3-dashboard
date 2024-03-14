@@ -9,7 +9,8 @@
         </template>
       </UDashboardNavbar>
       <UDashboardPanelContent>
-        <VuelidateDemo1 />
+        <!-- <VuelidateDemo1 /> -->
+        <VuelidateDemo2 />
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>

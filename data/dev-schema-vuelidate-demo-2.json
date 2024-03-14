@@ -1,0 +1,176 @@
+{
+  "type": "object",
+  "properties": {
+    "basicJSON": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "default": "Empty Title",
+          "ui": {
+            "label": "產品標題",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品標題"
+            }
+          },
+          "rules": {
+            "required": true,
+            "maxLength": 30
+          }
+        },
+        "description": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "label": "產品標題",
+            "widget": "textarea",
+            "widgetConfig": {
+              "placeholder": "請輸入產品描述(非必填)"
+            }
+          },
+          "rules": {
+            "maxLength": 300
+          }
+        }
+      },
+      "ui": {
+        "label": "基本資訊"
+      }
+    },
+    "prototypeJSON": {
+      "type": "object",
+      "properties": {
+        "others": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "default": "等級一",
+                "ui": {
+                  "label": "等級",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入等級"
+                  }
+                },
+                "rules": {
+                  "required": true,
+                  "maxLength": 10
+                }
+              },
+              "comment": {
+                "type": "string",
+                "default": "良好",
+                "ui": {
+                  "label": "評價",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入評價"
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              },
+              "manyThings": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "default": "你的名字",
+                      "ui": {
+                        "label": "名字",
+                        "widget": "input",
+                        "widgetConfig": {
+                          "placeholder": "請輸入名字"
+                        }
+                      },
+                      "rules": {
+                        "required": true
+                      }
+                    },
+                    "job": {
+                      "type": "string",
+                      "default": "工程師",
+                      "ui": {
+                        "label": "工作",
+                        "widget": "input",
+                        "widgetConfig": {
+                          "placeholder": "請輸入工作"
+                        }
+                      },
+                      "rules": {
+                        "required": true
+                      }
+                    }
+                  }
+                },
+                "ui": {
+                  "label": "陣列下層又是陣列",
+                  "widget": "array-tabs"
+                },
+                "rules": {}
+              }
+            }
+          },
+          "ui": {
+            "label": "其他說明",
+            "widget": "array-tabs"
+          },
+          "rules": {}
+        },
+        "colors": {
+          "type": "array",
+          "default": ["紅"],
+          "ui": {
+            "label": "顏色",
+            "widget": "multiple-select",
+            "widgetConfig": {
+              "options": ["紅", "橙", "黃", "綠", "藍"],
+              "placeholder": "請輸入顏色",
+              "searchablePlaceholder": "搜尋顏色"
+            }
+          },
+          "rules": {}
+        },
+        "productPrice": {
+          "type": "number",
+          "default": 100,
+          "ui": {
+            "label": "產品價格",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品價格"
+            }
+          },
+          "rules": {
+            "required": true,
+            "maxValue": 100
+          }
+        },
+        "productQuantity": {
+          "type": "number",
+          "ui": {
+            "label": "產品數量",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品數量"
+            }
+          },
+          "rules": {
+            "required": true,
+            "miniValue": 1
+          }
+        }
+      },
+      "ui": {
+        "label": "核心資料"
+      }
+    }
+  }
+}

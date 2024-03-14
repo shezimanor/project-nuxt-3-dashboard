@@ -100,8 +100,11 @@ export default function traverseSchemaToRules(obj: Record<string, any>): any {
   else if (obj.type === 'array' && obj.items) {
     // 如果 items 底下是 object 類型，則遞歸調用 traverseSchemaToRules 函數
     if (obj.items.type === 'object') {
-      // ...obj.rules 不用管 rules 是 undefined 或空物件
-      return { ...obj.rules, $eachItem: traverseSchemaToRules(obj.items) };
+      // ...obj.rules 不用管 rules 是 undefined 或空物件 traverseSchemaToRules(obj.items)
+      return {
+        ...obj.rules,
+        $each: helpers.forEach(traverseSchemaToRules(obj.items))
+      };
     }
   }
   // 如果不是 object 或 array 結構類型，則返回 default 值
