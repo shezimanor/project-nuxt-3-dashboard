@@ -1,4 +1,44 @@
+import {
+  decimal,
+  email,
+  integer,
+  maxLength,
+  maxValue,
+  minLength,
+  minValue,
+  required,
+  sameAs,
+  url
+} from '@vuelidate/validators';
 import isEmptyObject from './isEmptyObject';
+
+// 定義一個映射，將規則名稱映射到對應的驗證器函數
+const vuelidateValidatorsMap: Record<string, any> = {
+  email,
+  decimal,
+  integer,
+  maxLength,
+  maxValue,
+  minLength,
+  minValue,
+  required,
+  sameAs,
+  url
+};
+
+function isNoParamValidator(ruleKey: string) {
+  switch (ruleKey) {
+    case 'email':
+    case 'decimal':
+    case 'integer':
+    case 'required':
+    case 'url':
+      return true;
+    default:
+      return false;
+  }
+}
+
 /**
  * 遞迴整個 shcema 物件，並輸出 rules 結構
  *
@@ -29,7 +69,16 @@ export default function traverseSchemaToRules(obj: Record<string, any>): any {
   // 如果不是 object 或 array 結構類型，則返回 default 值
   else {
     return obj.hasOwnProperty('rules') && !isEmptyObject(obj.rules)
-      ? obj.rules
+      ? Object.keys(obj.rules).reduce((acc: Record<string, any>, ruleKey) => {
+          // 檢查規則是否在 vuelidateValidatorsMap 中
+          const validatorFn = vuelidateValidatorsMap[ruleKey];
+          if (validatorFn) {
+            acc[ruleKey] = isNoParamValidator(ruleKey)
+              ? validatorFn
+              : validatorFn(obj.rules[ruleKey]);
+          }
+          return acc;
+        }, {})
       : {};
   }
 }
