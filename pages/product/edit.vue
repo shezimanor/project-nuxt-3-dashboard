@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import schemaJSON from '~/data/dev-schema.json';
+import schemaJSON from '~/data/dev-schema-vuelidate-simple.json';
 // schema在最上層就將他加入響應式系統
-const schema = reactive(JSON.parse(JSON.stringify(schemaJSON)));
-// 已經拿到 schema
-console.log('schema', schema);
+const rawSchema = JSON.parse(JSON.stringify(schemaJSON));
+const schema = reactive(rawSchema);
 </script>
 
 <template>
@@ -15,7 +14,7 @@ console.log('schema', schema);
         </template>
       </UDashboardNavbar>
       <UDashboardPanelContent>
-        <MySchemaForm :schema="schema" />
+        <MySchemaForm :raw-schema="rawSchema" :schema="schema" />
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>

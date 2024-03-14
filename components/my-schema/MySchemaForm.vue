@@ -4,6 +4,8 @@ import getLastParent from '~/utils/getLastParent';
 import isEmptyObject from '~/utils/isEmptyObject';
 import traverseSchemaToRules from '~/utils/traverseSchemaToRules';
 import traverseSchemaToState from '~/utils/traverseSchemaToState';
+// 驗證器
+import { useVuelidate } from '@vuelidate/core';
 
 const mySchemaStore = useMySchemaStore();
 
@@ -12,13 +14,24 @@ const props = defineProps({
   schema: {
     type: Object,
     required: true
+  },
+  rawSchema: {
+    type: Object,
+    required: true
   }
 });
 
 console.log('testMode:', mySchemaStore.state.testMode);
 
 const state = reactive(traverseSchemaToState(props.schema));
-const rules = reactive(traverseSchemaToRules(props.schema));
+const rules = traverseSchemaToRules(props.rawSchema);
+const v$ = useVuelidate(rules, state, {
+  // autoDirty: true: 讓驗證器追蹤 state 的變化，不需要使用 v$
+  $autoDirty: true,
+  // $lazy: true: 初始化時不會觸發驗證
+  $lazy: true
+});
+
 const testModeProxy = ref(mySchemaStore.state.testMode);
 // path 不需要響應式: 讓子元件可以接自己的路徑陣列，方便後續抓值
 const paths: any[] = [];
