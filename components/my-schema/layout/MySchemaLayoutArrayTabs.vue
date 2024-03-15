@@ -4,7 +4,6 @@ import { useMySchemaStore } from '~/stores/mySchemaStore';
 import deepClone from '~/utils/deepClone';
 import traverseSchemaToState from '~/utils/traverseSchemaToState';
 // 使用 uuid 才能確保每次都是新的 key
-import { v4 as uuid } from 'uuid';
 
 const mySchemaStore = useMySchemaStore();
 
@@ -61,13 +60,13 @@ function removeAllItems() {
     <h3 class="text-lime-500 font-bold text-xl mb-1">
       {{ schema.ui.label ? schema.ui.label : 'Layout Arrayt(No Label)' }}
     </h3>
-    <UPageCard
+    <!-- <UPageCard
       v-show="mySchemaStore.state.testMode"
       title="Form Layout Array Tabs"
       description="陣列排版元件(Tabs)：底下渲染各個 items"
       icon="i-heroicons-rectangle-stack-20-solid"
       :ui="{ icon: { wrapper: '', base: 'text-lime-500' } }"
-    />
+    /> -->
     <UCard v-show="mySchemaStore.state.testMode" :ui="{ base: 'my-2' }">
       <ul class="w-full flex items-stretch gap-x-4">
         <li class="flex flex-col gap-y-2 grow">

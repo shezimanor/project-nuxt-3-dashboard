@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import schemaJSON from '~/data/dev-schema-vuelidate-demo-2.json';
+import schemaJSON from '~/data/dev-schema-vuelidate-items-not-object.json';
 // schema在最上層就將他加入響應式系統
 const rawSchema = JSON.parse(JSON.stringify(schemaJSON));
 const schema = reactive(rawSchema);

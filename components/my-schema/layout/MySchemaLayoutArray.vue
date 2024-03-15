@@ -52,15 +52,15 @@ function removeAllItems() {
 <template>
   <div class="flex flex-col">
     <h3 class="text-lime-500 font-bold text-xl mb-1">
-      {{ schema.ui.label ? schema.ui.label : 'Layout Arrayt(No Label)' }}
+      {{ schema.ui.label ? schema.ui.label : 'Layout Array(No Label)' }}
     </h3>
-    <UPageCard
+    <!-- <UPageCard
       v-show="mySchemaStore.state.testMode"
       title="Form Layout Array"
       description="陣列排版元件：底下渲染各個 items"
       icon="i-heroicons-rectangle-stack-20-solid"
       :ui="{ icon: { wrapper: '', base: 'text-lime-500' } }"
-    />
+    /> -->
     <UCard v-show="mySchemaStore.state.testMode" :ui="{ base: 'my-2' }">
       <ul class="w-full flex items-stretch gap-x-4">
         <li class="flex flex-col gap-y-2 grow">

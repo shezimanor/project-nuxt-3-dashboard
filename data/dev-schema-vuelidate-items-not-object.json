@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "prototypeJSON": {
+      "type": "object",
+      "properties": {
+        "urls": {
+          "type": "array",
+          "default": [
+            "https://www.google.com",
+            "https://www.facebook.com",
+            "https://www.yahoo.com"
+          ],
+          "items": {
+            "type": "string",
+            "default": "https://www.test.com",
+            "ui": {
+              "label": "網址",
+              "widget": "input",
+              "widgetConfig": {
+                "placeholder": "請輸入網址"
+              }
+            },
+            "rules": {
+              "required": true,
+              "url": true
+            }
+          },
+          "ui": {
+            "label": "多個網址"
+          },
+          "rules": {
+            "minLength": 3
+          }
+        }
+      },
+      "ui": {
+        "label": "核心資料"
+      }
+    }
+  }
+}

@@ -32,9 +32,13 @@ const vuelidateValidatorsMap: Record<string, any> = {
   decimal: helpers.withMessage('必須為數字', decimal),
   email: helpers.withMessage('email 格式錯誤', email),
   integer: helpers.withMessage('必須為整數', integer),
+  // array, string 都可以檢查
   maxLength: (params: number) =>
     helpers.withMessage(
-      ({ $params }) => `文字長度超過${$params.max}個字`,
+      ({ $params, $model }) =>
+        typeof $model === 'string'
+          ? `文字長度超過${$params.max}個字`
+          : `數量超過${$params.max}個`,
       maxLength(params)
     ),
   maxValue: (params: number) =>
@@ -42,9 +46,13 @@ const vuelidateValidatorsMap: Record<string, any> = {
       ({ $params }) => `數值超過${$params.max}`,
       maxValue(params)
     ),
+  // array, string 都可以檢查
   minLength: (params: number) =>
     helpers.withMessage(
-      ({ $params }) => `文字長度未達${$params.min}個字`,
+      ({ $params, $model }) =>
+        typeof $model === 'string'
+          ? `文字長度未達${$params.min}個字`
+          : `數量未達${$params.min}個`,
       minLength(params)
     ),
   minValue: (params: number) =>
@@ -77,6 +85,22 @@ function isNoParamValidator(ruleKey: string) {
   }
 }
 
+function getRulesFn(rulesObj: Record<string, any>): any {
+  if (!rulesObj || isEmptyObject(rulesObj)) return {};
+  return Object.keys(rulesObj).reduce((acc: Record<string, any>, ruleKey) => {
+    // 檢查規則是否在 vuelidateValidatorsMap 中
+    const validatorFn = vuelidateValidatorsMap[ruleKey];
+    if (validatorFn) {
+      acc[ruleKey] = isNoParamValidator(ruleKey)
+        ? validatorFn
+        : ruleKey === 'between'
+        ? validatorFn(rulesObj[ruleKey][0], rulesObj[ruleKey][1])
+        : validatorFn(rulesObj[ruleKey]);
+    }
+    return acc;
+  }, {});
+}
+
 /**
  * 遞迴整個 shcema 物件，並輸出 rules 結構
  *
@@ -99,29 +123,16 @@ export default function traverseSchemaToRules(obj: Record<string, any>): any {
   // 處理 array 類型
   else if (obj.type === 'array' && obj.items) {
     // 如果 items 底下是 object 類型，則遞歸調用 traverseSchemaToRules 函數
-    if (obj.items.type === 'object') {
-      // ...obj.rules 不用管 rules 是 undefined 或空物件 traverseSchemaToRules(obj.items)
-      return {
-        ...obj.rules,
-        $each: helpers.forEach(traverseSchemaToRules(obj.items))
-      };
-    }
+    // ...obj.rules 不用管 rules 是 undefined 或空物件 traverseSchemaToRules(obj.items)
+    return {
+      ...getRulesFn(obj.rules),
+      $each: helpers.forEach(traverseSchemaToRules(obj.items))
+    };
   }
   // 如果不是 object 或 array 結構類型，則返回 default 值
   else {
     return obj.hasOwnProperty('rules') && !isEmptyObject(obj.rules)
-      ? Object.keys(obj.rules).reduce((acc: Record<string, any>, ruleKey) => {
-          // 檢查規則是否在 vuelidateValidatorsMap 中
-          const validatorFn = vuelidateValidatorsMap[ruleKey];
-          if (validatorFn) {
-            acc[ruleKey] = isNoParamValidator(ruleKey)
-              ? validatorFn
-              : ruleKey === 'between'
-              ? validatorFn(obj.rules[ruleKey][0], obj.rules[ruleKey][1])
-              : validatorFn(obj.rules[ruleKey]);
-          }
-          return acc;
-        }, {})
+      ? getRulesFn(obj.rules)
       : {};
   }
 }

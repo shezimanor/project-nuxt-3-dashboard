@@ -18,16 +18,23 @@ const props = defineProps({
   }
 });
 
+console.log('ooo', props.schema, props.state, props.paths);
+
 const filteredProperties = computed(() => {
   // 過濾掉 ui.hidden 為 true 的 properties
   const { properties } = props.schema;
-  return Object.keys(properties).reduce((result: any, currentKey: string) => {
-    const currentValue = properties[currentKey];
-    if (!currentValue.ui.hidden) {
-      result[currentKey] = currentValue;
-    }
-    return result;
-  }, {});
+  const a = Object.keys(properties).reduce(
+    (result: any, currentKey: string) => {
+      const currentValue = properties[currentKey];
+      // ui 至少要加 label
+      if (currentValue.ui && !currentValue.ui.hidden) {
+        result[currentKey] = currentValue;
+      }
+      return result;
+    },
+    {}
+  );
+  return a;
 });
 </script>
 
@@ -36,12 +43,12 @@ const filteredProperties = computed(() => {
     <h3 class="text-primary font-bold text-xl mb-1">
       {{ schema.ui ? schema.ui.label : 'Layout Object(No Label)' }}
     </h3>
-    <UPageCard
+    <!-- <UPageCard
       v-show="mySchemaStore.state.testMode"
       title="Form Layout Object"
       description="物件排版元件：底下渲染各個 properties"
       icon="i-heroicons-square-3-stack-3d-20-solid"
-    />
+    /> -->
     <div
       v-for="(property, key) in filteredProperties"
       :key="key"

@@ -53,12 +53,12 @@ function addArrayState(paths: any, newValue: any) {
   const lastKeyIndex = paths.length - 1;
   const lastParent = getLastParent(state, paths, lastKeyIndex);
 
-  // 法一：使用陣列 push 做新增, "陣列"要整個取代才會觸發檢查
-  // const newArray = lastParent[paths[lastKeyIndex]].slice();
-  // newArray.push(newValue);
-  // lastParent[paths[lastKeyIndex]] = newArray;
+  // 法一：使用陣列 push 做新增, "陣列"要整個取代才會觸發 Vuelidate 的 $each 驗證
+  const newArray = lastParent[paths[lastKeyIndex]].slice();
+  newArray.push(newValue);
+  lastParent[paths[lastKeyIndex]] = newArray;
   // 法二：直接 push
-  lastParent[paths[lastKeyIndex]].push(newValue);
+  // lastParent[paths[lastKeyIndex]].push(newValue);
 }
 
 // remove array state
@@ -102,6 +102,7 @@ provide('rootState', {
   clearArrayState
 });
 
+console.log('schema:', props.schema);
 console.log('state:', state);
 console.log('rules:', rules);
 </script>
