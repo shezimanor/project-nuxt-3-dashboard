@@ -135,11 +135,7 @@
           },
           "rules": {
             "required": true,
-            "maxLength": 3,
-            "$eachPrimitiveItem": {
-              "required": true,
-              "string": true
-            }
+            "maxLength": 3
           }
         },
         "productName": {
@@ -169,7 +165,7 @@
           },
           "rules": {
             "required": true,
-            "minimum": 1
+            "minValue": 1
           }
         },
         "productQuantity": {
@@ -183,21 +179,102 @@
           },
           "rules": {
             "required": true,
-            "minimum": 1
+            "minValue": 30
+          }
+        },
+        "isOnSale": {
+          "type": "boolean",
+          "default": true,
+          "ui": {
+            "label": "上架狀態",
+            "widget": "toggle",
+            "widgetConfig": {}
           }
         },
         "productOrigin": {
-          "type": "string",
-          "default": "台北市",
+          "type": "array",
+          "default": ["台北市"],
           "ui": {
             "label": "產品產地",
-            "widget": "input",
+            "widget": "multiple-select",
             "widgetConfig": {
-              "placeholder": "請選擇產地"
+              "options": [
+                "台北市",
+                "桃園市",
+                "新竹市",
+                "台中市",
+                "新北市",
+                "高雄市"
+              ],
+              "placeholder": "請選擇產地",
+              "searchablePlaceholder": "搜尋"
             }
           },
           "rules": {
             "required": true
+          }
+        },
+        "oris": {
+          "type": "array",
+          "default": ["台北市"],
+          "items": {
+            "type": "string",
+            "default": "台北市",
+            "ui": {
+              "label": "產品產地",
+              "widget": "select",
+              "widgetConfig": {
+                "options": [
+                  "台北市",
+                  "桃園市",
+                  "新竹市",
+                  "台中市",
+                  "新北市",
+                  "高雄市"
+                ],
+                "placeholder": "請選擇產地",
+                "searchablePlaceholder": "搜尋"
+              }
+            },
+            "rules": {
+              "required": true,
+              "url": true
+            }
+          },
+          "ui": {
+            "label": "產地們"
+          },
+          "rules": {
+            "minLength": 3
+          }
+        },
+        "urls": {
+          "type": "array",
+          "default": [
+            "https://www.google.com",
+            "https://www.facebook.com",
+            "https://www.yahoo.com"
+          ],
+          "items": {
+            "type": "string",
+            "default": "https://www.test.com",
+            "ui": {
+              "label": "網址",
+              "widget": "input",
+              "widgetConfig": {
+                "placeholder": "請輸入網址"
+              }
+            },
+            "rules": {
+              "required": true,
+              "url": true
+            }
+          },
+          "ui": {
+            "label": "多個網址"
+          },
+          "rules": {
+            "minLength": 3
           }
         }
       },
@@ -205,5 +282,8 @@
         "label": "核心資料"
       }
     }
+  },
+  "ui": {
+    "label": "表單容器"
   }
 }

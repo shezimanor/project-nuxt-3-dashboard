@@ -1,9 +1,5 @@
 <script lang="ts" setup>
 import { useMySchemaStore } from '~/stores/mySchemaStore';
-import getLastParent from '~/utils/getLastParent';
-import isEmptyObject from '~/utils/isEmptyObject';
-import traverseSchemaToRules from '~/utils/traverseSchemaToRules';
-import traverseSchemaToState from '~/utils/traverseSchemaToState';
 // 驗證器
 import { useVuelidate } from '@vuelidate/core';
 
@@ -39,7 +35,7 @@ const paths: any[] = [];
 // update state
 function updateState(paths: any, newValue: any) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-  // 當遇到陣列包物件的時候 path item會是 "[0]"
+  // 當遇到陣列的時候 path item會是 `'i'`, i === 整數
   const lastKeyIndex = paths.length - 1;
   const lastParent = getLastParent(state, paths, lastKeyIndex);
 
@@ -54,7 +50,7 @@ function addArrayState(paths: any, newValue: any) {
   const lastParent = getLastParent(state, paths, lastKeyIndex);
 
   // 法一：使用陣列 push 做新增, "陣列"要整個取代才會觸發 Vuelidate 的 $each 驗證
-  const newArray = lastParent[paths[lastKeyIndex]].slice();
+  const newArray = deepClone(lastParent[paths[lastKeyIndex]]);
   newArray.push(newValue);
   lastParent[paths[lastKeyIndex]] = newArray;
   // 法二：直接 push

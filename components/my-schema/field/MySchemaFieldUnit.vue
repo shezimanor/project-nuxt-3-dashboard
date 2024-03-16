@@ -2,6 +2,7 @@
 import {
   MySchemaInput,
   MySchemaMultipleSelect,
+  MySchemaSelect,
   MySchemaNumber,
   MySchemaTextarea,
   MySchemaToggle
@@ -44,6 +45,8 @@ const fieldComponent = computed(() => {
       return MySchemaNumber;
     case 'toggle':
       return MySchemaToggle;
+    case 'select':
+      return MySchemaSelect;
     case 'multiple-select':
       return MySchemaMultipleSelect;
     case 'textarea':

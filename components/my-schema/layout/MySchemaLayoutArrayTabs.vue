@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 // 有別於物件排版元件，這個「陣列排版元件」就會直接對 rootState 進行操作
 import { useMySchemaStore } from '~/stores/mySchemaStore';
-import deepClone from '~/utils/deepClone';
-import traverseSchemaToState from '~/utils/traverseSchemaToState';
 // 使用 uuid 才能確保每次都是新的 key
 
 const mySchemaStore = useMySchemaStore();
@@ -14,7 +12,7 @@ const props = defineProps({
     default: null
   },
   state: {
-    type: Object,
+    type: Array,
     required: true
   },
   paths: {
@@ -26,7 +24,7 @@ const props = defineProps({
 // tabs model
 const selected = ref(0);
 
-// 注入依賴: 更新用 action: updateState
+// 注入依賴: 處理陣列 action
 const { addArrayState, removeArrayState, clearArrayState } = inject(
   'rootState'
 ) as {

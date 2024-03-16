@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 // 有別於物件排版元件，這個「陣列排版元件」就會直接對 rootState 進行操作
 import { useMySchemaStore } from '~/stores/mySchemaStore';
-import deepClone from '~/utils/deepClone';
 import traverseSchemaToState from '~/utils/traverseSchemaToState';
 // 使用 uuid 才能確保每次都是新的 key
 import { v4 as uuid } from 'uuid';
+import getUuids from '~/utils/getUuids';
+import index from '~/pages/index.vue';
 
 const mySchemaStore = useMySchemaStore();
 
@@ -15,7 +16,7 @@ const props = defineProps({
     default: null
   },
   state: {
-    type: Object,
+    type: Array,
     required: true
   },
   paths: {
@@ -24,7 +25,7 @@ const props = defineProps({
   }
 });
 
-// 注入依賴: 更新用 action: updateState
+// 注入依賴: 處理陣列 action
 const { addArrayState, removeArrayState, clearArrayState } = inject(
   'rootState'
 ) as {
@@ -34,18 +35,27 @@ const { addArrayState, removeArrayState, clearArrayState } = inject(
 // 取得項目空殼(用於新增，每次使用都要用深層拷貝)，不要直接把當下這層 schema 傳進去，一定要傳 `schema.items`
 const itemModel = traverseSchemaToState(props.schema.items);
 
+// key id
+const uuidList = ref(getUuids(props.state.length));
+
 // 新增項目
 function addItem() {
   // deepClone(itemModel) 拷貝空殼物件
   addArrayState(props.paths, deepClone(itemModel));
+  // 同步id陣列
+  uuidList.value.push(uuid());
 }
 // 刪除項目
 function removeItem(index: number) {
   removeArrayState(props.paths, index);
+  // 同步id陣列
+  uuidList.value.splice(index, 1);
 }
 // 刪除所有項目
 function removeAllItems() {
   clearArrayState(props.paths);
+  // 同步id陣列
+  uuidList.value = [];
 }
 </script>
 
@@ -98,7 +108,7 @@ function removeAllItems() {
       v-for="(item, index) in state"
       class="flex flex-col p-4 pr-0 pb-4"
       :class="{ 'gap-y-4': mySchemaStore.state.testMode }"
-      :key="uuid()"
+      :key="uuidList[index]"
     >
       <UBadge
         v-show="mySchemaStore.state.testMode"
@@ -121,7 +131,7 @@ function removeAllItems() {
       </UButtonGroup>
       <MySchemaFormItem
         :schema="schema.items"
-        :state="state[index]"
+        :state="state[index] as string | number | boolean | undefined | Record<string, any>"
         :paths="paths.concat(`${index}`)"
       />
     </div>

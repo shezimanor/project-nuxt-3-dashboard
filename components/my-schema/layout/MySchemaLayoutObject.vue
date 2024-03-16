@@ -18,10 +18,9 @@ const props = defineProps({
   }
 });
 
-console.log('ooo', props.schema, props.state, props.paths);
-
 const filteredProperties = computed(() => {
   // 過濾掉 ui.hidden 為 true 的 properties
+  // TODO: hidden 會被 dependencies 影響
   const { properties } = props.schema;
   const a = Object.keys(properties).reduce(
     (result: any, currentKey: string) => {
