@@ -34,7 +34,7 @@ const isObjectLayout = computed(() => {
 /**
  * 用來判斷要使用哪個動態表單元件(排版型、輸入型)
  */
-const MySchemaDynamicFormComponent = computed(() => {
+const mySchemaDynamicFormComponent = computed(() => {
   return isObjectLayout.value
     ? 'MySchemaLayoutObject'
     : isArrayLayout.value
@@ -43,33 +43,29 @@ const MySchemaDynamicFormComponent = computed(() => {
       : 'MySchemaLayoutArray'
     : 'MySchemaFieldUnit';
 });
-
-onMounted(() => {
-  // console.log('MySchemaFormItem props.schema:', props.schema);
-});
 </script>
 
 <template>
   <div>
     <!-- object -->
     <MySchemaLayoutObject
-      v-if="MySchemaDynamicFormComponent === 'MySchemaLayoutObject'"
+      v-if="mySchemaDynamicFormComponent === 'MySchemaLayoutObject'"
       :schema="schema"
       :state="state as Record<string, any>"
       :paths="paths"
     />
     <!-- array: array basic -->
     <MySchemaLayoutArray
-      v-else-if="MySchemaDynamicFormComponent === 'MySchemaLayoutArray'"
+      v-else-if="mySchemaDynamicFormComponent === 'MySchemaLayoutArray'"
       :schema="schema"
-      :state="state as Record<string, any>"
+      :state="state as unknown[]"
       :paths="paths"
     />
     <!-- array: array tabs -->
     <MySchemaLayoutArrayTabs
-      v-else-if="MySchemaDynamicFormComponent === 'MySchemaLayoutArrayTabs'"
+      v-else-if="mySchemaDynamicFormComponent === 'MySchemaLayoutArrayTabs'"
       :schema="schema"
-      :state="state as Record<string, any>"
+      :state="state as unknown[]"
       :paths="paths"
     />
     <!-- 基礎型別 -->
