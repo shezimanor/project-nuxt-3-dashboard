@@ -61,7 +61,6 @@ const vuelidateValidatorsMap: Record<string, any> = {
       minValue(params)
     ),
   required: helpers.withMessage('此欄位必填', required),
-  // TODO: sameAs 這個規則有問題，目前無法抓取到對應的欄位值
   sameAs: (propertyName: string) =>
     helpers.withMessage(
       '值必須相同',
@@ -124,10 +123,25 @@ export default function traverseSchemaToRules(obj: Record<string, any>): any {
   else if (obj.type === 'array' && obj.items) {
     // 如果 items 底下是 object 類型，則遞歸調用 traverseSchemaToRules 函數
     // ...obj.rules 不用管 rules 是 undefined 或空物件 traverseSchemaToRules(obj.items)
-    return {
-      ...getRulesFn(obj.rules),
-      $each: helpers.forEach(traverseSchemaToRules(obj.items))
-    };
+    if (obj.items.type === 'object') {
+      return {
+        ...getRulesFn(obj.rules),
+        $each: helpers.forEach(traverseSchemaToRules(obj.items))
+      };
+    } else if (
+      obj.items.hasOwnProperty('rules') &&
+      !isEmptyObject(obj.items.rules)
+    ) {
+      // items 如果不是接受 object 類型，驗證器會沒有反應
+      return {
+        ...getRulesFn(obj.rules),
+        $each: helpers.forEach(getRulesFn(obj.items.rules))
+      };
+    } else {
+      return {
+        ...getRulesFn(obj.rules)
+      };
+    }
   }
   // 如果不是 object 或 array 結構類型，則返回 default 值
   else {

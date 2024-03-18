@@ -248,26 +248,27 @@
             "minLength": 3
           }
         },
-        "urls": {
+        "newUrls": {
           "type": "array",
-          "default": [
-            "https://www.google.com",
-            "https://www.facebook.com",
-            "https://www.yahoo.com"
-          ],
+          "default": [{ "url": "https://www.google.com" }],
           "items": {
-            "type": "string",
-            "default": "https://www.test.com",
-            "ui": {
-              "label": "網址",
-              "widget": "input",
-              "widgetConfig": {
-                "placeholder": "請輸入網址"
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "default": "https://www.google.com",
+                "ui": {
+                  "label": "網址",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入網址"
+                  }
+                },
+                "rules": {
+                  "required": true,
+                  "url": true
+                }
               }
-            },
-            "rules": {
-              "required": true,
-              "url": true
             }
           },
           "ui": {
