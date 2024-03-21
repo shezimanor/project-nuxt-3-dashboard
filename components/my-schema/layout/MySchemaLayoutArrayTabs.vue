@@ -2,6 +2,8 @@
 // 有別於物件排版元件，這個「陣列排版元件」就會直接對 rootState 進行操作
 import { useMySchemaStore } from '~/stores/mySchemaStore';
 // 使用 uuid 才能確保每次都是新的 key
+import { v4 as uuid } from 'uuid';
+import getUuids from '~/utils/getUuids';
 
 const mySchemaStore = useMySchemaStore();
 
@@ -34,29 +36,43 @@ const { addArrayState, removeArrayState, clearArrayState } = inject(
 // 取得項目空殼(用於新增，每次使用都要用深層拷貝)，不要直接把當下這層 schema 傳進去，一定要傳 `schema.items`
 const itemModel = traverseSchemaToState(props.schema.items);
 
+// key id
+const uuidList = ref(getUuids(props.state.length));
+
 // 新增項目
-function addItem() {
+async function addItem() {
   // deepClone(itemModel) 拷貝空殼物件
   addArrayState(props.paths, deepClone(itemModel));
   // highlight tab
+  await nextTick();
   if (props.state.length === 1) selected.value = 0;
+  else selected.value = props.state.length - 1;
+  // 同步id陣列
+  uuidList.value.push(uuid());
 }
 // 刪除項目
-function removeItem(index: number) {
+async function removeItem(index: number) {
   removeArrayState(props.paths, index);
+  await nextTick();
   if (props.state.length === 0) selected.value = 0;
   else selected.value = index - 1;
+  // 同步id陣列
+  uuidList.value.splice(index, 1);
 }
 // 刪除所有項目
-function removeAllItems() {
+async function removeAllItems() {
   clearArrayState(props.paths);
+  await nextTick();
+  selected.value = 0;
+  // 同步id陣列
+  uuidList.value = [];
 }
 </script>
 
 <template>
   <div class="flex flex-col">
     <h3 class="text-lime-500 font-bold text-xl mb-1">
-      {{ schema.ui.label ? schema.ui.label : 'Layout Arrayt(No Label)' }}
+      {{ schema.ui.label ? schema.ui.label : 'Layout Array(No Label)' }}
     </h3>
     <!-- <UPageCard
       v-show="mySchemaStore.state.testMode"
@@ -107,10 +123,9 @@ function removeAllItems() {
       v-model="selected"
     >
       <template #default="{ item, index, selected }">
-        <div
-          class="w-32 flex items-center justify-center gap-2 relative truncate"
-        >
-          <span class="truncate">Item {{ index + 1 }}</span>
+        <div class="w-32 flex items-center justify-center gap-2 relative">
+          <span v-if="state.length <= 10">項目 {{ index + 1 }}</span>
+          <span v-else> {{ index + 1 }}</span>
         </div>
       </template>
       <template #item="{ item, index }">
@@ -134,6 +149,7 @@ function removeAllItems() {
           />
         </UButtonGroup>
         <MySchemaFormItem
+          :key="uuidList[index]"
           :schema="schema.items"
           :state="item"
           :paths="paths.concat(`${index}`)"
