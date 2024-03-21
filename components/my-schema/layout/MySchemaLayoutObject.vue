@@ -39,8 +39,11 @@ const filteredProperties = computed(() => {
 
 <template>
   <div class="flex flex-col">
-    <h3 class="text-primary font-bold text-xl mb-1">
-      {{ schema.ui ? schema.ui.label : 'Layout Object(No Label)' }}
+    <h3
+      class="text-primary font-bold text-xl mb-1"
+      v-show="schema.ui && schema.ui.label"
+    >
+      {{ schema?.ui?.label }}
     </h3>
     <!-- <UPageCard
       v-show="mySchemaStore.state.testMode"

@@ -23,6 +23,16 @@ const { rootState, updateState } = inject('rootState') as {
   [key: string]: any;
 };
 
+// 元件設定
+const defaultConfig = ref({
+  placeholder: '請輸入...',
+  disabled: false
+});
+const mergedConfig = computed(() => {
+  // target 物件會更新(first params)
+  return Object.assign(defaultConfig.value, props.schema.ui.widgetConfig);
+});
+
 // modelValue 更新後，
 watch(modelValue, (newValue) => {
   updateState(props.paths, newValue);
@@ -31,7 +41,11 @@ watch(modelValue, (newValue) => {
 
 <template>
   <UFormGroup :label="schema.ui.label">
-    <UInput v-model="modelValue" />
+    <UInput
+      v-model="modelValue"
+      :placeholder="mergedConfig.placeholder"
+      :disabled="mergedConfig.disabled"
+    />
   </UFormGroup>
 </template>
 

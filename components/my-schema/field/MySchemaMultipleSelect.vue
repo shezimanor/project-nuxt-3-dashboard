@@ -29,7 +29,9 @@ const defaultConfig = ref({
   placeholder: 'Select...',
   disabled: false,
   searchable: true,
-  searchablePlaceholder: 'Search...'
+  searchablePlaceholder: 'Search...',
+  valueAttribute: 'value',
+  labelAttribute: 'label'
 });
 const mergedConfig = computed(() => {
   // target 物件會更新(first params)
@@ -48,7 +50,14 @@ watch(modelValue, (newValue) => {
       v-model="modelValue"
       :options="mergedConfig.options"
       :placeholder="mergedConfig.placeholder"
+      :searchable="mergedConfig.searchable"
       :searchable-placeholder="mergedConfig.searchablePlaceholder"
+      :value-attribute="mergedConfig.valueAttribute"
+      :option-attribute="mergedConfig.labelAttribute"
+      :search-attributes="[
+        mergedConfig.valueAttribute,
+        mergedConfig.labelAttribute
+      ]"
       :disabled="mergedConfig.disabled"
       multiple
     >

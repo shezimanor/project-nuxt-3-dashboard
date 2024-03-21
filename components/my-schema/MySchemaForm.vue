@@ -63,7 +63,7 @@ function removeArrayState(paths: any, arrayIndex: number) {
   const lastParent = getLastParent(state, paths, lastKeyIndex);
 
   // 將項目移除
-  const newArray = lastParent[paths[lastKeyIndex]].slice();
+  const newArray = deepClone(lastParent[paths[lastKeyIndex]]);
   newArray.splice(arrayIndex, 1);
   lastParent[paths[lastKeyIndex]] = newArray;
 }
@@ -104,7 +104,7 @@ console.log('v$:', v$);
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col max-w-screen-md">
     <h2>Schema Form</h2>
     <div class="py-4">
       <UFormGroup label="測試模式">

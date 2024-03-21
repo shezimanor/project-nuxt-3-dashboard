@@ -5,7 +5,6 @@ import traverseSchemaToState from '~/utils/traverseSchemaToState';
 // 使用 uuid 才能確保每次都是新的 key
 import { v4 as uuid } from 'uuid';
 import getUuids from '~/utils/getUuids';
-import index from '~/pages/index.vue';
 
 const mySchemaStore = useMySchemaStore();
 
@@ -39,21 +38,24 @@ const itemModel = traverseSchemaToState(props.schema.items);
 const uuidList = ref(getUuids(props.state.length));
 
 // 新增項目
-function addItem() {
+async function addItem() {
   // deepClone(itemModel) 拷貝空殼物件
   addArrayState(props.paths, deepClone(itemModel));
+  await nextTick();
   // 同步id陣列
   uuidList.value.push(uuid());
 }
 // 刪除項目
-function removeItem(index: number) {
+async function removeItem(index: number) {
   removeArrayState(props.paths, index);
+  await nextTick();
   // 同步id陣列
   uuidList.value.splice(index, 1);
 }
 // 刪除所有項目
-function removeAllItems() {
+async function removeAllItems() {
   clearArrayState(props.paths);
+  await nextTick();
   // 同步id陣列
   uuidList.value = [];
 }

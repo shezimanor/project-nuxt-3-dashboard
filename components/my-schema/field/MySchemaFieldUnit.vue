@@ -2,8 +2,9 @@
 import {
   MySchemaInput,
   MySchemaMultipleSelect,
-  MySchemaSelect,
   MySchemaNumber,
+  MySchemaRange,
+  MySchemaSelect,
   MySchemaTextarea,
   MySchemaToggle
 } from '#components';
@@ -41,6 +42,8 @@ const mappingRootState = computed(() => {
 // 需要被渲染的欄位元件：由 schema.type 與 schema.ui.widget 共同決定
 const fieldComponent = computed(() => {
   switch (props.schema.ui.widget) {
+    case 'range':
+      return MySchemaRange;
     case 'number':
       return MySchemaNumber;
     case 'toggle':
@@ -76,11 +79,13 @@ const fieldComponent = computed(() => {
         `RootState: ${mappingRootState}`
       ]"
     />
+    <!-- https://tailwindcss.com/docs/max-width -->
     <component
       :is="fieldComponent"
       :schema="schema"
       :state="state"
       :paths="paths"
+      class="max-w-screen-md"
     />
   </div>
 </template>
