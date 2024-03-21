@@ -1,8 +1,3 @@
-import deepClone from '~/utils/deepClone';
-import getTypeDefault from './getTypeDefault';
-
-// 🔆 請注意這個版本的 items 底下不能接 `type: object` 以外的結構
-
 /**
  * 遞迴整個 shcema 物件，並輸出 state
  *

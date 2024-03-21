@@ -34,12 +34,6 @@ const links = [
     label: '編輯產品(test)',
     icon: 'i-heroicons-cube-transparent-20-solid',
     to: '/product/edit'
-  },
-  {
-    id: 'vuelidate-home',
-    label: '表單驗證實驗室',
-    icon: 'i-heroicons-document-check-20-solid',
-    to: '/vuelidate'
   }
 ];
 </script>

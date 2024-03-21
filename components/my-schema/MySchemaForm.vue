@@ -17,8 +17,6 @@ const props = defineProps({
   }
 });
 
-console.log('testMode:', mySchemaStore.state.testMode);
-
 const state = reactive(traverseSchemaToState(props.schema));
 const rules = traverseSchemaToRules(props.rawSchema);
 const v$ = useVuelidate(rules, state, {
@@ -92,6 +90,7 @@ watch(state, () => {
 // 提供依賴注入 rootState
 provide('rootState', {
   rootState: state,
+  rootValidator: v$,
   updateState,
   addArrayState,
   removeArrayState,
@@ -101,6 +100,7 @@ provide('rootState', {
 console.log('schema:', props.schema);
 console.log('state:', state);
 console.log('rules:', rules);
+console.log('v$:', v$);
 </script>
 
 <template>

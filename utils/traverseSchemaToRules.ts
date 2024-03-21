@@ -14,7 +14,6 @@ import {
   // sameAs, // 這邊自己寫
   url
 } from '@vuelidate/validators';
-import isEmptyObject from './isEmptyObject';
 
 // 定義一個映射，將規則名稱映射到對應的驗證器函數
 // List of helpers: https://vuelidate-next.netlify.app/custom_validators.html#list-of-helpers
