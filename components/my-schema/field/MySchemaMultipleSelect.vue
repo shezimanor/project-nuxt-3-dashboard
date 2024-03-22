@@ -59,6 +59,7 @@ watch(modelValue, (newValue) => {
         mergedConfig.labelAttribute
       ]"
       :disabled="mergedConfig.disabled"
+      class="max-w-full sm:max-w-xs"
       multiple
     >
       <template #empty>沒有選項</template>

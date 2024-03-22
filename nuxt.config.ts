@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
+  css: ['~/assets/css/main.css'],
   extends: ['@nuxt/ui-pro'],
   modules: ['@vueuse/nuxt', '@pinia/nuxt', '@nuxt/ui'],
   colorMode: {

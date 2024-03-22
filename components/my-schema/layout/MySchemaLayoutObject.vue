@@ -54,7 +54,7 @@ const filteredProperties = computed(() => {
     <div
       v-for="(property, key) in filteredProperties"
       :key="key"
-      class="flex flex-col p-4 pr-0 pb-4"
+      class="flex flex-col p-4 border-x border-b border-gray-200 first-of-type:border-t first-of-type:rounded-t-lg last-of-type:rounded-b-lg"
       :class="{ 'gap-y-4': mySchemaStore.state.testMode }"
     >
       <UBadge

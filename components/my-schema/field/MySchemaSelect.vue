@@ -59,6 +59,7 @@ watch(modelValue, (newValue) => {
         mergedConfig.labelAttribute
       ]"
       :disabled="mergedConfig.disabled"
+      class="max-w-full md:max-w-xs"
     >
       <template #empty>沒有選項</template>
     </USelectMenu>

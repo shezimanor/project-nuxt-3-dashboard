@@ -1,0 +1,3 @@
+.layout-obj:not(:first-child) {
+  @apply border-t-0;
+}
