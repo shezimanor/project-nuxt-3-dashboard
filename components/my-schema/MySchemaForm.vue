@@ -40,7 +40,8 @@ function updateState(paths: any, newValue: any) {
   // 更新最後一個鍵的值
   lastParent[paths[lastKeyIndex]] = newValue;
 }
-// add array state
+
+// 新增項目
 function addArrayState(paths: any, newValue: any) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
   // 當遇到陣列包物件的時候 path item會是 "[0]"
@@ -54,8 +55,7 @@ function addArrayState(paths: any, newValue: any) {
   // 法二：直接 push
   // lastParent[paths[lastKeyIndex]].push(newValue);
 }
-
-// remove array state
+// 刪除項目
 function removeArrayState(paths: any, arrayIndex: number) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
   // 當遇到陣列包物件的時候 path item會是 "[0]"
@@ -67,8 +67,20 @@ function removeArrayState(paths: any, arrayIndex: number) {
   newArray.splice(arrayIndex, 1);
   lastParent[paths[lastKeyIndex]] = newArray;
 }
+// 移動項目
+function moveArrayState(paths: any, fromIndex: number, toIndex: number) {
+  // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
+  // 當遇到陣列包物件的時候 path item會是 "[0]"
+  const lastKeyIndex = paths.length - 1;
+  const lastParent = getLastParent(state, paths, lastKeyIndex);
 
-// clear array state
+  // 移動項目
+  const newArray = deepClone(lastParent[paths[lastKeyIndex]]);
+  const [removedItem] = newArray.splice(fromIndex, 1);
+  newArray.splice(toIndex, 0, removedItem);
+  lastParent[paths[lastKeyIndex]] = newArray;
+}
+// 刪除所有項目
 function clearArrayState(paths: any) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
   // 當遇到陣列包物件的時候 path item會是 "[0]"
@@ -94,6 +106,7 @@ provide('rootState', {
   updateState,
   addArrayState,
   removeArrayState,
+  moveArrayState,
   clearArrayState
 });
 

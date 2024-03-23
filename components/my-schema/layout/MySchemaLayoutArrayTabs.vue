@@ -27,11 +27,10 @@ const props = defineProps({
 const selected = ref(0);
 
 // 注入依賴: 處理陣列 action
-const { addArrayState, removeArrayState, clearArrayState } = inject(
-  'rootState'
-) as {
-  [key: string]: any;
-};
+const { addArrayState, removeArrayState, moveArrayState, clearArrayState } =
+  inject('rootState') as {
+    [key: string]: any;
+  };
 
 // 取得項目空殼(用於新增，每次使用都要用深層拷貝)，不要直接把當下這層 schema 傳進去，一定要傳 `schema.items`
 const itemModel = traverseSchemaToState(props.schema.items);
@@ -58,6 +57,16 @@ async function removeItem(index: number) {
   else selected.value = index - 1;
   // 同步id陣列
   uuidList.value.splice(index, 1);
+}
+// 移動項目
+async function moveItem(fromIndex: number, direction: 'prev' | 'next') {
+  const toIndex = direction === 'prev' ? fromIndex - 1 : fromIndex + 1;
+  if (toIndex < 0 || toIndex >= props.state.length) return;
+  moveArrayState(props.paths, fromIndex, toIndex);
+  await nextTick();
+  selected.value = toIndex;
+  // 同步id陣列
+  uuidList.value.splice(toIndex, 0, uuidList.value.splice(fromIndex, 1)[0]);
 }
 // 刪除所有項目
 async function removeAllItems() {
@@ -106,10 +115,16 @@ async function removeAllItems() {
       orientation="horizontal"
       :ui="{ wrapper: { horizontal: 'mb-2 self-start' } }"
     >
-      <UButton label="新增項目" color="lime" @click="addItem" />
+      <UButton
+        label="新增項目"
+        icon="i-heroicons-plus-20-solid"
+        color="lime"
+        @click="addItem"
+      />
       <UButton
         v-if="state.length > 0"
         label="刪除全部"
+        icon="i-heroicons-trash-20-solid"
         color="rose"
         @click="removeAllItems"
       />
@@ -118,7 +133,11 @@ async function removeAllItems() {
       v-if="state.length > 0"
       :items="state"
       :ui="{
-        list: { base: 'max-w-fit' }
+        list: {
+          base: 'max-w-fit',
+          marker: { background: 'bg-zinc-600 dark:bg-zinc-300' },
+          tab: { active: 'text-white dark:text-black' }
+        }
       }"
       v-model="selected"
     >
@@ -136,18 +155,59 @@ async function removeAllItems() {
           :ui="{ base: 'self-start' }"
           >Index: {{ index }}</UBadge
         >
-        <UButtonGroup
-          size="sm"
-          orientation="horizontal"
-          :ui="{ wrapper: { horizontal: 'mb-2 self-start' } }"
-        >
-          <UButton
-            v-if="state.length > 0"
-            label="刪除項目"
-            color="rose"
-            @click="removeItem(Number(index))"
-          />
-        </UButtonGroup>
+        <div class="flex justify-between mb-2">
+          <div class="flex gap-2 self-start">
+            <UTooltip
+              v-show="index > 0"
+              text="往前移動"
+              :popper="{ placement: 'top' }"
+              :ui="{
+                background: 'bg-white dark:bg-blue-700',
+                color: 'text-blue-700 dark:text-white'
+              }"
+            >
+              <UButton
+                color="gray"
+                icon="i-heroicons-arrow-left-20-solid"
+                size="sm"
+                @click="moveItem(Number(index), 'prev')"
+              />
+            </UTooltip>
+            <UTooltip
+              v-show="index < state.length - 1 && state.length > 1"
+              text="往後移動"
+              :popper="{ placement: 'top' }"
+              :ui="{
+                background: 'bg-white dark:bg-blue-700',
+                color: 'text-blue-700 dark:text-white'
+              }"
+            >
+              <UButton
+                color="gray"
+                icon="i-heroicons-arrow-right-20-solid"
+                size="sm"
+                @click="moveItem(Number(index), 'next')"
+              />
+            </UTooltip>
+          </div>
+          <div>
+            <UTooltip
+              text="刪除項目"
+              :popper="{ placement: 'top' }"
+              :ui="{
+                background: 'bg-white dark:bg-rose-700',
+                color: 'text-rose-700 dark:text-white'
+              }"
+            >
+              <UButton
+                color="gray"
+                icon="i-heroicons-x-mark-20-solid"
+                size="sm"
+                @click="removeItem(Number(index))"
+              />
+            </UTooltip>
+          </div>
+        </div>
         <MySchemaFormItem
           :key="uuidList[index]"
           :schema="schema.items"
