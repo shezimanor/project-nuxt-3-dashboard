@@ -1,12 +1,12 @@
 /**
- * 取得最底層的 Parent State
+ * 取得指定層數的 State
  *
  * @param {Object} state
  * @param {Array} paths
- * @param {number} lastKeyIndex
+ * @param {number} lastKeyIndex 最後一個 key 的 index
  * @returns {Object} state
  */
-export default function getLastParent(
+export default function getStateByPaths(
   state: Record<string, any>,
   paths: string[],
   lastKeyIndex: number

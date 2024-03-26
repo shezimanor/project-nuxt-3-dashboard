@@ -35,7 +35,7 @@ function updateState(paths: any, newValue: any) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
   // 當遇到陣列的時候 path item會是 `'i'`, i === 整數
   const lastKeyIndex = paths.length - 1;
-  const lastParent = getLastParent(state, paths, lastKeyIndex);
+  const lastParent = getStateByPaths(state, paths, lastKeyIndex);
 
   // 更新最後一個鍵的值
   lastParent[paths[lastKeyIndex]] = newValue;
@@ -46,7 +46,7 @@ function addArrayState(paths: any, newValue: any) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
   // 當遇到陣列包物件的時候 path item會是 "[0]"
   const lastKeyIndex = paths.length - 1;
-  const lastParent = getLastParent(state, paths, lastKeyIndex);
+  const lastParent = getStateByPaths(state, paths, lastKeyIndex);
 
   // 法一：使用陣列 push 做新增, "陣列"要整個取代才會觸發 Vuelidate 的 $each 驗證
   const newArray = deepClone(lastParent[paths[lastKeyIndex]]);
@@ -60,7 +60,7 @@ function removeArrayState(paths: any, arrayIndex: number) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
   // 當遇到陣列包物件的時候 path item會是 "[0]"
   const lastKeyIndex = paths.length - 1;
-  const lastParent = getLastParent(state, paths, lastKeyIndex);
+  const lastParent = getStateByPaths(state, paths, lastKeyIndex);
 
   // 將項目移除
   const newArray = deepClone(lastParent[paths[lastKeyIndex]]);
@@ -72,7 +72,7 @@ function moveArrayState(paths: any, fromIndex: number, toIndex: number) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
   // 當遇到陣列包物件的時候 path item會是 "[0]"
   const lastKeyIndex = paths.length - 1;
-  const lastParent = getLastParent(state, paths, lastKeyIndex);
+  const lastParent = getStateByPaths(state, paths, lastKeyIndex);
 
   // 移動項目
   const newArray = deepClone(lastParent[paths[lastKeyIndex]]);
@@ -85,7 +85,7 @@ function clearArrayState(paths: any) {
   // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
   // 當遇到陣列包物件的時候 path item會是 "[0]"
   const lastKeyIndex = paths.length - 1;
-  const lastParent = getLastParent(state, paths, lastKeyIndex);
+  const lastParent = getStateByPaths(state, paths, lastKeyIndex);
 
   // 使用陣列清空
   lastParent[paths[lastKeyIndex]] = [];
