@@ -113,7 +113,7 @@ async function removeAllItems() {
     <UButtonGroup
       size="sm"
       orientation="horizontal"
-      :ui="{ wrapper: { horizontal: 'mb-2 self-start' } }"
+      :ui="{ wrapper: { horizontal: 'self-start' } }"
     >
       <UButton
         label="新增項目"
@@ -134,7 +134,7 @@ async function removeAllItems() {
       :items="state"
       :ui="{
         list: {
-          base: 'max-w-fit',
+          base: 'mt-2 max-w-fit',
           marker: { background: 'bg-zinc-600 dark:bg-zinc-300' },
           tab: { active: 'text-white dark:text-black' }
         }
@@ -143,8 +143,8 @@ async function removeAllItems() {
     >
       <template #default="{ item, index, selected }">
         <div class="w-32 flex items-center justify-center gap-2 relative">
-          <span v-if="state.length <= 10">項目 {{ index + 1 }}</span>
-          <span v-else> {{ index + 1 }}</span>
+          <span v-if="state.length < 10">項目 {{ index + 1 }}</span>
+          <span v-else class="truncate"> {{ index + 1 }}</span>
         </div>
       </template>
       <template #item="{ item, index }">
