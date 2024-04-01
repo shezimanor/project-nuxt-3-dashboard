@@ -5,6 +5,10 @@ const props = defineProps({
     type: Object,
     default: null
   },
+  validator: {
+    type: Object,
+    default: null
+  },
   state: {
     type: [Array, String, Number, Boolean],
     default: undefined
@@ -18,8 +22,8 @@ const props = defineProps({
 const modelValue = ref(getTypeDefault(props.schema.type));
 modelValue.value = props.state;
 
-// 注入依賴: rootState(這裡沒用到) 和更新用 action: updateState
-const { rootState, updateState } = inject('rootState') as {
+// 注入依賴
+const { updateState } = inject('rootState') as {
   [key: string]: any;
 };
 
@@ -40,12 +44,21 @@ watch(modelValue, (newValue) => {
 </script>
 
 <template>
+  <!-- <UFormGroup
+    :label="schema.ui.label"
+    :error="
+      validator.$dirty &&
+      validator.$invalid &&
+      validator.$silentErrors[0].$message
+    "
+  > -->
   <UFormGroup :label="schema.ui.label">
     <UInput
       v-model="modelValue"
       :placeholder="mergedConfig.placeholder"
       :disabled="mergedConfig.disabled"
     />
+    <!-- <pre>{{ validator }}</pre> -->
   </UFormGroup>
 </template>
 
