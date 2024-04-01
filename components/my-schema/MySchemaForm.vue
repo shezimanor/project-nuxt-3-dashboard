@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import { useMySchemaStore } from '~/stores/mySchemaStore';
-// 驗證器
-import { useVuelidate } from '@vuelidate/core';
 
 const mySchemaStore = useMySchemaStore();
 
@@ -18,105 +16,34 @@ const props = defineProps({
 });
 
 const state = reactive(traverseSchemaToState(props.schema));
-const rules = traverseSchemaToRules(props.rawSchema);
-const newV = traverseSchemaToStateValidator(props.schema);
-console.log('state:', state);
-console.log('newV:', newV);
-const v$ = useVuelidate(rules, state, {
-  // autoDirty: true: 讓驗證器追蹤 state 的變化，不需要使用 v$
-  $autoDirty: true,
-  // $lazy: true: 初始化時不會觸發驗證
-  $lazy: true
-});
+
+const {
+  stateValidator,
+  updateState,
+  addArrayState,
+  removeArrayState,
+  moveArrayState,
+  clearArrayState
+} = useValidator(state, props.rawSchema, props.schema);
 
 const testModeProxy = ref(mySchemaStore.state.testMode);
 // path 不需要響應式: 讓子元件可以接自己的路徑陣列，方便後續抓值
 const paths: any[] = [];
 
-// update state
-function updateState(paths: any, newValue: any) {
-  // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-  // 當遇到陣列的時候 path item會是 `'i'`, i === 整數
-  const lastKeyIndex = paths.length - 1;
-  const lastParent = getStateByPaths(state, paths, lastKeyIndex);
-
-  // 更新最後一個鍵的值
-  lastParent[paths[lastKeyIndex]] = newValue;
-}
-
-// 新增項目
-function addArrayState(paths: any, newValue: any) {
-  // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-  // 當遇到陣列包物件的時候 path item會是 "[0]"
-  const lastKeyIndex = paths.length - 1;
-  const lastParent = getStateByPaths(state, paths, lastKeyIndex);
-
-  // 法一：使用陣列 push 做新增, "陣列"要整個取代才會觸發 Vuelidate 的 $each 驗證
-  const newArray = deepClone(lastParent[paths[lastKeyIndex]]);
-  newArray.push(newValue);
-  lastParent[paths[lastKeyIndex]] = newArray;
-  // 法二：直接 push
-  // lastParent[paths[lastKeyIndex]].push(newValue);
-}
-// 刪除項目
-function removeArrayState(paths: any, arrayIndex: number) {
-  // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-  // 當遇到陣列包物件的時候 path item會是 "[0]"
-  const lastKeyIndex = paths.length - 1;
-  const lastParent = getStateByPaths(state, paths, lastKeyIndex);
-
-  // 將項目移除
-  const newArray = deepClone(lastParent[paths[lastKeyIndex]]);
-  newArray.splice(arrayIndex, 1);
-  lastParent[paths[lastKeyIndex]] = newArray;
-}
-// 移動項目
-function moveArrayState(paths: any, fromIndex: number, toIndex: number) {
-  // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-  // 當遇到陣列包物件的時候 path item會是 "[0]"
-  const lastKeyIndex = paths.length - 1;
-  const lastParent = getStateByPaths(state, paths, lastKeyIndex);
-
-  // 移動項目
-  const newArray = deepClone(lastParent[paths[lastKeyIndex]]);
-  const [removedItem] = newArray.splice(fromIndex, 1);
-  newArray.splice(toIndex, 0, removedItem);
-  lastParent[paths[lastKeyIndex]] = newArray;
-}
-// 刪除所有項目
-function clearArrayState(paths: any) {
-  // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-  // 當遇到陣列包物件的時候 path item會是 "[0]"
-  const lastKeyIndex = paths.length - 1;
-  const lastParent = getStateByPaths(state, paths, lastKeyIndex);
-
-  // 使用陣列清空
-  lastParent[paths[lastKeyIndex]] = [];
-}
-
 watch(testModeProxy, (newValue) => {
   mySchemaStore.updateTestMode(newValue);
-});
-
-watch(state, () => {
-  console.log('State Watcher Trigger');
 });
 
 // 提供依賴注入 rootState
 provide('rootState', {
   rootState: state,
-  rootValidator: v$,
+  rootValidator: stateValidator,
   updateState,
   addArrayState,
   removeArrayState,
   moveArrayState,
   clearArrayState
 });
-
-console.log('schema:', props.schema);
-console.log('state:', state);
-console.log('rules:', rules);
-console.log('v$:', v$);
 </script>
 
 <template>
@@ -132,8 +59,7 @@ console.log('v$:', v$);
       class="border p-4 rounded-2xl mb-4"
     >
       <pre>state: {{ state }}</pre>
-      <pre>newV: {{ newV }}</pre>
-      <!-- <pre>v$: {{ v$ }}</pre> -->
+      <pre>stateValidator: {{ stateValidator }}</pre>
     </div>
     <form v-if="schema && !isEmptyObject(schema)">
       <MySchemaFormItem :schema="schema" :state="state" :paths="paths" />
