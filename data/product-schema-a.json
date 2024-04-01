@@ -93,6 +93,10 @@
           "ui": {
             "label": "展示項目",
             "widget": "array-tabs"
+          },
+          "rules": {
+            "minLength": 1,
+            "maxLength": 6
           }
         },
         "color": {
@@ -134,7 +138,6 @@
             }
           },
           "rules": {
-            "required": true,
             "minValue": 1,
             "maxValue": 10
           }

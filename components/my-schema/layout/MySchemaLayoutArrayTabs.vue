@@ -90,7 +90,7 @@ async function removeAllItems() {
       icon="i-heroicons-rectangle-stack-20-solid"
       :ui="{ icon: { wrapper: '', base: 'text-lime-500' } }"
     /> -->
-    <UCard v-show="mySchemaStore.state.testMode" :ui="{ base: 'my-2' }">
+    <!-- <UCard v-show="mySchemaStore.state.testMode" :ui="{ base: 'my-2' }">
       <ul class="w-full flex items-stretch gap-x-4">
         <li class="flex flex-col gap-y-2 grow">
           <h4 class="text-lime-600 font-bold">itemModel:</h4>
@@ -108,7 +108,7 @@ async function removeAllItems() {
           <pre>{{ paths }}</pre>
         </li>
       </ul>
-    </UCard>
+    </UCard> -->
     <!-- 工具列 -->
     <UButtonGroup
       size="sm"

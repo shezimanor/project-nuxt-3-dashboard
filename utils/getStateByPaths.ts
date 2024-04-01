@@ -8,7 +8,7 @@
  */
 export default function getStateByPaths(
   state: Record<string, any>,
-  paths: string[],
+  paths: unknown[],
   lastKeyIndex: number
 ): any {
   return paths

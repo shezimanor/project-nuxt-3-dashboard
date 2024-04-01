@@ -19,6 +19,9 @@ const props = defineProps({
 
 const state = reactive(traverseSchemaToState(props.schema));
 const rules = traverseSchemaToRules(props.rawSchema);
+const newV = traverseSchemaToStateValidator(props.schema);
+console.log('state:', state);
+console.log('newV:', newV);
 const v$ = useVuelidate(rules, state, {
   // autoDirty: true: 讓驗證器追蹤 state 的變化，不需要使用 v$
   $autoDirty: true,
@@ -129,7 +132,8 @@ console.log('v$:', v$);
       class="border p-4 rounded-2xl mb-4"
     >
       <pre>state: {{ state }}</pre>
-      <pre>v$: {{ v$ }}</pre>
+      <pre>newV: {{ newV }}</pre>
+      <!-- <pre>v$: {{ v$ }}</pre> -->
     </div>
     <form v-if="schema && !isEmptyObject(schema)">
       <MySchemaFormItem :schema="schema" :state="state" :paths="paths" />

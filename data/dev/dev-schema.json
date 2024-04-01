@@ -43,6 +43,16 @@
       "properties": {
         "others": {
           "type": "array",
+          "default": [
+            {
+              "level": "等級二",
+              "comment": "普通",
+              "manyThings": [
+                { "name": "張雷恩", "job": "業務經理" },
+                { "name": "蘇珊", "job": "副理" }
+              ]
+            }
+          ],
           "items": {
             "type": "object",
             "properties": {
@@ -112,6 +122,9 @@
                 "ui": {
                   "label": "陣列下層又是陣列",
                   "widget": "array-tabs"
+                },
+                "rules": {
+                  "minLength": 3
                 }
               }
             }
@@ -119,6 +132,9 @@
           "ui": {
             "label": "其他說明",
             "widget": "array-tabs"
+          },
+          "rules": {
+            "minLength": 2
           }
         },
         "colors": {
@@ -134,7 +150,6 @@
             }
           },
           "rules": {
-            "required": true,
             "maxLength": 3
           }
         },
@@ -214,7 +229,7 @@
             "required": true
           }
         },
-        "newUrls": {
+        "newUrls1": {
           "type": "array",
           "default": [{ "url": "https://www.google.com" }],
           "items": {
@@ -238,10 +253,39 @@
             }
           },
           "ui": {
-            "label": "多個網址"
+            "label": "多個網址(items是物件陣列)"
           },
           "rules": {
             "minLength": 3
+          }
+        },
+        "newUrls2": {
+          "type": "array",
+          "default": [
+            "https://www.google.com",
+            "https://www.facebook.com",
+            "https://www.yahoo.com"
+          ],
+          "items": {
+            "type": "string",
+            "default": "https://www.test.com",
+            "ui": {
+              "label": "網址",
+              "widget": "input",
+              "widgetConfig": {
+                "placeholder": "請輸入網址"
+              }
+            },
+            "rules": {
+              "required": true,
+              "url": true
+            }
+          },
+          "ui": {
+            "label": "多個網址(items是字串陣列)"
+          },
+          "rules": {
+            "minLength": 2
           }
         }
       },

@@ -59,12 +59,22 @@ const fieldComponent = computed(() => {
       return MySchemaInput;
   }
 });
+
+// 找到當下的驗證器
+// const stateValidator = computed(() => {
+//   return getValidatorByPaths(
+//     rootValidator.value,
+//     props.paths,
+//     props.paths.length
+//   );
+// });
 </script>
 
 <template>
   <div class="flex flex-col gap-y-4">
+    <!-- mySchemaStore.state.testMode -->
     <UPricingCard
-      v-if="mySchemaStore.state.testMode"
+      v-if="false"
       :title="fieldComponent.__name"
       description="From 欄位元件分配器"
       :price="`${schema.ui.widget}`"
@@ -87,6 +97,7 @@ const fieldComponent = computed(() => {
       :paths="paths"
       class="max-w-screen-md"
     />
+    <!-- :validator="stateValidator" -->
   </div>
 </template>
 

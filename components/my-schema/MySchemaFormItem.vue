@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { isValidArraySchema, isValidObjectSchema } from '~/utils/schemaParser';
-
 // props
 const props = defineProps({
   schema: {
