@@ -19,6 +19,7 @@ const state = reactive(traverseSchemaToState(props.schema));
 
 const {
   stateValidator,
+  rules,
   updateState,
   addArrayState,
   removeArrayState,
@@ -59,6 +60,7 @@ provide('rootState', {
       class="border p-4 rounded-2xl mb-4"
     >
       <pre>state: {{ state }}</pre>
+      <pre>rules: {{ rules }}</pre>
       <pre>stateValidator: {{ stateValidator }}</pre>
     </div>
     <form v-if="schema && !isEmptyObject(schema)">

@@ -9,6 +9,22 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     // 當遇到陣列的時候 path item會是 `'i'`, i === 整數
     const lastKeyIndex = paths.length - 1;
     const lastParent = getStateByPaths(state, paths, lastKeyIndex);
+    const currentRuleValidator = getRulesByPaths(rules, paths, paths.length);
+    let result = true;
+    for (const key in currentRuleValidator) {
+      if (!currentRuleValidator[key].$validator(newValue)) {
+        result = false;
+        console.log('key:', key);
+        console.log(
+          'msg:',
+          currentRuleValidator[key].$message({
+            $params: currentRuleValidator[key].$params,
+            $model: newValue
+          })
+        );
+        break;
+      }
+    }
 
     // 更新最後一個鍵的值
     lastParent[paths[lastKeyIndex]] = newValue;
@@ -68,6 +84,7 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
   return {
     // state
     stateValidator,
+    rules, // 每個 rules 有 $validator fn 可以執行
     // action
     updateState,
     addArrayState,

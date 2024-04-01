@@ -42,7 +42,7 @@ function traverseSchemaToStateValidatorWithModel(
         ...JSON.parse(JSON.stringify(validatorCoreConfig)),
         $model: model,
         $type: 'array-object',
-        $rules: getRulesFn(obj.rules), // 陣列的 rules
+        // $rules: getRulesFn(obj.rules), // 陣列的 rules
         $eachState: model.map((itemModel: any) =>
           traverseSchemaToStateValidatorWithModel(itemModel, obj.items)
         )
@@ -53,8 +53,8 @@ function traverseSchemaToStateValidatorWithModel(
       return {
         ...JSON.parse(JSON.stringify(validatorCoreConfig)),
         $model: model,
-        $type: obj.items.type,
-        $rules: getRulesFn(obj.items.rules)
+        $type: obj.items.type
+        // $rules: getRulesFn(obj.items.rules)
       };
     }
   }
@@ -63,8 +63,8 @@ function traverseSchemaToStateValidatorWithModel(
     return {
       ...JSON.parse(JSON.stringify(validatorCoreConfig)),
       $model: model,
-      $type: obj.type,
-      $rules: getRulesFn(obj.rules)
+      $type: obj.type
+      // $rules: getRulesFn(obj.rules)
     };
   }
 }
@@ -154,11 +154,11 @@ export default function traverseSchemaToStateValidator(
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
           $model: newModel,
           $type: 'array-object',
-          $rules: getRulesFn(obj.rules), // 陣列的 rules
+          // $rules: getRulesFn(obj.rules), // 陣列的 rules
           $eachState: newModel.map((itemModel: any) =>
             traverseSchemaToStateValidatorWithModel(itemModel, obj.items)
-          ),
-          $eachRule: getEachRuleStructure(obj.items) // 僅存放規則
+          )
+          // $eachRule: getEachRuleStructure(obj.items) // 僅存放規則
         };
       }
       // 無 default 值，直接回傳空陣列
@@ -167,9 +167,9 @@ export default function traverseSchemaToStateValidator(
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
           $model: [],
           $type: 'array-object',
-          $rules: getRulesFn(obj.rules), // 陣列的 rules
-          $eachState: [],
-          $eachRule: getEachRuleStructure(obj.items) // 僅存放規則
+          // $rules: getRulesFn(obj.rules), // 陣列的 rules
+          $eachState: []
+          // $eachRule: getEachRuleStructure(obj.items) // 僅存放規則
         };
       }
     }
@@ -187,11 +187,11 @@ export default function traverseSchemaToStateValidator(
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
           $model: newModel,
           $type: 'array-primitive',
-          $rules: getRulesFn(obj.rules), // 陣列的 rules
+          // $rules: getRulesFn(obj.rules), // 陣列的 rules
           $eachState: obj.default.map((itemModel: any) =>
             traverseSchemaToStateValidatorWithModel(itemModel, obj.items)
-          ),
-          $eachRulePrimitive: getEachRuleStructure(obj.items) // 僅存放規則
+          )
+          // $eachRulePrimitive: getEachRuleStructure(obj.items) // 僅存放規則
         };
       }
       // 無 default 值，直接回傳空陣列
@@ -200,9 +200,9 @@ export default function traverseSchemaToStateValidator(
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
           $model: [],
           $type: 'array-primitive',
-          $rules: getRulesFn(obj.rules), // 陣列的 rules
-          $eachState: [],
-          $eachRulePrimitive: getEachRuleStructure(obj.items) // 繼續往下渲染
+          // $rules: getRulesFn(obj.rules), // 陣列的 rules
+          $eachState: []
+          // $eachRulePrimitive: getEachRuleStructure(obj.items) // 繼續往下渲染
         };
       }
     }
@@ -214,20 +214,20 @@ export default function traverseSchemaToStateValidator(
         ? {
             ...JSON.parse(JSON.stringify(validatorCoreConfig)),
             $model: deepClone(obj.default),
-            $type: obj.type,
-            $rules: getRulesFn(obj.rules)
+            $type: obj.type
+            // $rules: getRulesFn(obj.rules)
           }
         : {
             ...JSON.parse(JSON.stringify(validatorCoreConfig)),
             $model: obj.default,
-            $type: obj.type,
-            $rules: getRulesFn(obj.rules)
+            $type: obj.type
+            // $rules: getRulesFn(obj.rules)
           }
       : {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
           $model: getTypeDefault(obj.type),
-          $type: obj.type,
-          $rules: getRulesFn(obj.rules)
+          $type: obj.type
+          // $rules: getRulesFn(obj.rules)
         };
   }
 }
