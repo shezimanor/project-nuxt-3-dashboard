@@ -31,7 +31,7 @@ const isValidArraySchema = (schema: Record<string, any>): boolean => {
 /**
  * 判別 Schema Path 是否為陣列
  *
- * @description 如果是陣列path，該字串只會有數字
+ * @description 如果是陣列 path，該字串只會有數字
  * @param {string} str
  * @returns {boolean} 回傳布林值結果
  */
