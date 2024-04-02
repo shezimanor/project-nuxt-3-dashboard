@@ -45,10 +45,18 @@
           "type": "array",
           "default": [
             {
-              "level": "等級二",
+              "level": "等級SSR",
+              "comment": "頂級",
+              "manyThings": [
+                { "name": "歐巴馬", "job": "美國總統" },
+                { "name": "黃仁勳", "job": "執行長" }
+              ]
+            },
+            {
+              "level": "等級A",
               "comment": "普通",
               "manyThings": [
-                { "name": "張雷恩", "job": "業務經理" },
+                { "name": "張雷恩", "job": "副班長" },
                 { "name": "蘇珊", "job": "副理" }
               ]
             }
@@ -86,6 +94,7 @@
               },
               "manyThings": {
                 "type": "array",
+                "default": [{ "name": "你的名字", "job": "你的工作" }],
                 "items": {
                   "type": "object",
                   "properties": {
@@ -258,12 +267,16 @@
             }
           },
           "rules": {
-            "required": true
+            "minLength": 2,
+            "maxLength": 4
           }
         },
         "newUrls1": {
           "type": "array",
-          "default": [{ "url": "https://www.google.com" }],
+          "default": [
+            { "url": "https://www.google1.com" },
+            { "url": "https://www.google2.com" }
+          ],
           "items": {
             "type": "object",
             "properties": {
@@ -317,7 +330,7 @@
             "label": "多個網址(items是字串陣列)"
           },
           "rules": {
-            "minLength": 2
+            "minLength": 3
           }
         }
       },
