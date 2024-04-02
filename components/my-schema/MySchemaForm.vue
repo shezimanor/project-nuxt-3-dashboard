@@ -38,7 +38,7 @@ watch(testModeProxy, (newValue) => {
 // 提供依賴注入 rootState
 provide('rootState', {
   rootState: state,
-  rootValidator: stateValidator,
+  rootStateValidator: stateValidator,
   updateState,
   addArrayState,
   removeArrayState,

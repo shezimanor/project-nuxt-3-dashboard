@@ -70,52 +70,6 @@ function traverseSchemaToStateValidatorWithModel(
 }
 
 /**
- * 遞迴傳入的 shcema 物件，並輸出規則結構
- *
- * @description 遞迴傳入的 shcema 物件，並輸出規則結構(只適用於 `array-object` 和 `array-primitive`)
- * @param {Object} obj 被遞迴 schema object
- * @returns {Object} 規則結構
- */
-function getEachRuleStructure(obj: Record<string, any>): any {
-  // 檢查 obj 是否為 object 類型
-  if (obj.type === 'object' && obj.properties) {
-    const result: { [key: string]: any } = {};
-    // 遍歷 properties 中的每個屬性
-    for (const key in obj.properties) {
-      // 遞歸調用 traverseSchemaToStateValidator 函數來處理每個子屬性
-      result[key] = getEachRuleStructure(obj.properties[key]);
-    }
-    return result;
-  }
-  // 處理 array 類型
-  else if (obj.type === 'array' && obj.items) {
-    // 如果 items 底下是 object 類型，則遞歸調用 getEachRuleStructure 函數
-    if (obj.items.type === 'object' && obj.items.properties) {
-      return {
-        $type: 'array-object',
-        $rules: getRulesFn(obj.rules), // 陣列的 rules
-        $eachRule: getEachRuleStructure(obj.items) // 繼續往下渲染
-      };
-    }
-    // 如果 items 底下非 object 類型，則直接回傳 default 值
-    else {
-      return {
-        $type: 'array-primitive',
-        $rules: getRulesFn(obj.rules), // 陣列的 rules
-        $eachRulePrimitive: getEachRuleStructure(obj.items) // 繼續往下渲染
-      };
-    }
-  }
-  // 如果不是 object 或 array 類型，則返回 default 值
-  else {
-    return {
-      $type: obj.type,
-      $rules: getRulesFn(obj.rules)
-    };
-  }
-}
-
-/**
  * 遞迴整個 shcema 物件，並輸出 stateValidator
  *
  * @description 用於遞迴整個 shcema 物件，並輸出 stateValidator

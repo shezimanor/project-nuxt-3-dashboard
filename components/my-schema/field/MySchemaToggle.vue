@@ -5,13 +5,13 @@ const props = defineProps({
     type: Object,
     default: null
   },
-  validator: {
-    type: Object,
-    default: null
-  },
   state: {
     type: [Array, String, Number, Boolean],
     default: undefined
+  },
+  stateValidator: {
+    type: Object,
+    default: null
   },
   paths: {
     type: Array,
@@ -34,8 +34,16 @@ watch(modelValue, (newValue) => {
 </script>
 
 <template>
-  <UFormGroup :label="schema.ui.label">
+  <UFormGroup
+    :label="schema.ui.label"
+    :error="
+      stateValidator.$dirty &&
+      stateValidator.$invalid &&
+      stateValidator.$message
+    "
+  >
     <UToggle v-model="modelValue" />
+    <!-- <pre>{{ stateValidator }}</pre> -->
   </UFormGroup>
 </template>
 

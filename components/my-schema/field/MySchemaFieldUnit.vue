@@ -28,7 +28,7 @@ const props = defineProps({
 });
 
 // 注入依賴: rootState
-const { rootState } = inject('rootState') as {
+const { rootState, rootStateValidator } = inject('rootState') as {
   [key: string]: any;
 };
 
@@ -61,13 +61,13 @@ const fieldComponent = computed(() => {
 });
 
 // 找到當下的驗證器
-// const stateValidator = computed(() => {
-//   return getValidatorByPaths(
-//     rootValidator.value,
-//     props.paths,
-//     props.paths.length
-//   );
-// });
+const stateValidator = computed(() => {
+  return getStateValidatorByPaths(
+    rootStateValidator,
+    props.paths,
+    props.paths.length
+  );
+});
 </script>
 
 <template>
@@ -94,10 +94,10 @@ const fieldComponent = computed(() => {
       :is="fieldComponent"
       :schema="schema"
       :state="state"
+      :state-validator="stateValidator"
       :paths="paths"
       class="max-w-screen-md"
     />
-    <!-- :validator="stateValidator" -->
   </div>
 </template>
 

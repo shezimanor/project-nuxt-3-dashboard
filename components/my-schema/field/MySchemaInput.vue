@@ -5,13 +5,13 @@ const props = defineProps({
     type: Object,
     default: null
   },
-  validator: {
-    type: Object,
-    default: null
-  },
   state: {
     type: [Array, String, Number, Boolean],
     default: undefined
+  },
+  stateValidator: {
+    type: Object,
+    default: null
   },
   paths: {
     type: Array,
@@ -44,21 +44,20 @@ watch(modelValue, (newValue) => {
 </script>
 
 <template>
-  <!-- <UFormGroup
+  <UFormGroup
     :label="schema.ui.label"
     :error="
-      validator.$dirty &&
-      validator.$invalid &&
-      validator.$silentErrors[0].$message
+      stateValidator.$dirty &&
+      stateValidator.$invalid &&
+      stateValidator.$message
     "
-  > -->
-  <UFormGroup :label="schema.ui.label">
+  >
     <UInput
       v-model="modelValue"
       :placeholder="mergedConfig.placeholder"
       :disabled="mergedConfig.disabled"
     />
-    <!-- <pre>{{ validator }}</pre> -->
+    <!-- <pre>{{ stateValidator }}</pre> -->
   </UFormGroup>
 </template>
 

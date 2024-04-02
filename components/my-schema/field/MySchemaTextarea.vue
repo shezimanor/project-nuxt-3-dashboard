@@ -5,13 +5,13 @@ const props = defineProps({
     type: Object,
     default: null
   },
-  validator: {
-    type: Object,
-    default: null
-  },
   state: {
     type: [Array, String, Number, Boolean],
     default: undefined
+  },
+  stateValidator: {
+    type: Object,
+    default: null
   },
   paths: {
     type: Array,
@@ -48,7 +48,14 @@ watch(modelValue, (newValue) => {
 </script>
 
 <template>
-  <UFormGroup :label="schema.ui.label">
+  <UFormGroup
+    :label="schema.ui.label"
+    :error="
+      stateValidator.$dirty &&
+      stateValidator.$invalid &&
+      stateValidator.$message
+    "
+  >
     <UTextarea
       v-model="modelValue"
       :rows="mergedConfig.rows"
@@ -58,6 +65,7 @@ watch(modelValue, (newValue) => {
       :maxrows="mergedConfig.maxrows"
       :resize="mergedConfig.resize"
     />
+    <!-- <pre>{{ stateValidator }}</pre> -->
   </UFormGroup>
 </template>
 

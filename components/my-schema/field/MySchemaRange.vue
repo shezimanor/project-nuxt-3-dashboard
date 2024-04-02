@@ -5,13 +5,13 @@ const props = defineProps({
     type: Object,
     default: null
   },
-  validator: {
-    type: Object,
-    default: null
-  },
   state: {
     type: [Array, String, Number, Boolean],
     default: undefined
+  },
+  stateValidator: {
+    type: Object,
+    default: null
   },
   paths: {
     type: Array,
@@ -46,13 +46,15 @@ watch(modelValue, (newValue) => {
 </script>
 
 <template>
-  <UFormGroup :label="schema.ui.label">
+  <UFormGroup
+    :label="schema.ui.label"
+    :error="
+      stateValidator.$dirty &&
+      stateValidator.$invalid &&
+      stateValidator.$message
+    "
+  >
     <div class="flex flex-row items-center gap-x-2">
-      <!-- <UInput
-        v-model.number="modelValue"
-        readonly
-        class="w-12 text-center grow-0 shrink-0"
-      /> -->
       <UBadge
         color="white"
         variant="outline"
@@ -69,6 +71,7 @@ watch(modelValue, (newValue) => {
         class="grow"
       />
     </div>
+    <!-- <pre>{{ stateValidator }}</pre> -->
   </UFormGroup>
 </template>
 

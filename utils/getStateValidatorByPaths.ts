@@ -1,12 +1,12 @@
 /**
- * 取得指定層數的 validator
+ * 取得指定層數的 stateValidator
  *
- * @param {Object} validator
+ * @param {Object} stateValidator
  * @param {Array} paths
  * @param {number} lastKeyIndex 最後一個 key 的 index
- * @returns {Object} state
+ * @returns {Object} stateValidator
  */
-export default function getValidatorByPaths(
+export default function getStateValidatorByPaths(
   validator: Record<string, any>,
   paths: unknown[],
   lastKeyIndex: number
@@ -15,6 +15,6 @@ export default function getValidatorByPaths(
     .slice(0, lastKeyIndex)
     .reduce((parentValidator: any, currentKey: any) => {
       if (!isValidArrayPath(currentKey)) return parentValidator[currentKey];
-      else return parentValidator[Number(currentKey)];
+      else return parentValidator['$eachState'][Number(currentKey)];
     }, validator);
 }
