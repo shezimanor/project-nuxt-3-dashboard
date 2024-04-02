@@ -8,7 +8,7 @@ import {
   integer,
   maxLength, // = maxItems
   maxValue,
-  minLength, // = minItems
+  // minLength, = minItems 但他的邏輯 array.length === 0，會通過驗證，所以不用
   minValue,
   required,
   url
@@ -21,6 +21,12 @@ const sameAs = (key: string, label: string) =>
     { key, label },
     // 下面這個函數的參數是被 `useValidator.ts` 的 currentRulesObj[ruleKey].$validator(newValue, lastParent) 決定
     (value: any, lastParent: any) => lastParent[key] === value
+  );
+const minLength = (min: number) =>
+  helpers.withParams(
+    { min },
+    // 下面這個函數的參數是被 `useValidator.ts` 的 currentRulesObj[ruleKey].$validator(newValue, lastParent) 決定
+    (value: any) => value.length >= min
   );
 
 // 定義一個映射，將規則名稱映射到對應的驗證器函數
