@@ -47,14 +47,9 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     let invalidMessage = '';
     // 遍歷所有規則
     for (const ruleKey in currentRulesObj) {
-      console.log('ruleKey', ruleKey);
       if (ruleKey === '$each' || ruleKey === '$eachPrimitive') continue;
-      console.log(
-        't:',
-        newArray,
-        currentRulesObj[ruleKey].$validator(newArray)
-      );
       // 當驗證失敗，取得訊息並中斷遍歷(把 lastParentState 傳入是為了讓"部分"驗證器可以取得其他欄位的值)
+      // 但 arrayStateValidatorHandler 目前並不會取得其他欄位的值，所以 lastParentState 可以不用傳入
       if (!currentRulesObj[ruleKey].$validator(newArray, lastParentState)) {
         invalidMessage = getValidationMessage({
           ruleKey: ruleKey,

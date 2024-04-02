@@ -49,7 +49,6 @@ provide('rootState', {
 
 <template>
   <div class="flex flex-col max-w-screen-md">
-    <h2>Schema Form</h2>
     <div class="py-4">
       <UFormGroup label="測試模式">
         <UToggle v-model="testModeProxy" />
