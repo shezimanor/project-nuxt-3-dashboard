@@ -25,16 +25,30 @@ const props = defineProps({
 });
 
 // 注入依賴: 處理陣列 action
-const { addArrayState, removeArrayState, moveArrayState, clearArrayState } =
-  inject('rootState') as {
-    [key: string]: any;
-  };
+const {
+  rootStateValidator,
+  addArrayState,
+  removeArrayState,
+  moveArrayState,
+  clearArrayState
+} = inject('rootState') as {
+  [key: string]: any;
+};
 
 // 取得項目空殼(用於新增，每次使用都要用深層拷貝)，不要直接把當下這層 schema 傳進去，一定要傳 `schema.items`
 const itemModel = traverseSchemaToState(props.schema.items);
 
 // key id
 const uuidList = ref(getUuids(props.state.length));
+
+// 找到當下的驗證器
+const stateValidator = computed(() => {
+  return getStateValidatorByPaths(
+    rootStateValidator,
+    props.paths,
+    props.paths.length
+  );
+});
 
 // 新增項目
 async function addItem() {
@@ -74,6 +88,15 @@ async function removeAllItems() {
     <h3 class="text-lime-500 font-bold text-xl mb-1">
       {{ schema.ui.label ? schema.ui.label : 'Layout Array(No Label)' }}
     </h3>
+    <span
+      v-show="
+        stateValidator.$dirty &&
+        stateValidator.$invalid &&
+        stateValidator.$message
+      "
+      class="mb-1 text-red-500 dark:text-red-400"
+      >{{ stateValidator.$message }}</span
+    >
     <!-- <UPageCard
       v-show="mySchemaStore.state.testMode"
       title="Form Layout Array"

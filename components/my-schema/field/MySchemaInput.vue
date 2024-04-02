@@ -57,7 +57,6 @@ watch(modelValue, (newValue) => {
       :placeholder="mergedConfig.placeholder"
       :disabled="mergedConfig.disabled"
     />
-    <!-- <pre>{{ stateValidator }}</pre> -->
   </UFormGroup>
 </template>
 
