@@ -102,7 +102,14 @@
             "label": "顏色",
             "widget": "multiple-select",
             "widgetConfig": {
-              "options": ["紅", "橙", "黃", "綠", "藍"],
+              "options": [
+                { "label": "紅", "value": "紅" },
+                { "label": "綠", "value": "綠" },
+                { "label": "藍", "value": "藍" },
+                { "label": "黃", "value": "黃" },
+                { "label": "黑", "value": "黑" },
+                { "label": "白", "value": "白" }
+              ],
               "placeholder": "請輸入顏色",
               "searchablePlaceholder": "搜尋顏色"
             }

@@ -144,8 +144,36 @@
             "label": "顏色",
             "widget": "multiple-select",
             "widgetConfig": {
-              "options": ["紅", "橙", "黃", "綠", "藍"],
+              "options": [
+                { "label": "紅", "value": "紅" },
+                { "label": "橙", "value": "橙" },
+                { "label": "黃", "value": "黃" },
+                { "label": "綠", "value": "綠" },
+                { "label": "藍", "value": "藍" },
+                { "label": "紫", "value": "紫" }
+              ],
               "placeholder": "請輸入顏色",
+              "searchablePlaceholder": "搜尋顏色"
+            }
+          },
+          "rules": {
+            "maxLength": 3
+          }
+        },
+        "displayKey": {
+          "type": "string",
+          "default": "K",
+          "ui": {
+            "label": "代表字",
+            "widget": "select",
+            "widgetConfig": {
+              "options": [
+                { "label": "M", "value": "M" },
+                { "label": "K", "value": "K" },
+                { "label": "G", "value": "G" },
+                { "label": "T", "value": "T" }
+              ],
+              "placeholder": "請選擇代表字",
               "searchablePlaceholder": "搜尋顏色"
             }
           },
@@ -218,12 +246,12 @@
             "widget": "multiple-select",
             "widgetConfig": {
               "options": [
-                "台北市",
-                "桃園市",
-                "新竹市",
-                "台中市",
-                "新北市",
-                "高雄市"
+                { "label": "台北市", "value": "台北市" },
+                { "label": "桃園市", "value": "桃園市" },
+                { "label": "新竹市", "value": "新竹市" },
+                { "label": "台中市", "value": "台中市" },
+                { "label": "新北市", "value": "新北市" },
+                { "label": "高雄市", "value": "高雄市" }
               ],
               "placeholder": "請選擇產地",
               "searchablePlaceholder": "搜尋"
