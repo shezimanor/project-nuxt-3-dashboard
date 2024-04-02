@@ -9,19 +9,18 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     // 當遇到陣列的時候 path item會是 `'i'`, i === 整數
     const lastKeyIndex = paths.length - 1;
     const lastParent = getStateByPaths(state, paths, lastKeyIndex);
-    const currentRuleValidator = getRulesByPaths(rules, paths, paths.length);
+    const currentRulesObj = getRulesByPaths(rules, paths, paths.length);
     let result = true;
-    for (const key in currentRuleValidator) {
-      if (!currentRuleValidator[key].$validator(newValue)) {
+    for (const ruleKey in currentRulesObj) {
+      // 把 lastParent 傳入是為了讓"部分"驗證器可以取得其他欄位的值
+      if (!currentRulesObj[ruleKey].$validator(newValue, lastParent)) {
         result = false;
-        console.log('key:', key);
-        console.log(
-          'msg:',
-          currentRuleValidator[key].$message({
-            $params: currentRuleValidator[key].$params,
-            $model: newValue
-          })
-        );
+        const errorMessage = getValidationMessage({
+          ruleKey: ruleKey,
+          currentRuleValidator: currentRulesObj[ruleKey],
+          model: newValue
+        });
+        console.log('error message:', errorMessage);
         break;
       }
     }

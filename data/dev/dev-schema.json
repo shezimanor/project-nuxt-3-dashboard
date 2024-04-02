@@ -173,28 +173,32 @@
           "default": 100,
           "ui": {
             "label": "產品價格",
-            "widget": "input",
+            "widget": "number",
             "widgetConfig": {
               "placeholder": "請輸入產品價格"
             }
           },
           "rules": {
             "required": true,
-            "minValue": 1
+            "between": [30, 200]
           }
         },
         "productQuantity": {
           "type": "number",
+          "default": 10,
           "ui": {
             "label": "產品數量",
-            "widget": "input",
+            "widget": "number",
             "widgetConfig": {
               "placeholder": "請輸入產品數量"
             }
           },
           "rules": {
             "required": true,
-            "minValue": 30
+            "sameAs": {
+              "key": "productPrice",
+              "label": "產品價格"
+            }
           }
         },
         "isOnSale": {
