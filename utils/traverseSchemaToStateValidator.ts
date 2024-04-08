@@ -41,7 +41,6 @@ export default function traverseSchemaToStateValidator(
           $eachState: newModel.map((itemModel: any) =>
             traverseSchemaToStateValidatorWithModel(itemModel, obj.items)
           )
-          // $eachRule: getEachRuleStructure(obj.items) // 僅存放規則
         };
       }
       // 無 default 值，直接回傳空陣列
@@ -52,7 +51,6 @@ export default function traverseSchemaToStateValidator(
           $rules: getRulesFn(obj.rules), // 陣列的 rules
           $model: [],
           $eachState: []
-          // $eachRule: getEachRuleStructure(obj.items) // 僅存放規則
         };
       }
     }
@@ -74,7 +72,6 @@ export default function traverseSchemaToStateValidator(
           $eachState: obj.default.map((itemModel: any) =>
             traverseSchemaToStateValidatorWithModel(itemModel, obj.items)
           )
-          // $eachRulePrimitive: getEachRuleStructure(obj.items) // 僅存放規則
         };
       }
       // 無 default 值，直接回傳空陣列
@@ -85,7 +82,6 @@ export default function traverseSchemaToStateValidator(
           $rules: getRulesFn(obj.rules), // 陣列的 rules
           $model: [],
           $eachState: []
-          // $eachRulePrimitive: getEachRuleStructure(obj.items) // 繼續往下渲染
         };
       }
     }

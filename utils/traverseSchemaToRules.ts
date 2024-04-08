@@ -30,7 +30,6 @@ export default function traverseSchemaToRules(obj: Record<string, any>): any {
       obj.items.hasOwnProperty('rules') &&
       !isEmptyObject(obj.items.rules)
     ) {
-      // items 如果不是接受 object 類型，驗證器會沒有反應
       return {
         ...getRulesFn(obj.rules),
         $eachPrimitive: getRulesFn(obj.items.rules)

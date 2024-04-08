@@ -6,7 +6,7 @@
       "properties": {
         "title": {
           "type": "string",
-          "default": "Empty Title",
+          "default": "",
           "ui": {
             "label": "產品標題",
             "widget": "input",
