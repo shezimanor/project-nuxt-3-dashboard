@@ -2,7 +2,9 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
   // toast
   const toast = useToast();
   const rules = traverseSchemaToRules(rawSchema);
-  const stateValidator = reactive(traverseSchemaToStateValidator(schema));
+  const stateValidator = reactive(
+    traverseSchemaToStateValidator(schema, '$root')
+  );
   // 用來檢查表單是否驗證失敗
   const stateIsInvalid = ref(false);
 
@@ -65,7 +67,7 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     const $newItem = traverseSchemaToStateValidatorWithModel(
       newValue,
       currentSchema.items,
-      paths.concat(`${newArray.length - 1}`)
+      `$root.${paths.join('.')}.${newArray.length - 1}`
     );
 
     currentStateValidator.$eachState.push($newItem);
@@ -144,6 +146,8 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
       1
     );
     currentStateValidator.$eachState.splice(toIndex, 0, $removedItem);
+    // 更新 stateValidator $eachState $path
+    updateArrayEachStatePaths(currentStateValidator.$eachState);
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
 
@@ -250,6 +254,25 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
       currentStateValidator.$invalid = true;
       currentStateValidator.$message = invalidMessage;
     }
+  }
+
+  function updateArrayEachStatePaths(currentStateValidatorEachState: any) {
+    for (
+      let index = 0;
+      index < currentStateValidatorEachState.length;
+      index++
+    ) {
+      const item = currentStateValidatorEachState[index];
+      if (item.$type === 'array-object') {
+        updateArrayEachStateChildrenPaths(item.$eachState, item.$path);
+      }
+    }
+  }
+  function updateArrayEachStateChildrenPaths(
+    childrenEachState: any,
+    pathPattern: string
+  ) {
+    console.log('updateArrayEachStateChildrenPaths', childrenEachState);
   }
 
   // 驗證表單(整個 state 全部驗證一遍，但每個欄位只要驗證到有錯誤就跳到下一個欄位進行驗證)

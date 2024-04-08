@@ -7,7 +7,7 @@
  */
 export default function traverseSchemaToStateValidator(
   obj: Record<string, any>,
-  paths: unknown[] = []
+  path: string
 ): any {
   // 檢查 obj 是否為 object 類型
   if (obj.type === 'object' && obj.properties) {
@@ -21,7 +21,7 @@ export default function traverseSchemaToStateValidator(
       // 遞歸調用 traverseSchemaToStateValidator 函數來處理每個子屬性
       result[key] = traverseSchemaToStateValidator(
         obj.properties[key],
-        paths.concat(key)
+        `${path}.${key}`
       );
     }
     return result;
@@ -40,14 +40,14 @@ export default function traverseSchemaToStateValidator(
         return {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
           $type: 'array-object',
-          $paths: paths,
+          $path: path,
           $rules: getRulesFn(obj.rules), // 陣列的 rules
           $model: newModel,
           $eachState: newModel.map((itemModel: any, index: number) =>
             traverseSchemaToStateValidatorWithModel(
               itemModel,
               obj.items,
-              paths.concat(`${index}`)
+              `${path}.${index}`
             )
           )
         };
@@ -57,7 +57,7 @@ export default function traverseSchemaToStateValidator(
         return {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
           $type: 'array-object',
-          $paths: paths,
+          $path: path,
           $rules: getRulesFn(obj.rules), // 陣列的 rules
           $model: [],
           $eachState: []
@@ -77,14 +77,14 @@ export default function traverseSchemaToStateValidator(
         return {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
           $type: 'array-primitive',
-          $paths: paths,
+          $path: path,
           $rules: getRulesFn(obj.rules), // 陣列的 rules
           $model: newModel,
           $eachState: obj.default.map((itemModel: any, index: number) =>
             traverseSchemaToStateValidatorWithModel(
               itemModel,
               obj.items,
-              paths.concat(`${index}`)
+              `${path}.${index}`
             )
           )
         };
@@ -94,7 +94,7 @@ export default function traverseSchemaToStateValidator(
         return {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
           $type: 'array-primitive',
-          $paths: paths,
+          $path: path,
           $rules: getRulesFn(obj.rules), // 陣列的 rules
           $model: [],
           $eachState: []
@@ -109,21 +109,21 @@ export default function traverseSchemaToStateValidator(
         ? {
             ...JSON.parse(JSON.stringify(validatorCoreConfig)),
             $type: obj.type,
-            $paths: paths,
+            $path: path,
             $rules: getRulesFn(obj.rules),
             $model: deepClone(obj.default)
           }
         : {
             ...JSON.parse(JSON.stringify(validatorCoreConfig)),
             $type: obj.type,
-            $paths: paths,
+            $path: path,
             $rules: getRulesFn(obj.rules),
             $model: obj.default
           }
       : {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
           $type: obj.type,
-          $paths: paths,
+          $path: path,
           $rules: getRulesFn(obj.rules),
           $model: getTypeDefault(obj.type)
         };

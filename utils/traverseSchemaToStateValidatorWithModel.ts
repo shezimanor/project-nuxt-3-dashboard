@@ -9,7 +9,7 @@
 export default function traverseSchemaToStateValidatorWithModel(
   model: any,
   obj: Record<string, any>,
-  paths: unknown[] = []
+  path: string
 ): any {
   // 檢查 obj 是否為 object 類型
   if (obj.type === 'object' && obj.properties) {
@@ -20,7 +20,7 @@ export default function traverseSchemaToStateValidatorWithModel(
       result[key] = traverseSchemaToStateValidatorWithModel(
         model[key],
         obj.properties[key],
-        paths.concat(key)
+        `${path}.${key}`
       );
     }
     return result;
@@ -32,14 +32,14 @@ export default function traverseSchemaToStateValidatorWithModel(
       return {
         ...JSON.parse(JSON.stringify(validatorCoreConfig)),
         $type: 'array-object',
-        $paths: paths,
+        $path: path,
         $rules: getRulesFn(obj.rules), // 陣列的 rules
         $model: model,
         $eachState: model.map((itemModel: any, index: number) =>
           traverseSchemaToStateValidatorWithModel(
             itemModel,
             obj.items,
-            paths.concat(`${index}`)
+            `${path}.${index}`
           )
         )
       };
@@ -49,7 +49,7 @@ export default function traverseSchemaToStateValidatorWithModel(
       return {
         ...JSON.parse(JSON.stringify(validatorCoreConfig)),
         $type: obj.items.type,
-        $paths: paths,
+        $path: path,
         $rules: getRulesFn(obj.items.rules),
         $model: model
       };
@@ -60,7 +60,7 @@ export default function traverseSchemaToStateValidatorWithModel(
     return {
       ...JSON.parse(JSON.stringify(validatorCoreConfig)),
       $type: obj.type,
-      $paths: paths,
+      $path: path,
       $rules: getRulesFn(obj.rules),
       $model: model
     };
