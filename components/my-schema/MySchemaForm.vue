@@ -19,15 +19,16 @@ const state = reactive(traverseSchemaToState(props.schema));
 
 const {
   stateValidator,
-  rules,
   updateState,
   addArrayState,
   removeArrayState,
   moveArrayState,
-  clearArrayState
+  clearArrayState,
+  validateState
 } = useValidator(state, props.rawSchema, props.schema);
 
 const testModeProxy = ref(mySchemaStore.state.testMode);
+
 // path 不需要響應式: 讓子元件可以接自己的路徑陣列，方便後續抓值
 const paths: any[] = [];
 
@@ -45,6 +46,13 @@ provide('rootState', {
   moveArrayState,
   clearArrayState
 });
+
+function onSubmit(event: Event) {
+  // 阻止表單的預設提交行為
+  event.preventDefault();
+  console.log('A:', stateValidator);
+  validateState();
+}
 </script>
 
 <template>
@@ -59,10 +67,15 @@ provide('rootState', {
       class="border p-4 rounded-2xl mb-4"
     >
       <pre>state: {{ state }}</pre>
-      <pre>rules: {{ rules }}</pre>
       <pre>stateValidator: {{ stateValidator }}</pre>
     </div>
-    <form v-if="schema && !isEmptyObject(schema)">
+    <form v-if="schema && !isEmptyObject(schema)" @submit="onSubmit">
+      <div
+        class="p-4 sticky -top-0 justify-end md:fixed md:top-16 md:right-4 md:justify-start flex flex-row gap-x-2 bg-white dark:bg-gray-900 z-50"
+      >
+        <UButton type="button" variant="outline">取消</UButton>
+        <UButton type="submit">儲存</UButton>
+      </div>
       <MySchemaFormItem :schema="schema" :state="state" :paths="paths" />
     </form>
   </div>

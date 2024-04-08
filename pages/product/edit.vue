@@ -13,7 +13,7 @@ const schema = reactive(rawSchema);
           <UColorModeToggle />
         </template>
       </UDashboardNavbar>
-      <UDashboardPanelContent>
+      <UDashboardPanelContent class="pt-0 md:pt-4">
         <MySchemaForm :raw-schema="rawSchema" :schema="schema" />
       </UDashboardPanelContent>
     </UDashboardPanel>
