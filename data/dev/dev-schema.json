@@ -50,7 +50,8 @@
               "manyThings": [
                 { "name": "歐巴馬", "job": "美國總統" },
                 { "name": "黃仁勳", "job": "執行長" }
-              ]
+              ],
+              "socialUrls": ["www.google321.com"]
             },
             {
               "level": "等級A",
@@ -58,7 +59,8 @@
               "manyThings": [
                 { "name": "張雷恩", "job": "副班長" },
                 { "name": "蘇珊", "job": "副理" }
-              ]
+              ],
+              "socialUrls": ["www.google123.com"]
             }
           ],
           "items": {
@@ -131,6 +133,31 @@
                 "ui": {
                   "label": "陣列下層又是陣列",
                   "widget": "array-tabs"
+                },
+                "rules": {
+                  "minLength": 3
+                }
+              },
+              "socialUrls": {
+                "type": "array",
+                "default": [],
+                "items": {
+                  "type": "string",
+                  "default": "https://www.social.com",
+                  "ui": {
+                    "label": "社交網址",
+                    "widget": "input",
+                    "widgetConfig": {
+                      "placeholder": "請輸入網址"
+                    }
+                  },
+                  "rules": {
+                    "required": true,
+                    "url": true
+                  }
+                },
+                "ui": {
+                  "label": "多個網址(items是字串陣列)"
                 },
                 "rules": {
                   "minLength": 3
