@@ -64,7 +64,8 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     // 取得新的 $newItem
     const $newItem = traverseSchemaToStateValidatorWithModel(
       newValue,
-      currentSchema.items
+      currentSchema.items,
+      paths.concat(`${newArray.length - 1}`)
     );
 
     currentStateValidator.$eachState.push($newItem);

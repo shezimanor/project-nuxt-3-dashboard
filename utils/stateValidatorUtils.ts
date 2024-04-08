@@ -6,7 +6,6 @@ const validatorCoreConfig = {
   $dirty: false,
   $invalid: false,
   $pending: false,
-  $path: [],
   $message: ''
 };
 
