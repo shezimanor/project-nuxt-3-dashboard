@@ -6,6 +6,7 @@ const validatorCoreConfig = {
   $dirty: false,
   $invalid: false,
   $pending: false,
+  $path: [],
   $message: ''
 };
 
@@ -40,9 +41,9 @@ function traverseSchemaToStateValidatorWithModel(
     if (obj.items.type === 'object' && obj.items.properties) {
       return {
         ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-        $model: model,
         $type: 'array-object',
-        // $rules: getRulesFn(obj.rules), // 陣列的 rules
+        $rules: getRulesFn(obj.rules), // 陣列的 rules
+        $model: model,
         $eachState: model.map((itemModel: any) =>
           traverseSchemaToStateValidatorWithModel(itemModel, obj.items)
         )
@@ -52,9 +53,9 @@ function traverseSchemaToStateValidatorWithModel(
     else {
       return {
         ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-        $model: model,
-        $type: obj.items.type
-        // $rules: getRulesFn(obj.items.rules)
+        $type: obj.items.type,
+        $rules: getRulesFn(obj.items.rules),
+        $model: model
       };
     }
   }
@@ -62,9 +63,9 @@ function traverseSchemaToStateValidatorWithModel(
   else {
     return {
       ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-      $model: model,
-      $type: obj.type
-      // $rules: getRulesFn(obj.rules)
+      $type: obj.type,
+      $rules: getRulesFn(obj.rules),
+      $model: model
     };
   }
 }

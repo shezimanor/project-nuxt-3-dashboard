@@ -35,9 +35,9 @@ export default function traverseSchemaToStateValidator(
         const newModel = deepClone(obj.default);
         return {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-          $model: newModel,
           $type: 'array-object',
-          // $rules: getRulesFn(obj.rules), // 陣列的 rules
+          $rules: getRulesFn(obj.rules), // 陣列的 rules
+          $model: newModel,
           $eachState: newModel.map((itemModel: any) =>
             traverseSchemaToStateValidatorWithModel(itemModel, obj.items)
           )
@@ -48,9 +48,9 @@ export default function traverseSchemaToStateValidator(
       else {
         return {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-          $model: [],
           $type: 'array-object',
-          // $rules: getRulesFn(obj.rules), // 陣列的 rules
+          $rules: getRulesFn(obj.rules), // 陣列的 rules
+          $model: [],
           $eachState: []
           // $eachRule: getEachRuleStructure(obj.items) // 僅存放規則
         };
@@ -68,9 +68,9 @@ export default function traverseSchemaToStateValidator(
 
         return {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-          $model: newModel,
           $type: 'array-primitive',
-          // $rules: getRulesFn(obj.rules), // 陣列的 rules
+          $rules: getRulesFn(obj.rules), // 陣列的 rules
+          $model: newModel,
           $eachState: obj.default.map((itemModel: any) =>
             traverseSchemaToStateValidatorWithModel(itemModel, obj.items)
           )
@@ -81,9 +81,9 @@ export default function traverseSchemaToStateValidator(
       else {
         return {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-          $model: [],
           $type: 'array-primitive',
-          // $rules: getRulesFn(obj.rules), // 陣列的 rules
+          $rules: getRulesFn(obj.rules), // 陣列的 rules
+          $model: [],
           $eachState: []
           // $eachRulePrimitive: getEachRuleStructure(obj.items) // 繼續往下渲染
         };
@@ -96,21 +96,21 @@ export default function traverseSchemaToStateValidator(
       ? Array.isArray(obj.default)
         ? {
             ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-            $model: deepClone(obj.default),
-            $type: obj.type
-            // $rules: getRulesFn(obj.rules)
+            $type: obj.type,
+            $rules: getRulesFn(obj.rules),
+            $model: deepClone(obj.default)
           }
         : {
             ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-            $model: obj.default,
-            $type: obj.type
-            // $rules: getRulesFn(obj.rules)
+            $type: obj.type,
+            $rules: getRulesFn(obj.rules),
+            $model: obj.default
           }
       : {
           ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-          $model: getTypeDefault(obj.type),
-          $type: obj.type
-          // $rules: getRulesFn(obj.rules)
+          $type: obj.type,
+          $rules: getRulesFn(obj.rules),
+          $model: getTypeDefault(obj.type)
         };
   }
 }
