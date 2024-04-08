@@ -19,6 +19,7 @@ const state = reactive(traverseSchemaToState(props.schema));
 
 const {
   stateValidator,
+  stateIsInvalid,
   updateState,
   addArrayState,
   removeArrayState,
@@ -56,19 +57,25 @@ function onSubmit(event: Event) {
 </script>
 
 <template>
-  <div class="flex flex-col max-w-screen-md">
-    <div class="py-4">
+  <div class="flex flex-col gap-y-4 max-w-screen-md">
+    <div>
       <UFormGroup label="測試模式">
         <UToggle v-model="testModeProxy" />
       </UFormGroup>
     </div>
-    <div
-      v-show="mySchemaStore.state.testMode"
-      class="border p-4 rounded-2xl mb-4"
-    >
+    <div v-show="mySchemaStore.state.testMode" class="border p-4 rounded-2xl">
       <pre>state: {{ state }}</pre>
+      <pre>stateIsInvalid: {{ stateIsInvalid }}</pre>
       <pre>stateValidator: {{ stateValidator }}</pre>
     </div>
+    <UAlert
+      v-if="stateIsInvalid"
+      icon="i-heroicons-exclamation-triangle-20-solid"
+      color="rose"
+      variant="soft"
+      title="表單驗證失敗"
+      description="請檢查表單內容是否正確"
+    />
     <form v-if="schema && !isEmptyObject(schema)" @submit="onSubmit">
       <div
         class="p-4 sticky -top-0 justify-end md:fixed md:top-16 md:right-4 md:justify-start flex flex-row gap-x-2 bg-white dark:bg-gray-900 z-50"

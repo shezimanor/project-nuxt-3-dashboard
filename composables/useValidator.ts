@@ -1,6 +1,10 @@
 export const useValidator = (state: any, rawSchema: any, schema: any) => {
+  // toast
+  const toast = useToast();
   const rules = traverseSchemaToRules(rawSchema);
   const stateValidator = reactive(traverseSchemaToStateValidator(schema));
+  // 用來檢查表單是否驗證失敗
+  const stateIsInvalid = ref(false);
 
   // 更新狀態()
   function updateState(paths: any, newValue: any) {
@@ -249,12 +253,26 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
 
   // 驗證表單(整個 state 全部驗證一遍，但每個欄位只要驗證到有錯誤就跳到下一個欄位進行驗證)
   function validateState() {
+    stateIsInvalid.value = false;
     console.log('validateState');
+    // 遍歷所有的驗證器
+    // 驗證失敗(toast)
+    stateIsInvalid.value = true;
+    if (stateIsInvalid.value === true)
+      toast.add({
+        id: 'state_validation_failed',
+        icon: 'i-heroicons-exclamation-triangle-20-solid',
+        color: 'rose',
+        title: '表單驗證失敗',
+        description: '請檢查表單內容是否正確',
+        timeout: 2000
+      });
   }
 
   return {
     // state
     stateValidator,
+    stateIsInvalid,
     // action
     updateState,
     addArrayState,
