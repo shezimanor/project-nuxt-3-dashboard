@@ -78,7 +78,6 @@ const stateValidator = computed(() => {
       :title="fieldComponent.__name"
       description="From 欄位元件分配器"
       :price="`${schema.ui.widget}`"
-      cycle="(widget)"
       :highlight="true"
       :badge="{ label: '表單單位元件' }"
       orientation="horizontal"
@@ -89,6 +88,7 @@ const stateValidator = computed(() => {
         `RootState: ${mappingRootState}`
       ]"
     />
+    <UCard> $path: {{ stateValidator.$path }} </UCard>
     <!-- https://tailwindcss.com/docs/max-width -->
     <component
       :is="fieldComponent"

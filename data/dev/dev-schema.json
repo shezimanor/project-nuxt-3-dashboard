@@ -49,18 +49,28 @@
               "comment": "頂級",
               "manyThings": [
                 { "name": "歐巴馬", "job": "美國總統" },
-                { "name": "黃仁勳", "job": "執行長" }
+                { "name": "黃仁勳", "job": "執行長" },
+                { "name": "李小龍", "job": "武打巨星" }
               ],
-              "socialUrls": ["https://www.google321.com"]
+              "socialUrls": [
+                "https://www.edge.com",
+                "https://www.notion.com",
+                "https://www.spotify.com"
+              ]
             },
             {
               "level": "等級A",
               "comment": "普通",
               "manyThings": [
                 { "name": "張雷恩", "job": "副班長" },
-                { "name": "蘇珊", "job": "副理" }
+                { "name": "蘇珊", "job": "副理" },
+                { "name": "愛因斯坦", "job": "科學家" }
               ],
-              "socialUrls": ["https://www.google123.com"]
+              "socialUrls": [
+                "https://www.safari.com",
+                "https://www.slack.com",
+                "https://www.sourcetree.com"
+              ]
             }
           ],
           "items": {
@@ -148,7 +158,7 @@
                     "label": "社交網址",
                     "widget": "input",
                     "widgetConfig": {
-                      "placeholder": "請輸入網址"
+                      "placeholder": "請輸入社交網址"
                     }
                   },
                   "rules": {
@@ -157,7 +167,7 @@
                   }
                 },
                 "ui": {
-                  "label": "多個網址(items是字串陣列)"
+                  "label": "多個社交網址(items是字串陣列)"
                 },
                 "rules": {
                   "minLength": 3

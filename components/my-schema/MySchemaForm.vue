@@ -64,7 +64,7 @@ function onSubmit(event: Event) {
       </UFormGroup>
     </div>
     <div v-show="mySchemaStore.state.testMode" class="border p-4 rounded-2xl">
-      <pre>state: {{ state }}</pre>
+      <!-- <pre>state: {{ state }}</pre> -->
       <pre>stateValidator: {{ stateValidator }}</pre>
     </div>
     <UAlert

@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "properties": {
+    "prototypeJSON": {
+      "type": "object",
+      "properties": {
+        "players": {
+          "type": "array",
+          "default": [
+            {
+              "level": "等級SSR",
+              "comment": "頂級",
+              "name": "小明"
+            },
+            {
+              "level": "等級SR",
+              "comment": "普通",
+              "name": "小華"
+            }
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "default": "等級A",
+                "ui": {
+                  "label": "等級",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入等級"
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              },
+              "comment": {
+                "type": "string",
+                "default": "良好",
+                "ui": {
+                  "label": "評價",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入評價"
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              },
+              "name": {
+                "type": "string",
+                "default": "玩家A",
+                "ui": {
+                  "label": "姓名",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入姓名"
+                  }
+                },
+                "rules": {
+                  "required": true,
+                  "maxLength": 30
+                }
+              }
+            }
+          },
+          "ui": {
+            "label": "玩家名單",
+            "widget": "array-tabs"
+          },
+          "rules": {
+            "minLength": 2
+          }
+        }
+      },
+      "ui": {
+        "label": "核心資料"
+      }
+    }
+  },
+  "ui": {
+    "label": "表單容器"
+  }
+}
