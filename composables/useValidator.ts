@@ -278,21 +278,42 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
   // ✅ 更新陣列驗證器的每個項目路徑(array-primitive)
   function updateArrayPrimitiveEachStatePath(currentEachState: any[]) {
     for (let index = 0; index < currentEachState.length; index++) {
-      const item = currentEachState[index];
-      const pathSnippet = item.$path.split('.');
-      // pop() 已改變 pathSnippet
+      const stateItem = currentEachState[index];
+      const pathSnippet = stateItem.$path.split('.');
+      // pop() 已改變 pathSnippet, arrayPrimitiveEachState 的 $path 的最後一個 key 是 index
       const originalIndex = Number(pathSnippet.pop());
       // 如果index未變動，則跳過
       if (originalIndex === index) continue;
-      // 更新路徑
+      // 重組新的路徑
       const pathPattern = `${pathSnippet.join('.')}.${index}`;
-      item.$path = pathPattern;
+      // 更新路徑
+      stateItem.$path = pathPattern;
     }
   }
 
-  // 📛 TODO:更新陣列驗證器的每個項目路徑(array-object)
+  // TODO:更新陣列驗證器的每個項目路徑(array-object)
   function updateArrayObjectEachStatePath(currentEachState: any[]) {
-    for (let index = 0; index < currentEachState.length; index++) {}
+    for (let index = 0; index < currentEachState.length; index++) {
+      const stateItemObj = currentEachState[index];
+      for (const propKey in stateItemObj) {
+        if (Object.prototype.hasOwnProperty.call(stateItemObj, propKey)) {
+          const stateItem = stateItemObj[propKey];
+          const pathSnippet = stateItem.$path.split('.');
+          // pop() 已改變 pathSnippet, arrayObjectEachState 的 $path 的最後一個 key 是 propKey
+          const currentPropKey = pathSnippet.pop();
+          // pop() 再次改變 pathSnippet, currentPropKey 前一項 key 是 index
+          const originalIndex = Number(pathSnippet.pop());
+          // 如果index未變動，則跳過
+          if (originalIndex === index) continue;
+          // 重組新的路徑
+          const pathPattern = `${pathSnippet.join(
+            '.'
+          )}.${index}.${currentPropKey}`;
+          // 更新路徑
+          stateItem.$path = pathPattern;
+        }
+      }
+    }
   }
 
   // 驗證表單(整個 state 全部驗證一遍，但每個欄位只要驗證到有錯誤就跳到下一個欄位進行驗證)
