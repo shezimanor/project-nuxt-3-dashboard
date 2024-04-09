@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import schemaJSON from '~/data/dev/dev-schema-2-layer-array-object.json';
+import schemaJSON from '~/data/dev/dev-schema.json';
 // schema在最上層就將他加入響應式系統
 const rawSchema = deepClone(schemaJSON);
 const schema = reactive(rawSchema);

@@ -1,0 +1,210 @@
+{
+  "type": "object",
+  "properties": {
+    "prototypeJSON": {
+      "type": "object",
+      "properties": {
+        "players": {
+          "type": "array",
+          "default": [
+            {
+              "level": "等級SSR",
+              "comment": "頂級",
+              "manyThings": [
+                {
+                  "name": "歐巴馬",
+                  "job": "美國總統",
+                  "pets": [
+                    { "name": "狗", "type": "拉布拉多" },
+                    { "name": "貓", "type": "波斯貓" }
+                  ]
+                },
+                {
+                  "name": "黃仁勳",
+                  "job": "執行長",
+                  "pets": [
+                    { "name": "鼠", "type": "天竺鼠" },
+                    { "name": "貓", "type": "美國短毛貓" },
+                    { "name": "魚", "type": "金魚" }
+                  ]
+                },
+                {
+                  "name": "李小龍",
+                  "job": "武打巨星",
+                  "pets": [
+                    { "name": "貓", "type": "緬因貓" },
+                    { "name": "熊", "type": "貓熊" },
+                    { "name": "魚", "type": "異形" }
+                  ]
+                }
+              ]
+            },
+            {
+              "level": "等級SR",
+              "comment": "普通",
+              "manyThings": [
+                {
+                  "name": "張雷恩",
+                  "job": "副班長",
+                  "pets": [{ "name": "龜", "type": "綠蠵龜" }]
+                },
+                {
+                  "name": "蘇珊",
+                  "job": "副理",
+                  "pets": [
+                    { "name": "狗", "type": "哈士奇" },
+                    { "name": "猴", "type": "雪猴" }
+                  ]
+                },
+                {
+                  "name": "愛因斯坦",
+                  "job": "科學家",
+                  "pets": [
+                    { "name": "猴", "type": "台灣獼猴" },
+                    { "name": "熊", "type": "棕熊" }
+                  ]
+                }
+              ]
+            }
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "default": "等級A",
+                "ui": {
+                  "label": "等級",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入等級"
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              },
+              "comment": {
+                "type": "string",
+                "default": "良好",
+                "ui": {
+                  "label": "評價",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入評價"
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              },
+              "manyThings": {
+                "type": "array",
+                "default": [
+                  { "name": "你的名字", "job": "你的工作", "pets": [] }
+                ],
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "default": "你的名字",
+                      "ui": {
+                        "label": "名字",
+                        "widget": "input",
+                        "widgetConfig": {
+                          "placeholder": "請輸入名字"
+                        }
+                      },
+                      "rules": {
+                        "required": true
+                      }
+                    },
+                    "job": {
+                      "type": "string",
+                      "default": "工程師",
+                      "ui": {
+                        "label": "工作",
+                        "widget": "input",
+                        "widgetConfig": {
+                          "placeholder": "請輸入工作"
+                        }
+                      },
+                      "rules": {
+                        "required": true
+                      }
+                    },
+                    "pets": {
+                      "type": "array",
+                      "default": [{ "name": "貓", "type": "賓士貓" }],
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "default": "某種寵物",
+                            "ui": {
+                              "label": "寵物類別",
+                              "widget": "input",
+                              "widgetConfig": {
+                                "placeholder": "請輸入寵物類別"
+                              }
+                            },
+                            "rules": {
+                              "required": true
+                            }
+                          },
+                          "type": {
+                            "type": "string",
+                            "default": "賓士貓",
+                            "ui": {
+                              "label": "品種",
+                              "widget": "input",
+                              "widgetConfig": {
+                                "placeholder": "請輸入品種"
+                              }
+                            },
+                            "rules": {
+                              "required": true
+                            }
+                          }
+                        }
+                      },
+                      "ui": {
+                        "label": "我的寵物(第三層陣列包物件)",
+                        "widget": "array-tabs"
+                      },
+                      "rules": {
+                        "minLength": 1
+                      }
+                    }
+                  }
+                },
+                "ui": {
+                  "label": "陣列物件又包陣列物件",
+                  "widget": "array-tabs"
+                },
+                "rules": {
+                  "minLength": 2
+                }
+              }
+            }
+          },
+          "ui": {
+            "label": "玩家名單",
+            "widget": "array-tabs"
+          },
+          "rules": {
+            "minLength": 2
+          }
+        }
+      },
+      "ui": {
+        "label": "核心資料"
+      }
+    }
+  },
+  "ui": {
+    "label": "表單容器"
+  }
+}

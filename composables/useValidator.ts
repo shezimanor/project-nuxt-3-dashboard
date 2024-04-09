@@ -275,24 +275,32 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     }
   }
 
-  // ✅ 更新陣列驗證器的每個項目路徑(array-primitive)
-  function updateArrayPrimitiveEachStatePath(currentEachState: any[]) {
+  // 更新陣列驗證器的每個項目路徑(array-primitive)
+  function updateArrayPrimitiveEachStatePath(
+    currentEachState: any[],
+    newPathPattern: string = ''
+  ) {
     for (let index = 0; index < currentEachState.length; index++) {
       const stateItem = currentEachState[index];
       const pathSnippet = stateItem.$path.split('.');
       // pop() 已改變 pathSnippet, arrayPrimitiveEachState 的 $path 的最後一個 key 是 index
       const originalIndex = Number(pathSnippet.pop());
-      // 如果index未變動，則跳過
-      if (originalIndex === index) continue;
-      // 重組新的路徑
-      const pathPattern = `${pathSnippet.join('.')}.${index}`;
+      // 如果index未變動(而且是首層的話 newPathPattern === '')，則跳過
+      if (originalIndex === index && newPathPattern === '') continue;
+      // 重組新的路徑(有傳入 newPathPattern 則使用 newPathPattern，否則使用 pathSnippet.join('.'))
+      const pathPattern = `${
+        newPathPattern === '' ? pathSnippet.join('.') : newPathPattern
+      }.${index}`;
       // 更新路徑
       stateItem.$path = pathPattern;
     }
   }
 
-  // TODO:更新陣列驗證器的每個項目路徑(array-object)
-  function updateArrayObjectEachStatePath(currentEachState: any[]) {
+  // 更新陣列驗證器的每個項目路徑(array-object)
+  function updateArrayObjectEachStatePath(
+    currentEachState: any[],
+    newPathPattern: string = ''
+  ) {
     for (let index = 0; index < currentEachState.length; index++) {
       const stateItemObj = currentEachState[index];
       for (const propKey in stateItemObj) {
@@ -303,14 +311,23 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
           const currentPropKey = pathSnippet.pop();
           // pop() 再次改變 pathSnippet, currentPropKey 前一項 key 是 index
           const originalIndex = Number(pathSnippet.pop());
-          // 如果index未變動，則跳過
-          if (originalIndex === index) continue;
-          // 重組新的路徑
-          const pathPattern = `${pathSnippet.join(
-            '.'
-          )}.${index}.${currentPropKey}`;
+          // 如果index未變動(而且是首層的話 newPathPattern === '')，則跳過
+          if (originalIndex === index && newPathPattern === '') continue;
+          // 重組新的路徑(有傳入 newPathPattern 則使用 newPathPattern，否則使用 pathSnippet.join('.'))
+          const pathPattern = `${
+            newPathPattern === '' ? pathSnippet.join('.') : newPathPattern
+          }.${index}.${currentPropKey}`;
           // 更新路徑
           stateItem.$path = pathPattern;
+          // 更新下層的路徑
+          if (stateItem.$type === 'array-object') {
+            updateArrayObjectEachStatePath(stateItem.$eachState, pathPattern);
+          } else if (stateItem.$type === 'array-primitive') {
+            updateArrayPrimitiveEachStatePath(
+              stateItem.$eachState,
+              pathPattern
+            );
+          }
         }
       }
     }
