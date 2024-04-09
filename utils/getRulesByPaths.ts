@@ -15,7 +15,9 @@ export default function getRulesByPaths(
     .slice(0, lastKeyIndex)
     .reduce((parentRule: any, currentKey: any) => {
       if (!isValidArrayPath(currentKey)) return parentRule[currentKey];
-      else if (parentRule.hasOwnProperty('$eachPrimitive'))
+      else if (
+        Object.prototype.hasOwnProperty.call(parentRule, '$eachPrimitive')
+      )
         return parentRule['$eachPrimitive'];
       else return parentRule['$each'];
     }, rules);

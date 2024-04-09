@@ -19,7 +19,7 @@ export default function traverseObjectWithDepth(
 
   // traverse object
   for (let key in obj) {
-    if (obj.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
       let fullKey = parentKey ? `${parentKey}.${key}` : key;
       if (typeof obj[key] === 'object' && obj[key] !== null) {
         if (Array.isArray(obj[key])) {

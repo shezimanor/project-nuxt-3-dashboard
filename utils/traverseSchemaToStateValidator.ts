@@ -32,7 +32,7 @@ export default function traverseSchemaToStateValidator(
     if (obj.items.type === 'object' && obj.items.properties) {
       // 有 default 值，繼續往下渲染
       if (
-        obj.hasOwnProperty('default') &&
+        Object.prototype.hasOwnProperty.call(obj, 'default') &&
         Array.isArray(obj.default) &&
         obj.default.length > 0
       ) {
@@ -68,7 +68,7 @@ export default function traverseSchemaToStateValidator(
     else {
       // 有 default 值，繼續往下渲染
       if (
-        obj.hasOwnProperty('default') &&
+        Object.prototype.hasOwnProperty.call(obj, 'default') &&
         Array.isArray(obj.default) &&
         obj.default.length > 0
       ) {
@@ -104,7 +104,7 @@ export default function traverseSchemaToStateValidator(
   }
   // 如果不是 object 或 array 類型，則返回 default 值
   else {
-    return obj.hasOwnProperty('default')
+    return Object.prototype.hasOwnProperty.call(obj, 'default')
       ? Array.isArray(obj.default)
         ? {
             ...JSON.parse(JSON.stringify(validatorCoreConfig)),

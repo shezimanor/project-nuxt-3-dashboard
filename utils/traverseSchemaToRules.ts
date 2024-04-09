@@ -42,7 +42,8 @@ export default function traverseSchemaToRules(obj: Record<string, any>): any {
   }
   // 如果不是 object 或 array 結構類型，則返回 default 值
   else {
-    return obj.hasOwnProperty('rules') && !isEmptyObject(obj.rules)
+    return Object.prototype.hasOwnProperty.call(obj, 'rules') &&
+      !isEmptyObject(obj.rules)
       ? getRulesFn(obj.rules)
       : {};
   }
