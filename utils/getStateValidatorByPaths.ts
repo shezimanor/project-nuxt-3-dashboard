@@ -14,7 +14,8 @@ export default function getStateValidatorByPaths(
   return paths
     .slice(0, lastKeyIndex)
     .reduce((parentValidator: any, currentKey: any) => {
-      if (!isValidArrayPath(currentKey)) return parentValidator[currentKey];
+      if (!isValidArrayPath(currentKey))
+        return parentValidator['$properties'][currentKey];
       else return parentValidator['$eachState'][Number(currentKey)];
     }, validator);
 }

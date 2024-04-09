@@ -1,0 +1,163 @@
+{
+  "type": "object",
+  "properties": {
+    "prototypeJSON": {
+      "type": "object",
+      "properties": {
+        "players": {
+          "type": "array",
+          "default": [
+            {
+              "level": "等級A",
+              "someInfo": {
+                "name": "Adam",
+                "age": 38,
+                "pets": [
+                  {
+                    "name": "貓",
+                    "type": "賓士貓"
+                  },
+                  {
+                    "name": "猴子",
+                    "type": "雪猴"
+                  }
+                ]
+              }
+            },
+            {
+              "level": "等級B",
+              "someInfo": {
+                "name": "Lisa",
+                "age": 28,
+                "pets": [
+                  {
+                    "name": "狗",
+                    "type": "土狗"
+                  },
+                  {
+                    "name": "貓",
+                    "type": "賓士貓"
+                  }
+                ]
+              }
+            }
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "default": "等級A",
+                "ui": {
+                  "label": "等級",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入等級"
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              },
+              "someInfo": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "default": "玩家名稱",
+                    "ui": {
+                      "label": "名稱",
+                      "widget": "input",
+                      "widgetConfig": {
+                        "placeholder": "請輸入名稱"
+                      }
+                    },
+                    "rules": {
+                      "required": true
+                    }
+                  },
+                  "age": {
+                    "type": "number",
+                    "default": 18,
+                    "ui": {
+                      "label": "年齡",
+                      "widget": "input",
+                      "widgetConfig": {
+                        "type": "number",
+                        "placeholder": "請輸入年齡"
+                      }
+                    },
+                    "rules": {
+                      "minValue": 11,
+                      "maxValue": 100
+                    }
+                  },
+                  "pets": {
+                    "type": "array",
+                    "default": [{ "name": "貓", "type": "賓士貓" }],
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "default": "某種寵物",
+                          "ui": {
+                            "label": "寵物類別",
+                            "widget": "input",
+                            "widgetConfig": {
+                              "placeholder": "請輸入寵物類別"
+                            }
+                          },
+                          "rules": {
+                            "required": true
+                          }
+                        },
+                        "type": {
+                          "type": "string",
+                          "default": "賓士貓",
+                          "ui": {
+                            "label": "品種",
+                            "widget": "input",
+                            "widgetConfig": {
+                              "placeholder": "請輸入品種"
+                            }
+                          },
+                          "rules": {
+                            "required": true
+                          }
+                        }
+                      }
+                    },
+                    "ui": {
+                      "label": "我的寵物(第三層陣列包物件)",
+                      "widget": "array-tabs"
+                    },
+                    "rules": {
+                      "minLength": 1
+                    }
+                  }
+                },
+                "ui": {
+                  "label": "更多資料(第二層物件)"
+                }
+              }
+            }
+          },
+          "ui": {
+            "label": "玩家名單(第一層陣列包物件)",
+            "widget": "array-tabs"
+          },
+          "rules": {
+            "minLength": 2
+          }
+        }
+      },
+      "ui": {
+        "label": "核心資料"
+      }
+    }
+  },
+  "ui": {
+    "label": "表單容器"
+  }
+}

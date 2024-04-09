@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import schemaJSON from '~/data/dev/dev-schema-3-layer-array-object.json';
+import schemaJSON from '~/data/dev/dev-schema-1-layer-array-object-1-layer-array-primitive-clip-object.json';
 const rawSchema = deepClone(schemaJSON);
 </script>
 

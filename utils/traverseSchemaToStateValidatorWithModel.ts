@@ -13,11 +13,15 @@ export default function traverseSchemaToStateValidatorWithModel(
 ): any {
   // 檢查 obj 是否為 object 類型
   if (obj.type === 'object' && obj.properties) {
-    const result: { [key: string]: any } = {};
+    const result: { [key: string]: any } = {
+      $type: 'object',
+      $path: path,
+      $properties: {}
+    };
     // 遍歷 properties 中的每個屬性
     for (const key in obj.properties) {
       // 遞歸調用 traverseSchemaToStateValidatorWithModel 函數來處理每個子屬性
-      result[key] = traverseSchemaToStateValidatorWithModel(
+      result['$properties'][key] = traverseSchemaToStateValidatorWithModel(
         model[key],
         obj.properties[key],
         `${path}.${key}`
