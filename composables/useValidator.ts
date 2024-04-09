@@ -76,6 +76,7 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
       `${paths.join('.')}.${newArray.length - 1}`
     );
     currentStateValidator.$eachState.push($newItem);
+    // 🟡 更新 stateValidator $path(不用更新，因為新增項目不會影響到其他項目的路徑)
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
 
@@ -112,6 +113,8 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
 
     // 更新 stateValidator $eachState(刪除項目)
     currentStateValidator.$eachState.splice(arrayIndex, 1);
+    // 更新 stateValidator $path
+    updateArrayEachStatePathHandler(currentStateValidator);
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
 
@@ -154,19 +157,7 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     );
     currentStateValidator.$eachState.splice(toIndex, 0, $removedItem);
     // 更新 stateValidator $path
-    switch (currentStateValidator.$type) {
-      case 'array-object':
-        updateArrayObjectEachStatePath(currentStateValidator.$eachState);
-        break;
-      case 'array-primitive':
-        updateArrayPrimitiveEachStatePath(currentStateValidator.$eachState);
-        break;
-      default:
-        console.log(
-          'currentStateValidator.$type is not `array-object` or `array-primitive`.'
-        );
-        break;
-    }
+    updateArrayEachStatePathHandler(currentStateValidator);
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
 
@@ -201,6 +192,7 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
 
     // 更新 stateValidator $eachState(刪除所有項目)
     currentStateValidator.$eachState = newArray;
+    // 🟡 更新 stateValidator $path(不用更新，因為已刪除所有項目)
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
 
@@ -272,6 +264,23 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     if (invalidMessage.length > 0) {
       currentStateValidator.$invalid = true;
       currentStateValidator.$message = invalidMessage;
+    }
+  }
+
+  // 更新陣列驗證器的每個項目路徑的分流處理器(switch-case)
+  function updateArrayEachStatePathHandler(currentStateValidator: any) {
+    switch (currentStateValidator.$type) {
+      case 'array-object':
+        updateArrayObjectEachStatePath(currentStateValidator.$eachState);
+        break;
+      case 'array-primitive':
+        updateArrayPrimitiveEachStatePath(currentStateValidator.$eachState);
+        break;
+      default:
+        console.log(
+          'currentStateValidator.$type is not `array-object` or `array-primitive`.'
+        );
+        break;
     }
   }
 
