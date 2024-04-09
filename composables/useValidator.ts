@@ -2,14 +2,13 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
   // toast
   const toast = useToast();
   const rules = traverseSchemaToRules(rawSchema);
-  const stateValidator = reactive(
-    traverseSchemaToStateValidator(schema, '$root')
-  );
+  const stateValidator = reactive(traverseSchemaToStateValidator(schema, ''));
   // 用來檢查表單是否驗證失敗
   const stateIsInvalid = ref(false);
 
-  // 更新狀態()
+  // 更新狀態
   function updateState(paths: any, newValue: any) {
+    console.log('updateState');
     // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
     // 當遇到陣列的時候 path item會是 `'i'`, i === 整數
     const lastKeyIndex = paths.length - 1;
@@ -31,11 +30,18 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     );
 
     // 更新 state
-    lastParentState[paths[lastKeyIndex]] = newValue;
+    if (!Array.isArray(lastParentState))
+      lastParentState[paths[lastKeyIndex]] = newValue;
+    // 只有 `array-primitive` 會進入這個分支
+    else lastParentState[Number(paths[lastKeyIndex])] = newValue;
   }
+
+  // TODO: 陣列項的更新操作： 多層陣列的 stateValidator 要逆向更新到最頂層的陣列驗證器的 $model
+  // 包含新增、刪除、移動、清空
 
   // 新增項目(array-object, array-primitive)
   function addArrayState(paths: any, newValue: any) {
+    console.log('addArrayState');
     // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
     // 當遇到陣列包物件的時候 path item會是 "[0]"
     const lastKeyIndex = paths.length - 1;
@@ -67,9 +73,8 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     const $newItem = traverseSchemaToStateValidatorWithModel(
       newValue,
       currentSchema.items,
-      `$root.${paths.join('.')}.${newArray.length - 1}`
+      `${paths.join('.')}.${newArray.length - 1}`
     );
-
     currentStateValidator.$eachState.push($newItem);
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
@@ -80,6 +85,7 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
 
   // 刪除項目(array-object, array-primitive)
   function removeArrayState(paths: any, arrayIndex: number) {
+    console.log('removeArrayState');
     // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
     // 當遇到陣列包物件的時候 path item會是 "[0]"
     const lastKeyIndex = paths.length - 1;
@@ -115,6 +121,7 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
 
   // 移動項目(array-object, array-primitive)
   function moveArrayState(paths: any, fromIndex: number, toIndex: number) {
+    console.log('moveArrayState');
     // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
     // 當遇到陣列包物件的時候 path item會是 "[0]"
     const lastKeyIndex = paths.length - 1;
@@ -146,8 +153,20 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
       1
     );
     currentStateValidator.$eachState.splice(toIndex, 0, $removedItem);
-    // 更新 stateValidator $eachState $path
-    updateArrayEachStatePaths(currentStateValidator.$eachState);
+    // 更新 stateValidator $path
+    switch (currentStateValidator.$type) {
+      case 'array-object':
+        updateArrayObjectEachStatePath(currentStateValidator.$eachState);
+        break;
+      case 'array-primitive':
+        updateArrayPrimitiveEachStatePath(currentStateValidator.$eachState);
+        break;
+      default:
+        console.log(
+          'currentStateValidator.$type is not `array-object` or `array-primitive`.'
+        );
+        break;
+    }
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
 
@@ -256,23 +275,24 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     }
   }
 
-  function updateArrayEachStatePaths(currentStateValidatorEachState: any) {
-    for (
-      let index = 0;
-      index < currentStateValidatorEachState.length;
-      index++
-    ) {
-      const item = currentStateValidatorEachState[index];
-      if (item.$type === 'array-object') {
-        updateArrayEachStateChildrenPaths(item.$eachState, item.$path);
-      }
+  // ✅ 更新陣列驗證器的每個項目路徑(array-primitive)
+  function updateArrayPrimitiveEachStatePath(currentEachState: any[]) {
+    for (let index = 0; index < currentEachState.length; index++) {
+      const item = currentEachState[index];
+      const pathSnippet = item.$path.split('.');
+      // pop() 已改變 pathSnippet
+      const originalIndex = Number(pathSnippet.pop());
+      // 如果index未變動，則跳過
+      if (originalIndex === index) continue;
+      // 更新路徑
+      const pathPattern = `${pathSnippet.join('.')}.${index}`;
+      item.$path = pathPattern;
     }
   }
-  function updateArrayEachStateChildrenPaths(
-    childrenEachState: any,
-    pathPattern: string
-  ) {
-    console.log('updateArrayEachStateChildrenPaths', childrenEachState);
+
+  // 📛 TODO:更新陣列驗證器的每個項目路徑(array-object)
+  function updateArrayObjectEachStatePath(currentEachState: any[]) {
+    for (let index = 0; index < currentEachState.length; index++) {}
   }
 
   // 驗證表單(整個 state 全部驗證一遍，但每個欄位只要驗證到有錯誤就跳到下一個欄位進行驗證)

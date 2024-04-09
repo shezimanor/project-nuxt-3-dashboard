@@ -7,7 +7,7 @@
  */
 export default function traverseSchemaToStateValidator(
   obj: Record<string, any>,
-  path: string
+  path: string = ''
 ): any {
   // 檢查 obj 是否為 object 類型
   if (obj.type === 'object' && obj.properties) {
@@ -21,7 +21,7 @@ export default function traverseSchemaToStateValidator(
       // 遞歸調用 traverseSchemaToStateValidator 函數來處理每個子屬性
       result[key] = traverseSchemaToStateValidator(
         obj.properties[key],
-        `${path}.${key}`
+        `${path === '' ? '' : `${path}.`}${key}`
       );
     }
     return result;
@@ -47,7 +47,7 @@ export default function traverseSchemaToStateValidator(
             traverseSchemaToStateValidatorWithModel(
               itemModel,
               obj.items,
-              `${path}.${index}`
+              `${path === '' ? '' : `${path}.`}${index}`
             )
           )
         };
@@ -84,7 +84,7 @@ export default function traverseSchemaToStateValidator(
             traverseSchemaToStateValidatorWithModel(
               itemModel,
               obj.items,
-              `${path}.${index}`
+              `${path === '' ? '' : `${path}.`}${index}`
             )
           )
         };
