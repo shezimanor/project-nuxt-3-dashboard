@@ -1,6 +1,8 @@
-export const useValidator = (state: any, rawSchema: any, schema: any) => {
+export const useValidator = (rawSchema: any) => {
   // toast
   const toast = useToast();
+  const schema = reactive(rawSchema);
+  const state = reactive(traverseSchemaToState(schema));
   const rules = traverseSchemaToRules(rawSchema);
   const stateValidator = reactive(traverseSchemaToStateValidator(schema, ''));
   // 用來檢查表單是否驗證失敗
@@ -369,6 +371,8 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
 
   return {
     // state
+    schema,
+    state,
     stateValidator,
     stateIsInvalid,
     // action

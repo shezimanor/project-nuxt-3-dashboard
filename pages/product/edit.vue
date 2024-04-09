@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import schemaJSON from '~/data/dev/dev-schema-3-layer-array-object.json';
-// schema在最上層就將他加入響應式系統
 const rawSchema = deepClone(schemaJSON);
-const schema = reactive(rawSchema);
 </script>
 
 <template>
@@ -14,7 +12,7 @@ const schema = reactive(rawSchema);
         </template>
       </UDashboardNavbar>
       <UDashboardPanelContent class="pt-0 md:pt-4">
-        <MySchemaForm :raw-schema="rawSchema" :schema="schema" />
+        <MySchemaForm :raw-schema="rawSchema" />
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>

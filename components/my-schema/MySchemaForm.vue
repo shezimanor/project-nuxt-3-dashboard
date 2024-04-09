@@ -5,19 +5,15 @@ const mySchemaStore = useMySchemaStore();
 
 // props
 const props = defineProps({
-  schema: {
-    type: Object,
-    required: true
-  },
   rawSchema: {
     type: Object,
     required: true
   }
 });
 
-const state = reactive(traverseSchemaToState(props.schema));
-
 const {
+  state,
+  schema,
   stateValidator,
   stateIsInvalid,
   updateState,
@@ -26,7 +22,7 @@ const {
   moveArrayState,
   clearArrayState,
   validateState
-} = useValidator(state, props.rawSchema, props.schema);
+} = useValidator(props.rawSchema);
 
 const testModeProxy = ref(mySchemaStore.state.testMode);
 
