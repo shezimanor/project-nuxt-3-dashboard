@@ -10,7 +10,7 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
   function updateState(paths: any, newValue: any) {
     console.log('updateState');
     // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-    // 當遇到陣列的時候 path item會是 `'i'`, i === 整數
+    // 當遇到陣列的時候 path item 會是 `'i'`, i === 整數
     const lastKeyIndex = paths.length - 1;
     // 取得當層的驗證器
     const currentStateValidator = getStateValidatorByPaths(
@@ -36,14 +36,13 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     else lastParentState[Number(paths[lastKeyIndex])] = newValue;
   }
 
-  // TODO: 陣列項的更新操作： 多層陣列的 stateValidator 要逆向更新到最頂層的陣列驗證器的 $model
-  // 包含新增、刪除、移動、清空
+  // TODO: （測試）要把 state 的資料給 stateValidator 做 $model 的參考
+  // 這樣也許就不用逆向更新 stateValidator 的 $model 了
 
   // 新增項目(array-object, array-primitive)
   function addArrayState(paths: any, newValue: any) {
     console.log('addArrayState');
     // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-    // 當遇到陣列包物件的時候 path item會是 "[0]"
     const lastKeyIndex = paths.length - 1;
     // 取得當層的驗證器
     const currentStateValidator = getStateValidatorByPaths(
@@ -66,6 +65,9 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
       lastParentState
     );
 
+    // 更新 state
+    lastParentState[paths[lastKeyIndex]] = newArray;
+
     // 🌶️ 更新 stateValidator $eachState(新增項目)
     // 取得當層的 schema
     const currentSchema = getSchemaByPaths(schema, paths, paths.length);
@@ -79,16 +81,12 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     // 🟡 更新 stateValidator $path(不用更新，因為新增項目不會影響到其他項目的路徑)
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
-
-    // 更新 state
-    lastParentState[paths[lastKeyIndex]] = newArray;
   }
 
   // 刪除項目(array-object, array-primitive)
   function removeArrayState(paths: any, arrayIndex: number) {
     console.log('removeArrayState');
     // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-    // 當遇到陣列包物件的時候 path item會是 "[0]"
     const lastKeyIndex = paths.length - 1;
     // 取得當層的驗證器
     const currentStateValidator = getStateValidatorByPaths(
@@ -111,22 +109,21 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
       lastParentState
     );
 
+    // 更新 state
+    lastParentState[paths[lastKeyIndex]] = newArray;
+
     // 更新 stateValidator $eachState(刪除項目)
     currentStateValidator.$eachState.splice(arrayIndex, 1);
     // 更新 stateValidator $path
     updateArrayEachStatePathHandler(currentStateValidator);
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
-
-    // 更新 state
-    lastParentState[paths[lastKeyIndex]] = newArray;
   }
 
   // 移動項目(array-object, array-primitive)
   function moveArrayState(paths: any, fromIndex: number, toIndex: number) {
     console.log('moveArrayState');
     // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-    // 當遇到陣列包物件的時候 path item會是 "[0]"
     const lastKeyIndex = paths.length - 1;
     // 取得當層的驗證器
     const currentStateValidator = getStateValidatorByPaths(
@@ -150,6 +147,9 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
       lastParentState
     );
 
+    // 更新 state
+    lastParentState[paths[lastKeyIndex]] = newArray;
+
     // 更新 stateValidator $eachState(移動項目)
     const [$removedItem] = currentStateValidator.$eachState.splice(
       fromIndex,
@@ -160,15 +160,11 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     updateArrayEachStatePathHandler(currentStateValidator);
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
-
-    // 更新 state
-    lastParentState[paths[lastKeyIndex]] = newArray;
   }
 
   // 刪除所有項目(array-object, array-primitive)
   function clearArrayState(paths: any) {
     // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
-    // 當遇到陣列包物件的時候 path item會是 "[0]"
     const lastKeyIndex = paths.length - 1;
     // 取得當層的驗證器
     const currentStateValidator = getStateValidatorByPaths(
@@ -190,14 +186,14 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
       lastParentState
     );
 
+    // 更新 state
+    lastParentState[paths[lastKeyIndex]] = newArray;
+
     // 更新 stateValidator $eachState(刪除所有項目)
     currentStateValidator.$eachState = newArray;
     // 🟡 更新 stateValidator $path(不用更新，因為已刪除所有項目)
     // 更新 stateValidator $model
     currentStateValidator.$model = newArray;
-
-    // 更新 state
-    lastParentState[paths[lastKeyIndex]] = newArray;
   }
 
   // 驗證器處理器
@@ -342,7 +338,18 @@ export const useValidator = (state: any, rawSchema: any, schema: any) => {
     }
   }
 
-  // 驗證表單(整個 state 全部驗證一遍，但每個欄位只要驗證到有錯誤就跳到下一個欄位進行驗證)
+  // 🔑 從頂層到最底層的陣列驗證器樹的 $model(array-object, array-primitive)
+  // 這個可能用不到
+  function updateTreeArrayModel(paths: any[]) {
+    const topStateValidator = getStateValidatorByPaths(
+      stateValidator,
+      [paths[0]],
+      1
+    );
+    console.log('topStateValidator', topStateValidator);
+  }
+
+  // 🎈 驗證表單(整個 state 全部驗證一遍，但每個欄位只要驗證到有錯誤就跳到下一個欄位進行驗證)
   function validateState() {
     stateIsInvalid.value = false;
     console.log('validateState');

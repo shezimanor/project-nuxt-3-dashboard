@@ -97,32 +97,10 @@ async function removeAllItems() {
       class="mb-1 text-red-500 dark:text-red-400"
       >{{ stateValidator.$message }}</span
     >
-    <!-- <UPageCard
-      v-show="mySchemaStore.state.testMode"
-      title="Form Layout Array"
-      description="陣列排版元件：底下渲染各個 items"
-      icon="i-heroicons-rectangle-stack-20-solid"
-      :ui="{ icon: { wrapper: '', base: 'text-lime-500' } }"
-    /> -->
-    <!-- <UCard v-show="mySchemaStore.state.testMode" :ui="{ base: 'my-2' }">
-      <ul class="w-full flex items-stretch gap-x-4">
-        <li class="flex flex-col gap-y-2 grow">
-          <h4 class="text-lime-600 font-bold">itemModel:</h4>
-          <hr />
-          <pre>{{ itemModel }}</pre>
-        </li>
-        <li class="flex flex-col gap-y-2 grow">
-          <h4 class="text-lime-600 font-bold">state:</h4>
-          <hr />
-          <pre>{{ state }}</pre>
-        </li>
-        <li class="flex flex-col gap-y-2 grow">
-          <h4 class="text-lime-600 font-bold">paths:</h4>
-          <hr />
-          <pre>{{ paths }}</pre>
-        </li>
-      </ul>
-    </UCard> -->
+    <UCard>
+      $model:
+      <pre>{{ stateValidator.$model }}</pre>
+    </UCard>
     <!-- 工具列 -->
     <UButtonGroup
       size="sm"
