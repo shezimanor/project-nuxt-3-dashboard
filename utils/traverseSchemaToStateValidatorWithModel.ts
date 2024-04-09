@@ -48,10 +48,17 @@ export default function traverseSchemaToStateValidatorWithModel(
     else {
       return {
         ...JSON.parse(JSON.stringify(validatorCoreConfig)),
-        $type: obj.items.type,
+        $type: 'array-primitive',
         $path: path,
-        $rules: getRulesFn(obj.items.rules),
-        $model: model
+        $rules: getRulesFn(obj.rules), // 陣列的 rules
+        $model: model,
+        $eachState: model.map((itemModel: any, index: number) =>
+          traverseSchemaToStateValidatorWithModel(
+            itemModel,
+            obj.items,
+            `${path}.${index}`
+          )
+        )
       };
     }
   }

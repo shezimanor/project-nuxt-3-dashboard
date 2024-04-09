@@ -51,7 +51,7 @@
                 { "name": "歐巴馬", "job": "美國總統" },
                 { "name": "黃仁勳", "job": "執行長" }
               ],
-              "socialUrls": ["www.google321.com"]
+              "socialUrls": ["https://www.google321.com"]
             },
             {
               "level": "等級A",
@@ -60,7 +60,7 @@
                 { "name": "張雷恩", "job": "副班長" },
                 { "name": "蘇珊", "job": "副理" }
               ],
-              "socialUrls": ["www.google123.com"]
+              "socialUrls": ["https://www.google123.com"]
             }
           ],
           "items": {
