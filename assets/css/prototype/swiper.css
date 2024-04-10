@@ -1,0 +1,7 @@
+.swiper {
+  /* @apply w-64 h-64; */
+  @apply w-full h-full;
+}
+.swiper-slide {
+  @apply flex flex-col justify-center items-center text-xl font-bold bg-cyan-500 text-white;
+}
