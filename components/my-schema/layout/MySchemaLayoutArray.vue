@@ -35,6 +35,11 @@ const {
   [key: string]: any;
 };
 
+// 注入依賴: 負責捲動到指定位置
+const { scorllFormContainer } = inject('rootForm') as {
+  [key: string]: any;
+};
+
 // 取得項目空殼(用於新增，每次使用都要用深層拷貝)，不要直接把當下這層 schema 傳進去，一定要傳 `schema.items`
 const itemModel = traverseSchemaToState(props.schema.items);
 
@@ -50,6 +55,10 @@ const stateValidator = computed(() => {
   );
 });
 
+// 主元素
+const targetElement = ref(null);
+const { bottom } = useElementBounding(targetElement);
+
 // 新增項目
 async function addItem() {
   // deepClone(itemModel) 拷貝空殼物件
@@ -57,6 +66,8 @@ async function addItem() {
   await nextTick();
   // 同步id陣列
   uuidList.value.push(uuid());
+  // 元素捲動(向下對齊)
+  scorllFormContainer(bottom.value, true);
 }
 // 刪除項目
 async function removeItem(index: number) {
@@ -84,7 +95,7 @@ async function removeAllItems() {
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col" ref="targetElement">
     <h3 class="text-lime-500 font-bold text-xl mb-1">
       {{ schema.ui.label ? schema.ui.label : 'Layout Array(No Label)' }}
     </h3>
@@ -120,8 +131,11 @@ async function removeAllItems() {
     </UButtonGroup>
     <div
       v-for="(item, index) in state"
-      class="flex flex-col mt-2 pb-4"
-      :class="{ 'gap-y-4': mySchemaStore.state.testMode }"
+      class="flex flex-col py-4"
+      :class="{
+        'gap-y-4': mySchemaStore.state.testMode,
+        'border-b': index < state.length - 1
+      }"
       :key="uuidList[index]"
     >
       <UBadge
