@@ -425,7 +425,7 @@ export const useValidator = (rawSchema: any) => {
     // 遍歷整個 stateValidator 驗證來驗證表單
     validateStateValidator(stateValidator);
     // 驗證成功的介面處理
-    if (stateIsValid.value === true)
+    if (stateIsValid.value === true) {
       toast.add({
         id: 'state_validation_success',
         icon: 'i-heroicons-check-circle-20-solid',
@@ -434,8 +434,10 @@ export const useValidator = (rawSchema: any) => {
         description: '表單已通過驗證',
         timeout: 1000
       });
+      return true;
+    }
     // 驗證失敗的介面處理
-    else
+    else {
       toast.add({
         id: 'state_validation_failed',
         icon: 'i-heroicons-exclamation-triangle-20-solid',
@@ -444,6 +446,8 @@ export const useValidator = (rawSchema: any) => {
         description: '請檢查表單內容是否正確',
         timeout: 2000
       });
+      return false;
+    }
   }
 
   return {

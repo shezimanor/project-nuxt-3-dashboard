@@ -75,8 +75,12 @@ function scorllFormContainer(y: number, isAlignBottom: boolean = false) {
 function onSubmit(event: Event) {
   // 阻止表單的預設提交行為
   event.preventDefault();
-  validateState();
-  if (stateIsValid.value === false) scrollToTop();
+  const result = validateState();
+  if (result === false) scrollToTop();
+  else {
+    // 這裡可以做表單提交的事情
+    console.log('state', state);
+  }
 }
 
 function scrollToTop() {
