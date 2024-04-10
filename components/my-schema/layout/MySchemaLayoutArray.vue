@@ -88,16 +88,19 @@ async function removeAllItems() {
     <h3 class="text-lime-500 font-bold text-xl mb-1">
       {{ schema.ui.label ? schema.ui.label : 'Layout Array(No Label)' }}
     </h3>
-    <span
+    <UAlert
       v-show="
         stateValidator.$dirty &&
         stateValidator.$invalid &&
         stateValidator.$message
       "
-      class="mb-1 text-red-500 dark:text-red-400"
-      >{{ stateValidator.$message }}</span
-    >
-    <UCard>
+      icon="i-heroicons-exclamation-triangle-20-solid"
+      color="rose"
+      variant="soft"
+      :title="stateValidator.$message"
+      class="mb-2"
+    />
+    <UCard v-if="false">
       $model:
       <pre>{{ stateValidator.$model }}</pre>
     </UCard>

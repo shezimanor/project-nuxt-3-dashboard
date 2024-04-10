@@ -88,7 +88,7 @@ const stateValidator = computed(() => {
         `RootState: ${mappingRootState}`
       ]"
     />
-    <UCard> $path: {{ stateValidator.$path }} </UCard>
+    <UCard v-if="false"> $path: {{ stateValidator.$path }} </UCard>
     <!-- https://tailwindcss.com/docs/max-width -->
     <component
       :is="fieldComponent"
