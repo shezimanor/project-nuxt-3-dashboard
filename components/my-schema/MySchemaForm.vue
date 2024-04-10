@@ -15,7 +15,7 @@ const {
   state,
   schema,
   stateValidator,
-  stateIsInvalid,
+  stateIsValid,
   updateState,
   addArrayState,
   removeArrayState,
@@ -59,12 +59,12 @@ function onSubmit(event: Event) {
         <UToggle v-model="testModeProxy" />
       </UFormGroup>
     </div>
-    <div v-show="mySchemaStore.state.testMode" class="border p-4 rounded-2xl">
+    <div v-show="false" class="border p-4 rounded-2xl">
       <pre>state: {{ state }}</pre>
       <pre>stateValidator: {{ stateValidator }}</pre>
     </div>
     <UAlert
-      v-if="stateIsInvalid"
+      v-if="!stateIsValid"
       icon="i-heroicons-exclamation-triangle-20-solid"
       color="rose"
       variant="soft"

@@ -7,8 +7,8 @@ export const useValidator = (rawSchema: any) => {
   const stateValidator = reactive(
     traverseSchemaToStateValidator(schema, state, '')
   );
-  // 用來檢查表單是否驗證失敗
-  const stateIsInvalid = ref(false);
+  // 用來檢查表單是否驗證成功
+  const stateIsValid = ref(true);
 
   // 更新狀態
   function updateState(paths: any, newValue: any) {
@@ -25,7 +25,7 @@ export const useValidator = (rawSchema: any) => {
     // 取得父層的 state
     const lastParentState = getStateByPaths(state, paths, lastKeyIndex);
 
-    // 更新 stateValidator
+    // 更新 stateValidator(這邊不需要接回傳值，回傳值是表單全驗證在用的)
     stateValidatorHandler(
       paths,
       newValue,
@@ -187,7 +187,9 @@ export const useValidator = (rawSchema: any) => {
     paths: any,
     newValue: any,
     currentStateValidator: any,
-    lastParentState: any
+    lastParentState: any,
+    // 是否為更新動作(預設為 true)，因為整個表單全驗證 `validateState` 也會用到這個函數，但不會更新 $model
+    isUpdateAction: boolean = true
   ) {
     // 取得當層的驗證規則
     const currentRulesObj = getRulesByPaths(rules, paths, paths.length);
@@ -212,7 +214,9 @@ export const useValidator = (rawSchema: any) => {
       currentStateValidator.$invalid = true;
       currentStateValidator.$message = invalidMessage;
     }
-    currentStateValidator.$model = newValue;
+    if (isUpdateAction === true) currentStateValidator.$model = newValue;
+    // 回傳驗證結果，驗證成功回傳 true，驗證失敗回傳 false
+    return !currentStateValidator.$invalid;
   }
 
   // 陣列驗證器處理器(array-object, array-primitive)
@@ -247,6 +251,8 @@ export const useValidator = (rawSchema: any) => {
       currentStateValidator.$invalid = true;
       currentStateValidator.$message = invalidMessage;
     }
+    // 回傳驗證結果，驗證成功回傳 true，驗證失敗回傳 false
+    return !currentStateValidator.$invalid;
   }
 
   // 更新階層驗證器的每個項目路徑的分流處理器(switch-case)
@@ -356,14 +362,80 @@ export const useValidator = (rawSchema: any) => {
     }
   }
 
-  // 🎈 驗證表單(整個 state 全部驗證一遍，但每個欄位只要驗證到有錯誤就跳到下一個欄位進行驗證)
+  // stateValidator 遍歷驗證(會直接修改 stateIsValid 的值)
+  function validateStateValidator(currentStateValidator: any) {
+    // 遍歷整個 stateValidator
+    // $type = 'object'
+    if (currentStateValidator.$type === 'object') {
+      // 直接往下遞迴，物件本身不需要驗證
+      const currentSVObj = currentStateValidator.$properties;
+      for (const propKey in currentSVObj) {
+        if (Object.prototype.hasOwnProperty.call(currentSVObj, propKey)) {
+          const currentSVItem = currentSVObj[propKey];
+          validateStateValidator(currentSVItem);
+        }
+      }
+    }
+    // 1. $type = 其他類型: 直接檢查驗證狀態，無需再遞迴; 2. $type = 'array-object' or 'array-primitive': 除了檢查陣列本身的驗證狀態和往下遞迴
+    else {
+      const currentPaths = currentStateValidator.$path.split('.');
+      const lastParentState = getStateByPaths(
+        state,
+        currentPaths,
+        currentPaths.length - 1
+      );
+      const isSVArrayType =
+        currentStateValidator.$type === 'array-object' ||
+        currentStateValidator.$type === 'array-primitive'
+          ? true
+          : false;
+      // 處理器分流
+      const currentSVHandler = isSVArrayType
+        ? arrayStateValidatorHandler
+        : stateValidatorHandler;
+      const validationResult = currentSVHandler(
+        currentPaths,
+        currentStateValidator.$model,
+        currentStateValidator,
+        lastParentState,
+        false
+      );
+      // 驗證失敗 stateIsValid = false
+      if (validationResult === false) stateIsValid.value = false;
+      // 往下遞迴(isSVArrayType = true)
+      if (isSVArrayType) {
+        for (
+          let index = 0;
+          index < currentStateValidator.$eachState.length;
+          index++
+        ) {
+          validateStateValidator(currentStateValidator.$eachState[index]);
+        }
+      }
+    }
+
+    // 驗證成功 stateIsValid = true，驗證失敗 stateIsValid = false
+  }
+
+  // 🎈 驗證表單(整個 stateValidator 全部驗證一遍，但每個欄位只要驗證到有錯誤就跳到下一個欄位進行驗證)
   function validateState() {
-    stateIsInvalid.value = false;
+    // 初始化 stateIsValid
+    stateIsValid.value = true;
     console.log('validateState');
-    // 遍歷所有的驗證器
-    // 驗證失敗(toast)
-    stateIsInvalid.value = true;
-    if (stateIsInvalid.value === true)
+    // 遍歷整個 stateValidator 驗證來驗證表單
+    validateStateValidator(stateValidator);
+    // 驗證成功的介面處理
+    if (stateIsValid.value === true)
+      toast.add({
+        id: 'state_validation_success',
+        icon: 'i-heroicons-check-circle-20-solid',
+        color: 'green',
+        title: '表單驗證成功',
+        description: '表單已通過驗證',
+        timeout: 1000
+      });
+    // 驗證失敗的介面處理
+    else
       toast.add({
         id: 'state_validation_failed',
         icon: 'i-heroicons-exclamation-triangle-20-solid',
@@ -379,7 +451,7 @@ export const useValidator = (rawSchema: any) => {
     schema,
     state,
     stateValidator,
-    stateIsInvalid,
+    stateIsValid,
     // action
     updateState,
     addArrayState,
