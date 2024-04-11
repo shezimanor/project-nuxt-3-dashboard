@@ -17,7 +17,7 @@ console.log('data:', data.value);
       <UDashboardPanelContent>
         <div
           v-if="prototypeData && prototypeData.list.length > 0"
-          class="flex flex-row gap-x-4"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4"
         >
           <UPageCard
             v-for="prototypeItem in prototypeData.list"
@@ -26,9 +26,6 @@ console.log('data:', data.value);
             :description="prototypeItem.description"
             icon="i-heroicons-cube-20-solid"
             :to="`/product/edit/create/${prototypeItem.id}`"
-            :ui="{
-              wrapper: 'w-1/4'
-            }"
           />
         </div>
       </UDashboardPanelContent>
