@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "basicJSON": {
+    "basicData": {
       "type": "object",
       "properties": {
         "title": {
@@ -16,14 +16,14 @@
           },
           "rules": {
             "required": true,
-            "maxLength": 30
+            "maxLength": 20
           }
         },
         "description": {
           "type": "string",
           "default": "",
           "ui": {
-            "label": "產品標題",
+            "label": "產品描述",
             "widget": "textarea",
             "widgetConfig": {
               "placeholder": "請輸入產品描述(非必填)"
@@ -38,7 +38,7 @@
         "label": "基本資訊"
       }
     },
-    "prototypeJSON": {
+    "prototypeData": {
       "type": "object",
       "properties": {
         "others": {

@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "prototypeJSON": {
+    "prototypeData": {
       "type": "object",
       "properties": {
         "players": {
