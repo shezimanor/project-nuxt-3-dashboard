@@ -12,6 +12,7 @@ const rawSchema = deepClone(schemaJSON);
         </template>
       </UDashboardNavbar>
       <UDashboardPanelContent class="pt-0 md:pt-4">
+        <p>{{ $route.params.feature }} - {{ $route.params.id }}</p>
         <MySchemaForm :raw-schema="rawSchema" />
       </UDashboardPanelContent>
     </UDashboardPanel>

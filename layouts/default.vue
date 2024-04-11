@@ -28,18 +28,6 @@ const links = [
     label: '建立產品',
     icon: 'i-heroicons-plus-circle-20-solid',
     to: '/product/build'
-  },
-  {
-    id: 'product-edit',
-    label: '編輯產品(test)',
-    icon: 'i-heroicons-cube-transparent-20-solid',
-    to: '/product/edit'
-  },
-  {
-    id: 'product-showcase',
-    label: '產品展示(test)',
-    icon: 'i-heroicons-device-phone-mobile-20-solid',
-    to: '/product/showcase'
   }
 ];
 </script>

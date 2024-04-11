@@ -1,12 +1,12 @@
-import { useStorage } from '@vueuse/core';
-import prototypeData from '~/data/product-prototypes.json';
+import { unref } from 'vue';
+import { usePrototype } from '~/composables/usePrototype';
 
 export default defineEventHandler(async (event) => {
-  const prototypes = useStorage('my-prototypes', prototypeData);
+  const { prototypeData } = usePrototype();
 
   await new Promise(function (resolve) {
-    setTimeout(resolve, 300);
+    setTimeout(resolve, 100);
   });
 
-  return prototypes.value.list;
+  return unref(prototypeData);
 });

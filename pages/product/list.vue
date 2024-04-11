@@ -72,18 +72,20 @@ onMounted(() => {});
           <UColorModeToggle />
         </template>
       </UDashboardNavbar>
-      <UTable
-        v-if="productData"
-        :rows="productData.list"
-        :columns="defaultColumns"
-        :loading="pending"
-        class="w-full"
-        :ui="{ divide: 'divide-gray-200 dark:divide-gray-800' }"
-      ></UTable>
-      <div>
-        <UButton @click="updateItem">修改</UButton>
-        <UButton @click="addItem">新增</UButton>
-      </div>
+      <UDashboardPanelContent>
+        <UTable
+          v-if="productData"
+          :rows="productData.list"
+          :columns="defaultColumns"
+          :loading="pending"
+          class="w-full"
+          :ui="{ divide: 'divide-gray-200 dark:divide-gray-800' }"
+        ></UTable>
+        <div>
+          <UButton @click="updateItem">修改</UButton>
+          <UButton @click="addItem">新增</UButton>
+        </div>
+      </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>
 </template>
