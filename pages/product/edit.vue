@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import schemaJSON from '~/data/dev/dev-schema.json';
+import schemaJSON from '~/data/product-schema-swiper.json';
 const rawSchema = deepClone(schemaJSON);
 </script>
 

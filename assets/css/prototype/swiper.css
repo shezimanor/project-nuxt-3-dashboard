@@ -5,3 +5,53 @@
 .swiper-slide {
   @apply flex flex-col justify-center items-center text-xl font-bold bg-cyan-500 text-white;
 }
+.swiper-slide-card {
+  @apply w-4/5 mx-auto top-4 right-0 left-0 absolute z-50;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.6);
+  transition: all 0.45s;
+}
+
+.animate-spin-simple-x {
+  @apply origin-center;
+  animation: spinSimpleX 0.3s alternate infinite;
+}
+.animate-spin-simple-y {
+  @apply origin-center;
+  animation: spinSimpleY 0.3s alternate infinite;
+}
+
+@keyframes spinSimpleY {
+  from {
+    transform: translateY(-30px) rotate(0deg);
+  }
+  to {
+    transform: translateY(0px) rotate(-30deg);
+  }
+}
+@keyframes spinSimpleX {
+  from {
+    transform: translateX(-15px) rotate(-30deg);
+  }
+  to {
+    transform: translateX(15px) rotate(30deg);
+  }
+}
+
+.swiper-slide-fully-visible .animate-fade-in {
+  animation-name: fadeIn;
+  animation-duration: 0.45s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

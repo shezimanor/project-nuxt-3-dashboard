@@ -1,8 +1,10 @@
-<script setup>
+<script lang="ts" setup>
 // Swiper Prototype
 // import Swiper JS
 import Swiper from 'swiper';
 import { EffectCube, Navigation } from 'swiper/modules';
+const toast = useToast();
+
 // props
 const props = defineProps({
   productState: {
@@ -11,34 +13,55 @@ const props = defineProps({
   }
 });
 
+const isVertical = ref(
+  props.productState.prototypeData.direction === 'vertical' ? true : false
+);
+
+const isShowHint = ref(true);
+
+function onCTA(index: number = 0, url: string = '') {
+  toast.add({
+    id: `swiper_cta_${index}`,
+    icon: 'i-heroicons-arrow-top-right-on-square-solid',
+    color: 'blue',
+    title: '[模擬]成功跳轉(不會真的跳轉)',
+    description: `外連網址: ${url}`,
+    timeout: 1200
+  });
+}
+
 onMounted(() => {
   // init Swiper: https://swiperjs.com/swiper-api#parameters
   const swiper = new Swiper('.my-swiper', {
     // configure Swiper to use modules
     modules: [EffectCube, Navigation],
     // Optional parameters
-    // direction: 'vertical',
-    direction: 'horizontal',
+    // direction: 'vertical' | 'horizontal',
+    direction: props.productState.prototypeData.direction,
+    loop: props.productState.prototypeData.loop,
     effect: 'cube',
-    loop: true,
+    // 修正奇數張圖片的loop問題
+    loopAdditionalSlides:
+      props.productState.prototypeData.slides.length % 2 === 0 ? 0 : 1,
+    speed: 300,
     grabCursor: true,
-    cubeEffect: {
-      slideShadows: true,
-      shadow: true,
-      shadowOffset: 20,
-      shadowScale: 0.94
-    },
-
     // Navigation arrows
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev'
     },
+    // Events
     on: {
-      setTranslate(swiper) {
+      setTranslate(swiper: any) {
         const transformString = swiper.slidesEl.style.transform;
-        const newTransformString = getTransformString(transformString, false);
+        const newTransformString = getTransformString(
+          transformString,
+          isVertical.value
+        );
         swiper.slidesEl.style.transform = newTransformString;
+      },
+      sliderFirstMove() {
+        isShowHint.value = false;
       }
     }
   });
@@ -46,21 +69,85 @@ onMounted(() => {
 </script>
 <template>
   <!-- 320 x 512 -->
-  <div class="border rounded-xl w-80 h-128 overflow-hidden">
+  <div class="relative border rounded-xl w-80 h-128 overflow-hidden">
     <!-- Slider main container -->
-    <div class="swiper my-swiper">
+    <div v-if="productState.prototypeData?.slides" class="swiper my-swiper">
       <!-- Additional required wrapper -->
       <div class="swiper-wrapper">
         <!-- Slides -->
-        <div class="swiper-slide">Slide 1</div>
-        <div class="swiper-slide">Slide 2</div>
-        <div class="swiper-slide">Slide 3</div>
-        <div class="swiper-slide">Slide 4</div>
-        <div class="swiper-slide">Slide 5</div>
+        <div
+          v-for="(slide, index) in productState.prototypeData.slides"
+          :key="`slide_${index}`"
+          class="swiper-slide relative"
+        >
+          <img
+            :src="`/images/prototype/swiper/${slide.image}`"
+            :alt="slide.title"
+            class="w-80 h-128 absolute top-0 left-0"
+          />
+          {{ slide.title }}
+          <UCard
+            :ui="{
+              base: 'border-none text-sm',
+              ring: 'ring-0',
+              body: { padding: 'px-3 py-2 sm:p-3' }
+            }"
+            class="swiper-slide-card animate-fade-in"
+          >
+            <div class="font-bold text-lg mb-1">
+              {{ slide.title }}
+            </div>
+            <template v-if="slide.description.length > 0">
+              <hr />
+              <div class="text-stone-200 text-xs mt-1">
+                {{ slide.description }}
+              </div>
+              <div class="mt-4 flex flex-row justify-end">
+                <UButton
+                  icon="i-heroicons-arrow-long-right-16-solid"
+                  size="xs"
+                  :color="productState.prototypeData.buttonColor"
+                  variant="solid"
+                  :label="productState.prototypeData.buttonText"
+                  trailing
+                  @click="onCTA(index, slide.url)"
+                />
+              </div>
+            </template>
+            <template v-else>
+              <hr />
+              <div class="mt-3 flex flex-row justify-end">
+                <UButton
+                  icon="i-heroicons-arrow-long-right-16-solid"
+                  size="sm"
+                  :color="productState.prototypeData.buttonColor"
+                  variant="solid"
+                  :label="productState.prototypeData.buttonText"
+                  trailing
+                  @click="onCTA(index, slide.url)"
+                />
+              </div>
+            </template>
+          </UCard>
+        </div>
       </div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
     </div>
+    <img
+      v-if="isVertical && isShowHint"
+      src="~/assets/images/swipe-vertical.svg"
+      alt="上下滑動以查看更多"
+      width="32"
+      height="32"
+      class="animate-spin-simple-y absolute mx-auto right-0 left-0 bottom-4 pointer-events-none z-50"
+    />
+    <img
+      v-else-if="!isVertical && isShowHint"
+      src="~/assets/images/swipe-horizontal.svg"
+      alt="左右滑動以查看更多"
+      width="32"
+      height="32"
+      class="animate-spin-simple-x absolute mx-auto right-0 left-0 bottom-4 pointer-events-none z-50"
+    />
   </div>
 </template>
 <style scoped>
