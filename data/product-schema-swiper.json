@@ -188,8 +188,8 @@
                       { "label": "紫鞋", "value": "purple.webp" },
                       { "label": "灰鞋", "value": "gray.webp" }
                     ],
-                    "placeholder": "請選擇顏色",
-                    "searchablePlaceholder": "搜尋顏色"
+                    "placeholder": "請選擇現有圖片素材",
+                    "searchablePlaceholder": "搜尋圖片素材"
                   }
                 },
                 "rules": {

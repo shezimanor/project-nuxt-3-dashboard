@@ -36,6 +36,7 @@ watch(modelValue, (newValue) => {
 <template>
   <UFormGroup
     :label="schema.ui.label"
+    :description="schema.ui.description"
     :error="
       stateValidator.$dirty &&
       stateValidator.$invalid &&
