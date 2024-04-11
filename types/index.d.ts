@@ -15,9 +15,9 @@ export interface Product {
 export interface Prototype {
   id: string;
   title: string;
+  description: string;
   version: string;
   features: string[];
-  sizes: string[];
   schema: string;
   status: number;
   created_at: string;

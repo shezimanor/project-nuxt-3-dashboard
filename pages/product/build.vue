@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-const { data } = await useFetch('/api/prototypes');
-const { data: prototypeData } = await useLazyAsyncData('prototypeData', () =>
-  $fetch('/api/prototypes')
+const { data: prototypeList, pending } = await useLazyAsyncData(
+  'getPrototypeList',
+  () => $fetch('/api/prototypes')
 );
-console.log('data:', data.value);
 </script>
 
 <template>
@@ -16,11 +15,11 @@ console.log('data:', data.value);
       </UDashboardNavbar>
       <UDashboardPanelContent>
         <div
-          v-if="prototypeData && prototypeData.list.length > 0"
+          v-if="prototypeList && prototypeList.list.length > 0"
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4"
         >
           <UPageCard
-            v-for="prototypeItem in prototypeData.list"
+            v-for="prototypeItem in prototypeList.list"
             :key="prototypeItem.id"
             :title="prototypeItem.title"
             :description="prototypeItem.description"

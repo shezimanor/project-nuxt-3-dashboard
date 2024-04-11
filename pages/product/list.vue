@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-const { data: productData, pending } = await useLazyAsyncData(
-  'productData',
+const { data: productList, pending } = await useLazyAsyncData(
+  'getProductList',
   () => $fetch('/api/products')
 );
 
@@ -27,7 +27,7 @@ const defaultColumns = [
   }
 ];
 
-const refreshData = () => refreshNuxtData('productData');
+const refreshData = () => refreshNuxtData('getProductList');
 const updateItem = async () => {
   const reponse = await $fetch(
     '/api/products/b09f8877-be64-450b-8844-9da462be82af',
@@ -74,8 +74,8 @@ onMounted(() => {});
       </UDashboardNavbar>
       <UDashboardPanelContent>
         <UTable
-          v-if="productData"
-          :rows="productData.list"
+          v-if="productList"
+          :rows="productList.list"
           :columns="defaultColumns"
           :loading="pending"
           class="w-full"
