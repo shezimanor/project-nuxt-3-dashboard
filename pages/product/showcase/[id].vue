@@ -1,8 +1,11 @@
 <script lang="ts" setup>
-const productState = ref({
+const prototypeClassName = ref(
+  'border w-[258px] h-[450px] overflow-hidden sm:w-[344px] sm:h-[600px]'
+);
+const productStateForSwiper = ref({
   basicData: {
-    title: '旋轉立方體Demo1',
-    description: '這是一個旋轉立方體的Demo'
+    title: '旋轉立方體 Demo1',
+    description: '這是一個旋轉立方體的 Demo'
   },
   prototypeData: {
     loop: true,
@@ -49,6 +52,21 @@ const productState = ref({
     ]
   }
 });
+const productState = ref({
+  basicData: {
+    title: '靜態展示 Demo1',
+    description: '這是一個靜態展示 Demo'
+  },
+  prototypeData: {
+    title: '栗色福樂鞋',
+    description: '2024夏季新款',
+    image: 'maroon.webp',
+    buttonText: '立即購買',
+    buttonColor: 'yellow',
+    position: 'bottom', // top/bottom
+    url: 'https://www.example.com/shoes/maroon'
+  }
+});
 </script>
 
 <template>
@@ -60,7 +78,15 @@ const productState = ref({
         </template>
       </UDashboardNavbar>
       <UDashboardPanelContent class="flex items-center justify-center">
-        <MyPrototypeSwiper :product-state="productState" />
+        <!-- 依據使用的 Prototype 來渲染對應的 Component -->
+        <MyPrototypeSimple
+          :class="prototypeClassName"
+          :prototype-data="productState.prototypeData"
+        />
+        <!-- <MyPrototypeSwiper
+          :class="prototypeClassName"
+          :prototype-data="productStateForSwiper.prototypeData"
+        /> -->
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>

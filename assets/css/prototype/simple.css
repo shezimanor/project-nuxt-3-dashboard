@@ -1,0 +1,41 @@
+.simple-card {
+  @apply w-full left-0 absolute z-50;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+.simple-card.is-bottom {
+  @apply bottom-0;
+  animation-name: bottomfadeIn;
+  animation-duration: 0.5s;
+  animation-delay: 0.33s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+.simple-card.is-top {
+  @apply top-0;
+  animation-name: topfadeIn;
+  animation-duration: 0.5s;
+  animation-delay: 0.33s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+@keyframes topfadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes bottomfadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

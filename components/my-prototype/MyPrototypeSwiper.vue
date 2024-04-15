@@ -7,7 +7,7 @@ const { onCTA } = usePreview();
 
 // props
 const props = defineProps({
-  productState: {
+  prototypeData: {
     type: Object,
     required: true
   }
@@ -16,7 +16,7 @@ const props = defineProps({
 const isShowHint = ref(true);
 
 const isVertical = computed(() =>
-  props.productState.prototypeData.direction === 'vertical' ? true : false
+  props.prototypeData.direction === 'vertical' ? true : false
 );
 
 onMounted(() => {
@@ -26,12 +26,11 @@ onMounted(() => {
     modules: [EffectCube],
     // Optional parameters
     // direction: 'vertical' | 'horizontal',
-    direction: props.productState.prototypeData.direction,
-    loop: props.productState.prototypeData.loop,
+    direction: props.prototypeData.direction,
+    loop: props.prototypeData.loop,
     effect: 'cube',
     // 修正奇數張圖片的loop問題
-    loopAdditionalSlides:
-      props.productState.prototypeData.slides.length % 2 === 0 ? 0 : 1,
+    loopAdditionalSlides: props.prototypeData.slides.length % 2 === 0 ? 0 : 1,
     speed: 300,
     grabCursor: true,
     // Events
@@ -52,22 +51,22 @@ onMounted(() => {
 });
 </script>
 <template>
-  <!-- 256 x 448(1024 x 1792) -->
-  <div class="relative border rounded-xl w-[256px] h-[448px] overflow-hidden">
+  <!-- 尺寸寫在父層: 256+2 x 448+2 / 342+2 x 598+2 (圖片尺寸: 1024 x 1792) -->
+  <div>
     <!-- Slider main container -->
-    <div v-if="productState.prototypeData?.slides" class="swiper my-swiper">
+    <div v-if="prototypeData.slides" class="swiper my-swiper">
       <!-- Additional required wrapper -->
       <div class="swiper-wrapper">
         <!-- Slides -->
         <div
-          v-for="(slide, index) in productState.prototypeData.slides"
+          v-for="(slide, index) in prototypeData.slides"
           :key="`slide_${index}`"
           class="swiper-slide relative bg-transparent"
         >
           <img
             :src="`/images/prototype/${slide.image}`"
             :alt="slide.title"
-            class="w-[256px] h-[448px] absolute top-0 left-0"
+            class="w-[256px] h-[448px] absolute top-0 left-0 sm:w-[342px] sm:h-[598px]"
           />
           {{ slide.title }}
           <UCard
@@ -78,7 +77,7 @@ onMounted(() => {
             }"
             class="swiper-slide-card animate-fade-in"
           >
-            <div class="font-bold text-lg mb-1">
+            <div class="font-bold text-white text-lg mb-1">
               {{ slide.title }}
             </div>
             <template v-if="slide.description.length > 0">
@@ -90,11 +89,11 @@ onMounted(() => {
                 <UButton
                   icon="i-heroicons-arrow-long-right-16-solid"
                   size="xs"
-                  :color="productState.prototypeData.buttonColor"
+                  :color="prototypeData.buttonColor"
                   variant="solid"
-                  :label="productState.prototypeData.buttonText"
+                  :label="prototypeData.buttonText"
                   trailing
-                  @click="onCTA(index, slide.url)"
+                  @click="onCTA(slide.url, index)"
                 />
               </div>
             </template>
@@ -104,11 +103,11 @@ onMounted(() => {
                 <UButton
                   icon="i-heroicons-arrow-long-right-16-solid"
                   size="sm"
-                  :color="productState.prototypeData.buttonColor"
+                  :color="prototypeData.buttonColor"
                   variant="solid"
-                  :label="productState.prototypeData.buttonText"
+                  :label="prototypeData.buttonText"
                   trailing
-                  @click="onCTA(index, slide.url)"
+                  @click="onCTA(slide.url, index)"
                 />
               </div>
             </template>
@@ -136,7 +135,6 @@ onMounted(() => {
 </template>
 <style scoped>
 @import 'swiper/css';
-@import 'swiper/css/navigation';
 @import 'swiper/css/effect-cube';
 @import '~/assets/css/prototype/swiper.css';
 </style>
