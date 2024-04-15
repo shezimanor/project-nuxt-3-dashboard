@@ -6,7 +6,7 @@ const productState = ref({
   },
   prototypeData: {
     loop: true,
-    direction: 'vertical',
+    direction: 'horizontal',
     buttonText: '立即購買',
     buttonColor: 'orange',
     slides: [

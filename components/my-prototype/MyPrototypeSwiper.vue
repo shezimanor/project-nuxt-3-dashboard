@@ -2,8 +2,8 @@
 // Swiper Prototype
 // import Swiper JS
 import Swiper from 'swiper';
-import { EffectCube, Navigation } from 'swiper/modules';
-const toast = useToast();
+import { EffectCube } from 'swiper/modules';
+const { onCTA } = usePreview();
 
 // props
 const props = defineProps({
@@ -13,28 +13,17 @@ const props = defineProps({
   }
 });
 
-const isVertical = ref(
-  props.productState.prototypeData.direction === 'vertical' ? true : false
-);
-
 const isShowHint = ref(true);
 
-function onCTA(index: number = 0, url: string = '') {
-  toast.add({
-    id: `swiper_cta_${index}`,
-    icon: 'i-heroicons-arrow-top-right-on-square-solid',
-    color: 'blue',
-    title: '[模擬]成功跳轉(不會真的跳轉)',
-    description: `外連網址: ${url}`,
-    timeout: 1200
-  });
-}
+const isVertical = computed(() =>
+  props.productState.prototypeData.direction === 'vertical' ? true : false
+);
 
 onMounted(() => {
   // init Swiper: https://swiperjs.com/swiper-api#parameters
   const swiper = new Swiper('.my-swiper', {
     // configure Swiper to use modules
-    modules: [EffectCube, Navigation],
+    modules: [EffectCube],
     // Optional parameters
     // direction: 'vertical' | 'horizontal',
     direction: props.productState.prototypeData.direction,
@@ -45,11 +34,6 @@ onMounted(() => {
       props.productState.prototypeData.slides.length % 2 === 0 ? 0 : 1,
     speed: 300,
     grabCursor: true,
-    // Navigation arrows
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    },
     // Events
     on: {
       setTranslate(swiper: any) {
@@ -68,8 +52,8 @@ onMounted(() => {
 });
 </script>
 <template>
-  <!-- 320 x 512 -->
-  <div class="relative border rounded-xl w-80 h-128 overflow-hidden">
+  <!-- 256 x 448(1024 x 1792) -->
+  <div class="relative border rounded-xl w-[256px] h-[448px] overflow-hidden">
     <!-- Slider main container -->
     <div v-if="productState.prototypeData?.slides" class="swiper my-swiper">
       <!-- Additional required wrapper -->
@@ -78,12 +62,12 @@ onMounted(() => {
         <div
           v-for="(slide, index) in productState.prototypeData.slides"
           :key="`slide_${index}`"
-          class="swiper-slide relative"
+          class="swiper-slide relative bg-transparent"
         >
           <img
-            :src="`/images/prototype/swiper/${slide.image}`"
+            :src="`/images/prototype/${slide.image}`"
             :alt="slide.title"
-            class="w-80 h-128 absolute top-0 left-0"
+            class="w-[256px] h-[448px] absolute top-0 left-0"
           />
           {{ slide.title }}
           <UCard
