@@ -1,24 +1,43 @@
 import { v4 as uuid } from 'uuid';
 import { unref } from 'vue';
 import { useProduct } from '~/composables/useProduct';
-import type { Product } from '~/types';
+import { usePrototype } from '~/composables/usePrototype';
+import type { Product, Prototype } from '~/types';
 import getCurrentFormattedDate from '~/utils/getCurrentFormattedDate';
 
 export default defineEventHandler(async (event) => {
   const { productData: productDataRef } = useProduct();
+  const { prototypeData: prototypeDataRef } = usePrototype();
   const body = await readBody(event);
-  const productData = unref(productDataRef);
-  if (!productData.list) {
+  const productData = unref(productDataRef) as { list: Product[] };
+  const prototypeData = unref(prototypeDataRef) as { list: Prototype[] };
+  const newId = uuid();
+  // 先找到對應的 prototype
+  const prototype = prototypeData.list.find(
+    (item: Prototype) => item.id === body.prototype_id
+  );
+  console.log('prototype', prototype);
+  console.log('productData list', productData.list);
+  if (!productData.list || !prototype) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'product list is not found!'
+      statusMessage: 'product list or prototype is not found!'
     });
   } else {
     const newProduct: Product = {
-      id: uuid(),
-      ...body,
-      created_at: getCurrentFormattedDate()
+      id: newId,
+      title: body.product_data.basicData.title,
+      description: body.product_data.basicData.description,
+      product_data: JSON.stringify(body.product_data),
+      preview_link: `/product/showcase/${newId}`,
+      prototype_id: prototype.id,
+      prototype_title: prototype.title,
+      prototype_version: prototype.version,
+      status: 1,
+      created_at: getCurrentFormattedDate(),
+      updated_at: getCurrentFormattedDate()
     };
+    // 新增 product
     productData.list.push(newProduct);
   }
 
@@ -27,6 +46,7 @@ export default defineEventHandler(async (event) => {
   });
 
   return {
-    result: true
+    result: true,
+    link: `/product/showcase/${newId}`
   };
 });
