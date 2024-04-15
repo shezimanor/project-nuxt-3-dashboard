@@ -12,7 +12,7 @@ const props = defineProps({
 </script>
 <template>
   <!-- 尺寸寫在父層: 256+2 x 448+2 / 342+2 x 598+2 (圖片尺寸: 1024 x 1792) -->
-  <div></div>
+  <div>Unknown</div>
 </template>
 <style scoped>
 /* @import '~/assets/css/prototype/xxx.css'; */
