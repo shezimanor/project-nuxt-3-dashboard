@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+const toast = useToast();
+
 const { data: productList, pending } = await useLazyAsyncData(
   'getProductList',
   () => $fetch('/api/products')
@@ -18,50 +20,52 @@ const defaultColumns = [
     label: '版號'
   },
   {
-    key: 'size',
-    label: '尺寸'
-  },
-  {
-    key: 'status',
-    label: '狀態'
+    key: 'actions'
   }
 ];
+const items = (row: any) => [
+  [
+    {
+      label: 'Edit',
+      icon: 'i-heroicons-pencil-square-20-solid',
+      click: () => console.log('Edit', row.id)
+    }
+  ],
+  [
+    {
+      label: 'Delete',
+      icon: 'i-heroicons-trash-20-solid',
+      click: () => console.log('Delete', row.id)
+    }
+  ]
+];
+// 刪除產品
+const onDelete = async (id: string) => {
+  console.log('Delete', id);
+  const response = await $fetch(`/api/products/${id}`, {
+    method: 'delete'
+  });
+  if (response.result) {
+    toast.add({
+      id: `product_delete_success`,
+      icon: 'i-heroicons-check-circle-20-solid',
+      color: 'blue',
+      title: '刪除產品成功！',
+      timeout: 1000
+    });
+    refreshData();
+  } else {
+    toast.add({
+      id: `product_delete_fail`,
+      icon: 'i-heroicons-x-circle-20-solid',
+      color: 'red',
+      title: '刪除產品失敗！',
+      timeout: 1000
+    });
+  }
+};
 
 const refreshData = () => refreshNuxtData('getProductList');
-const updateItem = async () => {
-  const reponse = await $fetch(
-    '/api/products/b09f8877-be64-450b-8844-9da462be82af',
-    {
-      method: 'put',
-      body: {
-        title: '綿羊造型立方CDD',
-        description: 'CCC',
-        size: '320x360',
-        preview_link: 'link-new'
-      }
-    }
-  );
-  if (reponse.result) refreshData();
-};
-const addItem = async () => {
-  const reponse = await $fetch('/api/products', {
-    method: 'post',
-    body: {
-      title: '野狼造型立方GTO',
-      description: '999',
-      size: '720x300',
-      preview_link: 'link-new-2',
-      owner_id: 1,
-      status: 0,
-      prototype_id: '4dc207f2-2229-451a-aa9d-e29bb44acf84',
-      prototype_title: '魔幻立方',
-      prototype_version: '1.0.0'
-    }
-  });
-  if (reponse.result) refreshData();
-};
-
-onMounted(() => {});
 </script>
 
 <template>
@@ -80,11 +84,40 @@ onMounted(() => {});
           :loading="pending"
           class="w-full"
           :ui="{ divide: 'divide-gray-200 dark:divide-gray-800' }"
-        ></UTable>
-        <div>
-          <UButton @click="updateItem">修改</UButton>
-          <UButton @click="addItem">新增</UButton>
-        </div>
+        >
+          <template #actions-data="{ row }">
+            <div class="flex flex-row gap-x-2">
+              <UButton
+                color="green"
+                variant="ghost"
+                icon="i-heroicons-play-20-solid"
+                :to="`/product/showcase/${row.id}`"
+              />
+              <UButton
+                color="sky"
+                variant="ghost"
+                icon="i-heroicons-pencil-square-20-solid"
+                :to="`/product/edit/update/${row.prototype_id}?id=${row.id}`"
+              />
+              <UButton
+                color="red"
+                variant="ghost"
+                icon="i-heroicons-trash-20-solid"
+                @click="onDelete(row.id)"
+              />
+            </div>
+          </template>
+          <template #empty-state>
+            <div class="flex flex-col items-center justify-center py-6 gap-3">
+              <span class="italic text-sm">還沒建立任何商品</span>
+              <UButton
+                icon="i-heroicons-plus-20-solid"
+                label="建立商品"
+                to="/product/build"
+              />
+            </div>
+          </template>
+        </UTable>
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>
