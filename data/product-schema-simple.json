@@ -6,7 +6,7 @@
       "properties": {
         "title": {
           "type": "string",
-          "default": "產品標題",
+          "default": "靜態展示_產品標題",
           "ui": {
             "label": "產品標題",
             "widget": "input",
@@ -105,11 +105,13 @@
                 { "label": "米色鞋", "value": "beige.webp" },
                 { "label": "藍鞋", "value": "blue.webp" },
                 { "label": "綠鞋", "value": "green.webp" },
+                { "label": "炭灰色鞋", "value": "charcoal.webp" },
                 { "label": "黃鞋", "value": "yellow.webp" },
                 { "label": "栗色鞋", "value": "maroon.webp" },
                 { "label": "銅色鞋", "value": "bronze.webp" },
                 { "label": "紫鞋", "value": "purple.webp" },
-                { "label": "灰鞋", "value": "gray.webp" }
+                { "label": "灰鞋", "value": "gray.webp" },
+                { "label": "海軍藍色鞋", "value": "navy.webp" }
               ],
               "placeholder": "請選擇現有圖片素材",
               "searchablePlaceholder": "搜尋圖片素材"
@@ -151,7 +153,7 @@
         },
         "buttonColor": {
           "type": "string",
-          "default": "orange",
+          "default": "yellow",
           "ui": {
             "label": "按鈕顏色",
             "widget": "select",

@@ -6,7 +6,7 @@
       "properties": {
         "title": {
           "type": "string",
-          "default": "產品標題",
+          "default": "旋轉立方_產品標題",
           "ui": {
             "label": "產品標題",
             "widget": "input",
@@ -129,10 +129,16 @@
               "url": "https://www.example.com/shoes/2"
             },
             {
-              "title": "象牙色球鞋",
-              "description": "環保材質 | 限量發售",
-              "image": "ivory.webp",
+              "title": "黃色球鞋",
+              "description": "狂野豪邁 | 限量發售",
+              "image": "yellow.webp",
               "url": "https://www.example.com/shoes/3"
+            },
+            {
+              "title": "海軍藍跑鞋",
+              "description": "極限舒適 | 超越自我",
+              "image": "navy.webp",
+              "url": "https://www.example.com/shoes/4"
             }
           ],
           "items": {
@@ -183,11 +189,13 @@
                       { "label": "米色鞋", "value": "beige.webp" },
                       { "label": "藍鞋", "value": "blue.webp" },
                       { "label": "綠鞋", "value": "green.webp" },
+                      { "label": "炭灰色鞋", "value": "charcoal.webp" },
                       { "label": "黃鞋", "value": "yellow.webp" },
                       { "label": "栗色鞋", "value": "maroon.webp" },
                       { "label": "銅色鞋", "value": "bronze.webp" },
                       { "label": "紫鞋", "value": "purple.webp" },
-                      { "label": "灰鞋", "value": "gray.webp" }
+                      { "label": "灰鞋", "value": "gray.webp" },
+                      { "label": "海軍藍色鞋", "value": "navy.webp" }
                     ],
                     "placeholder": "請選擇現有圖片素材",
                     "searchablePlaceholder": "搜尋圖片素材"
@@ -219,7 +227,7 @@
             "widget": "array-tabs"
           },
           "rules": {
-            "minLength": 3,
+            "minLength": 4,
             "maxLength": 8
           }
         }
