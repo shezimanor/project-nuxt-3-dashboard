@@ -1,4 +1,5 @@
 export const useValidator = (rawSchema: any) => {
+  // TODO:當表單是編輯模式時，會有帶一個 state 做為參數，作為 state 的初始值
   // toast
   const toast = useToast();
   // 核心狀態
@@ -14,6 +15,9 @@ export const useValidator = (rawSchema: any) => {
   // 表單狀態已經改變
   function onDirtyState() {
     stateValidator.$dirty = true;
+  }
+  function onUndirtyState() {
+    stateValidator.$dirty = false;
   }
 
   // 更新狀態
@@ -447,6 +451,8 @@ export const useValidator = (rawSchema: any) => {
     validateStateValidator(stateValidator);
     // 驗證成功的介面處理
     if (stateIsValid.value === true) {
+      /*
+      // 已不需要下面的 toast，因為會在儲存表單時會有其他的 toast
       toast.add({
         id: 'state_validation_success',
         icon: 'i-heroicons-check-circle-20-solid',
@@ -455,6 +461,7 @@ export const useValidator = (rawSchema: any) => {
         description: '表單已通過驗證',
         timeout: 1000
       });
+      */
       return true;
     }
     // 驗證失敗的介面處理
@@ -483,6 +490,7 @@ export const useValidator = (rawSchema: any) => {
     removeArrayState,
     moveArrayState,
     clearArrayState,
-    validateState
+    validateState,
+    onUndirtyState
   };
 };

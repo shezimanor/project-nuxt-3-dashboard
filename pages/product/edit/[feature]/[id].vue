@@ -22,6 +22,8 @@ const currentRawSchema = computed(() => {
       <UDashboardPanelContent class="pt-0 md:pt-4">
         <MySchemaForm
           v-if="prototypeData && !pending"
+          :prototype-id="$route.params.id.toString()"
+          :feature="$route.params.feature.toString()"
           :raw-schema="currentRawSchema"
         />
       </UDashboardPanelContent>

@@ -3,6 +3,7 @@ import { MyUnsaveConfirmModal } from '#components';
 import { useMySchemaStore } from '~/stores/mySchemaStore';
 
 const mySchemaStore = useMySchemaStore();
+const toast = useToast();
 const $router = useRouter();
 const modal = useModal();
 
@@ -11,6 +12,17 @@ const formContainerElement = useParentElement();
 
 // props
 const props = defineProps({
+  prototypeId: {
+    type: String,
+    required: true
+  },
+  feature: {
+    type: String,
+    required: true,
+    validator: (value: string) => {
+      return ['create', 'update'].includes(value);
+    }
+  },
   rawSchema: {
     type: Object,
     required: true
@@ -27,7 +39,8 @@ const {
   removeArrayState,
   moveArrayState,
   clearArrayState,
-  validateState
+  validateState,
+  onUndirtyState
 } = useValidator(props.rawSchema);
 
 const testModeProxy = ref(mySchemaStore.state.testMode);
@@ -80,19 +93,59 @@ function onSubmit(event: Event) {
   // 阻止表單的預設提交行為
   event.preventDefault();
   const result = validateState();
-  if (result === false) scrollToTop();
+  if (result === false) onScrollToTop();
   else {
     // 這裡可以做表單提交的事情
-    console.log('state', state);
+    // 取消dirty狀態(方便頁面直接跳轉不用再次確認)
+    onUndirtyState();
+    // 儲存產品表單
+    if (props.feature === 'create') onCreate();
+    else if (props.feature === 'update') onUpdate();
   }
 }
 
 // 捲動到頂部
-function scrollToTop() {
+function onScrollToTop() {
   formContainerElement.value?.scroll({
     top: 0,
     behavior: 'smooth'
   });
+}
+
+// 新增產品
+async function onCreate() {
+  console.log('onCreate Product');
+  const reponse = await $fetch('/api/products', {
+    method: 'post',
+    body: {
+      prototype_id: props.prototypeId,
+      product_data: state
+    }
+  });
+  if (reponse.result && reponse.link) {
+    toast.add({
+      id: `product_create_success`,
+      icon: 'i-heroicons-check-circle-20-solid',
+      color: 'blue',
+      title: '新增產品成功！',
+      timeout: 1000
+    });
+    // 到產品產示頁面
+    $router.push(reponse.link);
+  } else {
+    toast.add({
+      id: `product_create_fail`,
+      icon: 'i-heroicons-x-circle-20-solid',
+      color: 'red',
+      title: '新增產品失敗！',
+      timeout: 1000
+    });
+  }
+}
+
+// 更新產品
+function onUpdate() {
+  console.log('onUpdate Product');
 }
 
 // 回上頁
@@ -163,7 +216,7 @@ onBeforeRouteLeave((to, from, next) => {
       variant="soft"
       icon="i-heroicons-arrow-small-up-solid"
       :ui="{ rounded: 'rounded-full' }"
-      @click="scrollToTop"
+      @click="onScrollToTop"
     ></UButton>
   </div>
 </template>
