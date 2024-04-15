@@ -16,6 +16,7 @@ export default function traverseSchemaToStateValidator(
     const result: { [key: string]: any } = {
       $type: 'object',
       $path: path,
+      $dirty: false,
       $properties: {}
     };
     // 遍歷 properties 中的每個屬性

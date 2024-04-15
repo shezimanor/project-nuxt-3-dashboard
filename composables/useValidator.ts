@@ -1,6 +1,7 @@
 export const useValidator = (rawSchema: any) => {
   // toast
   const toast = useToast();
+  // 核心狀態
   const schema = reactive(rawSchema);
   const state = reactive(traverseSchemaToState(schema));
   const rules = traverseSchemaToRules(rawSchema);
@@ -9,6 +10,11 @@ export const useValidator = (rawSchema: any) => {
   );
   // 用來檢查表單是否驗證成功
   const stateIsValid = ref(true);
+
+  // 表單狀態已經改變
+  function onDirtyState() {
+    stateValidator.$dirty = true;
+  }
 
   // 更新狀態
   function updateState(paths: any, newValue: any) {
@@ -38,6 +44,9 @@ export const useValidator = (rawSchema: any) => {
       lastParentState[paths[lastKeyIndex]] = newValue;
     // 只有 `array-primitive` 會進入這個分支
     else lastParentState[Number(paths[lastKeyIndex])] = newValue;
+
+    // 表單已經改變
+    onDirtyState();
   }
 
   // 新增項目(array-object, array-primitive)
@@ -77,6 +86,9 @@ export const useValidator = (rawSchema: any) => {
     );
     currentStateValidator.$eachState.push($newItem);
     // 🟡 更新 stateValidator $path(不用更新，因為新增項目不會影響到其他項目的路徑)
+
+    // 表單已經改變
+    onDirtyState();
   }
 
   // 刪除項目(array-object, array-primitive)
@@ -109,6 +121,9 @@ export const useValidator = (rawSchema: any) => {
     currentStateValidator.$eachState.splice(arrayIndex, 1);
     // 更新 stateValidator $path
     updateEachNestedPathHandler(currentStateValidator);
+
+    // 表單已經改變
+    onDirtyState();
   }
 
   // 移動項目(array-object, array-primitive)
@@ -146,6 +161,9 @@ export const useValidator = (rawSchema: any) => {
     currentStateValidator.$eachState.splice(toIndex, 0, $removedItem);
     // 更新 stateValidator $path
     updateEachNestedPathHandler(currentStateValidator);
+
+    // 表單已經改變
+    onDirtyState();
   }
 
   // 刪除所有項目(array-object, array-primitive)
@@ -180,6 +198,9 @@ export const useValidator = (rawSchema: any) => {
       currentStateValidator.$eachState.length
     );
     // 🟡 更新 stateValidator $path(不用更新，因為已刪除所有項目)
+
+    // 表單已經改變
+    onDirtyState();
   }
 
   // 驗證器處理器

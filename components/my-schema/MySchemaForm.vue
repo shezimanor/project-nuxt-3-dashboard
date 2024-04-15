@@ -1,7 +1,10 @@
 <script lang="ts" setup>
+import { MyUnsaveConfirmModal } from '#components';
 import { useMySchemaStore } from '~/stores/mySchemaStore';
 
 const mySchemaStore = useMySchemaStore();
+const $router = useRouter();
+const modal = useModal();
 
 // 取得父元件的元素(有捲軸的容器元素)
 const formContainerElement = useParentElement();
@@ -72,6 +75,7 @@ function scorllFormContainer(y: number, isAlignBottom: boolean = false) {
   }
 }
 
+// 表單提交
 function onSubmit(event: Event) {
   // 阻止表單的預設提交行為
   event.preventDefault();
@@ -83,6 +87,7 @@ function onSubmit(event: Event) {
   }
 }
 
+// 捲動到頂部
 function scrollToTop() {
   formContainerElement.value?.scroll({
     top: 0,
@@ -90,7 +95,32 @@ function scrollToTop() {
   });
 }
 
-function testAction() {}
+// 回上頁
+function onCancel() {
+  $router.back();
+}
+
+// 開啟確認視窗
+function onOpenConfirmModal(next: Function) {
+  modal.open(MyUnsaveConfirmModal, {
+    onConfirm() {
+      modal.close();
+      next();
+    },
+    onCancel() {
+      modal.close();
+    }
+  });
+}
+
+// 監控路由變化，如果表單有變更，則彈出確認視窗
+onBeforeRouteLeave((to, from, next) => {
+  if (stateValidator.$dirty) {
+    onOpenConfirmModal(next);
+  } else {
+    next();
+  }
+});
 </script>
 
 <template>
@@ -100,7 +130,7 @@ function testAction() {}
         <UToggle v-model="testModeProxy" />
       </UFormGroup>
     </div>
-    <div v-show="false" class="border p-4 rounded-2xl">
+    <div v-show="testModeProxy" class="border p-4 rounded-2xl">
       <pre>state: {{ state }}</pre>
       <pre>stateValidator: {{ stateValidator }}</pre>
     </div>
@@ -117,7 +147,7 @@ function testAction() {}
       <div
         class="p-4 sticky -top-0 justify-end md:fixed md:top-16 md:right-4 md:justify-start flex flex-row gap-x-2 bg-white dark:bg-gray-900 z-50"
       >
-        <UButton type="button" variant="outline" @click="testAction"
+        <UButton type="button" variant="outline" @click="onCancel"
           >取消</UButton
         >
         <UButton type="submit">儲存</UButton>
