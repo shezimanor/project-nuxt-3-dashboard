@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// 解決 Chrome51 以上版本的報錯
+import 'default-passive-events';
+
 const colorMode = useColorMode();
 
 const color = computed(() =>

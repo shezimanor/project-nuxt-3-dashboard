@@ -17,6 +17,7 @@
     "@vuelidate/validators": "^2.0.4",
     "@vueuse/core": "^10.9.0",
     "@vueuse/nuxt": "^10.9.0",
+    "default-passive-events": "^2.0.0",
     "pinia": "^2.1.7",
     "swiper": "^11.1.1",
     "uuid": "^9.0.1",
