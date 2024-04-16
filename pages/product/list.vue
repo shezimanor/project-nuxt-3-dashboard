@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import { MyConfirmModal } from '#components';
+
 const toast = useToast();
+const modal = useModal();
 
 const { data: productList, pending } = await useLazyAsyncData(
   'getProductList',
@@ -40,8 +43,24 @@ const items = (row: any) => [
   ]
 ];
 // 刪除產品
-const onDelete = async (id: string) => {
-  console.log('Delete', id);
+function onDelete(id: string) {
+  modal.open(MyConfirmModal, {
+    modalContent: '確定要刪除這個產品嗎？刪除後將無法復原',
+    buttonText: '刪除',
+    buttonColor: 'red',
+    params: {
+      id
+    },
+    onConfirm({ id }) {
+      modal.close();
+      deleteProduct(id);
+    },
+    onCancel() {
+      modal.close();
+    }
+  });
+}
+async function deleteProduct(id: string) {
   const response = await $fetch(`/api/products/${id}`, {
     method: 'delete'
   });
@@ -49,7 +68,7 @@ const onDelete = async (id: string) => {
     toast.add({
       id: `product_delete_success`,
       icon: 'i-heroicons-check-circle-20-solid',
-      color: 'blue',
+      color: 'green',
       title: '刪除產品成功！',
       timeout: 1000
     });
@@ -63,7 +82,7 @@ const onDelete = async (id: string) => {
       timeout: 1000
     });
   }
-};
+}
 
 const refreshData = () => refreshNuxtData('getProductList');
 </script>
