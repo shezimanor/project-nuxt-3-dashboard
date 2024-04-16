@@ -3,6 +3,7 @@ import { MyConfirmModal } from '#components';
 
 const toast = useToast();
 const modal = useModal();
+const $router = useRouter();
 
 const { data: productList, pending } = await useLazyAsyncData(
   'getProductList',
@@ -29,16 +30,37 @@ const defaultColumns = [
 const items = (row: any) => [
   [
     {
-      label: 'Edit',
-      icon: 'i-heroicons-pencil-square-20-solid',
-      click: () => console.log('Edit', row.id)
+      label: '預覽',
+      icon: 'i-heroicons-play-20-solid',
+      click() {
+        $router.push(`/product/showcase/${row.id}`);
+      }
     }
   ],
   [
     {
-      label: 'Delete',
+      label: '編輯',
+      icon: 'i-heroicons-pencil-square-20-solid',
+      click() {
+        $router.push(`/product/edit/update/${row.prototype_id}?id=${row.id}`);
+      }
+    },
+    {
+      label: '複製',
+      icon: 'i-heroicons-document-duplicate-20-solid',
+      disabled: true,
+      click() {
+        //TODO: copyProduct(row.id);
+      }
+    }
+  ],
+  [
+    {
+      label: '刪除',
       icon: 'i-heroicons-trash-20-solid',
-      click: () => console.log('Delete', row.id)
+      click() {
+        onDelete(row.id);
+      }
     }
   ]
 ];
@@ -102,29 +124,24 @@ const refreshData = () => refreshNuxtData('getProductList');
           :columns="defaultColumns"
           :loading="pending"
           class="w-full"
-          :ui="{ divide: 'divide-gray-200 dark:divide-gray-800' }"
+          :ui="{ th: { base: 'last:text-right' } }"
         >
+          <template #actions-header>
+            <UButton
+              v-if="productList.list.length > 0"
+              icon="i-heroicons-plus-20-solid"
+              label="建立商品"
+              to="/product/build"
+            />
+          </template>
           <template #actions-data="{ row }">
-            <div class="flex flex-row gap-x-2">
+            <UDropdown :items="items(row)">
               <UButton
-                color="green"
+                color="gray"
                 variant="ghost"
-                icon="i-heroicons-play-20-solid"
-                :to="`/product/showcase/${row.id}`"
+                icon="i-heroicons-ellipsis-horizontal-20-solid"
               />
-              <UButton
-                color="sky"
-                variant="ghost"
-                icon="i-heroicons-pencil-square-20-solid"
-                :to="`/product/edit/update/${row.prototype_id}?id=${row.id}`"
-              />
-              <UButton
-                color="red"
-                variant="ghost"
-                icon="i-heroicons-trash-20-solid"
-                @click="onDelete(row.id)"
-              />
-            </div>
+            </UDropdown>
           </template>
           <template #empty-state>
             <div class="flex flex-col items-center justify-center py-6 gap-3">
