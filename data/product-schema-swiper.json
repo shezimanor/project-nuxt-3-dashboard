@@ -103,10 +103,11 @@
                 { "label": "藍色", "value": "blue" },
                 { "label": "靛青色", "value": "indigo" },
                 { "label": "紫色", "value": "purple" },
-                { "label": "黑色", "value": "black" }
+                { "label": "灰色", "value": "gray" }
               ],
               "placeholder": "請選擇顏色",
-              "searchablePlaceholder": "搜尋顏色"
+              "searchablePlaceholder": "搜尋顏色",
+              "isColorMode": true
             }
           },
           "rules": {
@@ -198,7 +199,8 @@
                       { "label": "海軍藍色鞋", "value": "navy.webp" }
                     ],
                     "placeholder": "請選擇現有圖片素材",
-                    "searchablePlaceholder": "搜尋圖片素材"
+                    "searchablePlaceholder": "搜尋圖片素材",
+                    "isThumbnailMode": true
                   }
                 },
                 "rules": {
