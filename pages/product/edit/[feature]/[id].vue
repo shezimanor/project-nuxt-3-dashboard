@@ -14,22 +14,27 @@ const { data: currentData, pending }: any = await useLazyAsyncData(
   }
 );
 
-watch(currentData, (newData) => {
-  console.log('1. watch currentData', newData);
-});
-
 const currentRawSchema = computed(() => {
-  console.log('2. currentRawSchema');
   if (currentData.value.prototypeData)
     return JSON.parse(currentData.value.prototypeData.schema);
   else return {};
 });
 
+const prototypeId = computed(() => {
+  if (currentData.value.prototypeData)
+    return currentData.value.prototypeData.id;
+  else return '';
+});
+
 const currentRawState = computed(() => {
-  console.log('3. currentRawState');
   if (currentData.value.productData)
     return JSON.parse(currentData.value.productData.product_data);
   else return null;
+});
+
+const productId = computed(() => {
+  if (currentData.value.productData) return currentData.value.productData.id;
+  else return '';
 });
 
 function getPromiseAllArray(feature: string) {
@@ -58,8 +63,9 @@ function getPromiseAllArray(feature: string) {
       <UDashboardPanelContent class="pt-0 md:pt-4">
         <MySchemaForm
           v-if="currentData && !pending"
-          :prototype-id="$route.params.id.toString()"
           :feature="$route.params.feature.toString()"
+          :prototype-id="prototypeId"
+          :product-id="productId"
           :raw-schema="currentRawSchema"
           :raw-state="currentRawState"
         />

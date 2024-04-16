@@ -12,16 +12,20 @@ const formContainerElement = useParentElement();
 
 // props
 const props = defineProps({
-  prototypeId: {
-    type: String,
-    required: true
-  },
   feature: {
     type: String,
     required: true,
     validator: (value: string) => {
       return ['create', 'update'].includes(value);
     }
+  },
+  prototypeId: {
+    type: String,
+    required: true
+  },
+  productId: {
+    type: String,
+    default: ''
   },
   rawSchema: {
     type: Object,
@@ -32,8 +36,6 @@ const props = defineProps({
     default: null
   }
 });
-
-console.log('4. MySchemaForm useValidator START');
 
 const {
   state,
@@ -125,7 +127,7 @@ async function createProduct() {
     method: 'post',
     body: {
       prototype_id: props.prototypeId,
-      product_data: state
+      data: state
     }
   });
   if (reponse.result && reponse.link) {
@@ -150,8 +152,33 @@ async function createProduct() {
 }
 
 // 更新產品
-function updateProduct() {
+async function updateProduct() {
   console.log('updateProduct Product');
+  const reponse = await $fetch(`/api/products/${props.productId}`, {
+    method: 'put',
+    body: {
+      data: state
+    }
+  });
+  if (reponse.result && reponse.link) {
+    toast.add({
+      id: `product_create_success`,
+      icon: 'i-heroicons-check-circle-20-solid',
+      color: 'green',
+      title: '更新產品成功！',
+      timeout: 1000
+    });
+    // 到產品產示頁面
+    $router.push(reponse.link);
+  } else {
+    toast.add({
+      id: `product_create_fail`,
+      icon: 'i-heroicons-x-circle-20-solid',
+      color: 'red',
+      title: '更新產品失敗！',
+      timeout: 1000
+    });
+  }
 }
 
 // 回上頁

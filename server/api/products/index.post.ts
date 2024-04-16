@@ -26,9 +26,9 @@ export default defineEventHandler(async (event) => {
   } else {
     const newProduct: Product = {
       id: newId,
-      title: body.product_data.basicData.title,
-      description: body.product_data.basicData.description,
-      product_data: JSON.stringify(body.product_data),
+      title: body.data.basicData.title,
+      description: body.data.basicData.description,
+      product_data: JSON.stringify(body.data),
       preview_link: `/product/showcase/${newId}`,
       prototype_id: prototype.id,
       prototype_title: prototype.title,

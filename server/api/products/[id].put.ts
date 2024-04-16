@@ -1,6 +1,7 @@
 import { unref } from 'vue';
 import { useProduct } from '~/composables/useProduct';
 import type { Product } from '~/types';
+import getCurrentFormattedDate from '~/utils/getCurrentFormattedDate';
 
 export default defineEventHandler(async (event) => {
   const { productData: productDataRef } = useProduct();
@@ -20,10 +21,13 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'product is not found!'
       });
     }
-    // 修改
-    console.log('body:', body);
-    Object.assign(product, body);
-    console.log('product', product);
+    // 更新的部分(title, product_data, description, updated_at)
+    Object.assign(product, {
+      title: body.data.basicData.title,
+      description: body.data.basicData.description,
+      product_data: JSON.stringify(body.data),
+      updated_at: getCurrentFormattedDate()
+    });
   }
 
   await new Promise(function (resolve) {
@@ -31,6 +35,7 @@ export default defineEventHandler(async (event) => {
   });
 
   return {
-    result: true
+    result: true,
+    link: `/product/showcase/${id}`
   };
 });
