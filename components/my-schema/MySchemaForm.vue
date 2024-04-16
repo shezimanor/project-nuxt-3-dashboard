@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { MyUnsaveConfirmModal } from '#components';
+import { MyConfirmModal } from '#components';
 import { useMySchemaStore } from '~/stores/mySchemaStore';
 
 const mySchemaStore = useMySchemaStore();
@@ -99,8 +99,8 @@ function onSubmit(event: Event) {
     // 取消dirty狀態(方便頁面直接跳轉不用再次確認)
     onUndirtyState();
     // 儲存產品表單
-    if (props.feature === 'create') onCreate();
-    else if (props.feature === 'update') onUpdate();
+    if (props.feature === 'create') createProduct();
+    else if (props.feature === 'update') updateProduct();
   }
 }
 
@@ -113,8 +113,8 @@ function onScrollToTop() {
 }
 
 // 新增產品
-async function onCreate() {
-  console.log('onCreate Product');
+async function createProduct() {
+  console.log('createProduct Product');
   const reponse = await $fetch('/api/products', {
     method: 'post',
     body: {
@@ -126,7 +126,7 @@ async function onCreate() {
     toast.add({
       id: `product_create_success`,
       icon: 'i-heroicons-check-circle-20-solid',
-      color: 'blue',
+      color: 'green',
       title: '新增產品成功！',
       timeout: 1000
     });
@@ -144,8 +144,8 @@ async function onCreate() {
 }
 
 // 更新產品
-function onUpdate() {
-  console.log('onUpdate Product');
+function updateProduct() {
+  console.log('updateProduct Product');
 }
 
 // 回上頁
@@ -155,7 +155,8 @@ function onCancel() {
 
 // 開啟確認視窗
 function onOpenConfirmModal(next: Function) {
-  modal.open(MyUnsaveConfirmModal, {
+  modal.open(MyConfirmModal, {
+    modalContent: '表單有變更，確定要離開嗎？',
     onConfirm() {
       modal.close();
       next();
