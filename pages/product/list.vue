@@ -131,6 +131,13 @@ const refreshData = () => refreshNuxtData('getProductList');
               v-if="productList.list.length > 0"
               icon="i-heroicons-plus-20-solid"
               label="建立商品"
+              class="hidden sm:inline-flex"
+              to="/product/build"
+            />
+            <UButton
+              v-if="productList.list.length > 0"
+              icon="i-heroicons-plus-20-solid"
+              class="sm:hidden"
               to="/product/build"
             />
           </template>

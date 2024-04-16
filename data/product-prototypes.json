@@ -21,17 +21,6 @@
       "status": 1,
       "created_at": "2024/04/15 20:02:30",
       "updated_at": "2024/04/16 19:20:42"
-    },
-    {
-      "id": "22bfa0dd-2e2d-4768-bbc3-da789203eb2b",
-      "title": "測試中B",
-      "description": "測試中的產品B，這是一款測試中的產品，目前還在開發中，請勿使用。",
-      "version": "0.1.4",
-      "features": ["測試中"],
-      "schema": "",
-      "status": 0,
-      "created_at": "2024/03/10 20:02:30",
-      "updated_at": "2024/03/11 19:20:42"
     }
   ]
 }
