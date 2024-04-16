@@ -36,11 +36,14 @@ const { data: prototypeList, pending } = await useLazyAsyncData(
             </template>
             <template #description>
               <div class="flex flex-row gap-x-2 mb-1">
+                <UBadge color="green" variant="subtle">{{
+                  prototypeItem.version
+                }}</UBadge>
                 <UBadge
                   v-for="(feature, index) in prototypeItem.features"
                   :key="index"
                   color="primary"
-                  variant="subtle"
+                  variant="soft"
                   >{{ feature }}</UBadge
                 >
               </div>

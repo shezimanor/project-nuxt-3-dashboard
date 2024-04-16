@@ -15,8 +15,6 @@ const { data: productData, pending } = await useLazyAsyncData(
 const prototypeClassName = ref(
   'relative border w-[258px] h-[450px] overflow-hidden sm:w-[344px] sm:h-[600px]'
 );
-
-//
 const ProductComponent = computed(() => {
   if (!productData) return MyPrototypeUnknown;
   const targetData = productData.value as Product;

@@ -24,6 +24,10 @@ const defaultColumns = [
     label: '版號'
   },
   {
+    key: 'updated_at',
+    label: '最後更新時間'
+  },
+  {
     key: 'actions'
   }
 ];
@@ -130,14 +134,14 @@ const refreshData = () => refreshNuxtData('getProductList');
             <UButton
               v-if="productList.list.length > 0"
               icon="i-heroicons-plus-20-solid"
-              label="建立商品"
-              class="hidden sm:inline-flex"
+              label="建立產品"
+              class="hidden md:inline-flex"
               to="/product/build"
             />
             <UButton
               v-if="productList.list.length > 0"
               icon="i-heroicons-plus-20-solid"
-              class="sm:hidden"
+              class="md:hidden"
               to="/product/build"
             />
           </template>
