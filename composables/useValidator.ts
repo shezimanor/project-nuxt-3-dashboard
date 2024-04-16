@@ -1,10 +1,12 @@
-export const useValidator = (rawSchema: any) => {
+export const useValidator = (rawSchema: any, rawState: any) => {
   // TODO:當表單是編輯模式時，會有帶一個 state 做為參數，作為 state 的初始值
   // toast
   const toast = useToast();
   // 核心狀態
   const schema = reactive(rawSchema);
-  const state = reactive(traverseSchemaToState(schema));
+  const state = rawState
+    ? reactive(rawState)
+    : reactive(traverseSchemaToState(schema));
   const rules = traverseSchemaToRules(rawSchema);
   const stateValidator = reactive(
     traverseSchemaToStateValidator(schema, state, '')

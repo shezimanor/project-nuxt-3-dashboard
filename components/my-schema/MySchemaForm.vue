@@ -26,8 +26,14 @@ const props = defineProps({
   rawSchema: {
     type: Object,
     required: true
+  },
+  rawState: {
+    type: Object,
+    default: null
   }
 });
+
+console.log('4. MySchemaForm useValidator START');
 
 const {
   state,
@@ -41,7 +47,7 @@ const {
   clearArrayState,
   validateState,
   onUndirtyState
-} = useValidator(props.rawSchema);
+} = useValidator(props.rawSchema, props.rawState);
 
 const testModeProxy = ref(mySchemaStore.state.testMode);
 

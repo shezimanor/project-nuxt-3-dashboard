@@ -10,7 +10,7 @@ const todoList = ref([
   { label: '產品展示完整流程', help: '主要功能', done: true },
   { label: '建立產品樣式與細節', help: '優化', done: false },
   { label: '編輯產品樣式與細節', help: '優化', done: false },
-  { label: '產品列表樣式與細節', help: '優化', done: false },
+  { label: '產品列表樣式與細節', help: '優化', done: true },
   { label: '產品展示樣式與細節', help: '優化', done: false },
   { label: '第二個產品原型預覽元件', help: '', done: true },
   { label: '第二個產品原型Schema', help: '', done: true },
