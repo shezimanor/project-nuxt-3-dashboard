@@ -18,7 +18,8 @@ const todoList = ref([
   { label: '首頁功能', help: '預計用來展示教學和功能', done: false },
   { label: '專案教學和演示', help: '包含報告與圖解', done: false },
   { label: '內建其他產品的預設產品清單', help: '1~4個', done: false },
-  { label: '建立縮圖檔案', help: 'PS', done: false }
+  { label: '建立縮圖檔案', help: 'PS', done: true },
+  { label: '建立產品的預覽功能', help: '用 Modal 來做', done: false }
 ]);
 </script>
 

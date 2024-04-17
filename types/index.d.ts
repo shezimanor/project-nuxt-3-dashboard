@@ -20,6 +20,7 @@ export interface Prototype {
   features: string[];
   schema: string;
   status: number;
+  preview_id: string;
   created_at: string;
   updated_at: string;
 }
