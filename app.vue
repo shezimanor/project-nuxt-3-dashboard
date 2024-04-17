@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// 解決 Chrome51 以上版本的報錯
+// default-passive-events: 解決 Chrome51 以上版本的報錯
 import 'default-passive-events';
 
 const colorMode = useColorMode();
@@ -20,9 +20,9 @@ useHead({
   }
 });
 
-const title = '後台系統模擬 with Nuxt 3';
+const title = '結構化表單系統 with Nuxt 3';
 const description =
-  '這是一個使用 Nuxt3 和 Nuxt UI 架設的模擬後台系統平台的專案';
+  '這是一個使用 Nuxt3 和 Nuxt UI 架設的模擬結構化表單系統平台的專案';
 
 useSeoMeta({
   title,

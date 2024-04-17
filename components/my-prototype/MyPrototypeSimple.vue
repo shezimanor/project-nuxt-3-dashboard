@@ -3,7 +3,7 @@
 const { onCTA } = usePreview();
 
 // props
-const props = defineProps({
+defineProps({
   prototypeData: {
     type: Object,
     required: true
