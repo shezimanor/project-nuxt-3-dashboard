@@ -95,7 +95,7 @@ watch(modelValue, (newValue) => {
       </template>
       <!-- 選中: 縮圖模式 -->
       <template v-else-if="mergedConfig.isThumbnailMode" #label>
-        <UAvatar :src="`/images/prototype/${modelValue}`" size="2xs" />
+        <UAvatar :src="`/images/thumbnail/${modelValue}`" size="2xs" />
         <span class="truncate">{{ modelLabel }}</span>
       </template>
       <!-- 選項: 顏色模式 -->
@@ -109,7 +109,7 @@ watch(modelValue, (newValue) => {
       </template>
       <!-- 選項: 縮圖模式 -->
       <template v-else-if="mergedConfig.isThumbnailMode" #option="{ option }">
-        <UAvatar :src="`/images/prototype/${option.value}`" size="2xs" />
+        <UAvatar :src="`/images/thumbnail/${option.value}`" size="2xs" />
         <span class="truncate">{{ option.label }}</span>
       </template>
     </USelectMenu>

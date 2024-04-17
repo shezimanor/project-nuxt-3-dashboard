@@ -157,7 +157,7 @@
                 },
                 "rules": {
                   "required": true,
-                  "maxLength": 10
+                  "maxLength": 15
                 }
               },
               "description": {
@@ -196,7 +196,13 @@
                       { "label": "銅色鞋", "value": "bronze.webp" },
                       { "label": "紫鞋", "value": "purple.webp" },
                       { "label": "灰鞋", "value": "gray.webp" },
-                      { "label": "海軍藍色鞋", "value": "navy.webp" }
+                      { "label": "海軍藍色鞋", "value": "navy.webp" },
+                      { "label": "耳機-黑", "value": "a-headphone-1.webp" },
+                      { "label": "耳機-紅", "value": "a-headphone-2.webp" },
+                      { "label": "耳機-橙", "value": "a-headphone-3.webp" },
+                      { "label": "耳機-綠", "value": "a-headphone-4.webp" },
+                      { "label": "耳機-青", "value": "a-headphone-5.webp" },
+                      { "label": "耳機-靛", "value": "a-headphone-6.webp" }
                     ],
                     "placeholder": "請選擇現有圖片素材",
                     "searchablePlaceholder": "搜尋圖片素材",

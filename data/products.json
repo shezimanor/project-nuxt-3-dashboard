@@ -1,17 +1,17 @@
 {
   "list": [
     {
-      "id": "209d0fb6-ac0b-4d1a-b71b-ea864a06d03a",
-      "title": "靜態展示_產品標題",
-      "description": "{\"hi\":123}",
-      "product_data": "{\"basicData\":{\"title\":\"靜態展示_產品標題\",\"description\":\"\"},\"prototypeData\":{\"position\":\"bottom\",\"title\":\"你的商品標題\",\"description\":\"\",\"image\":\"white.webp\",\"url\":\"https://www.example.com/shoes\",\"buttonText\":\"了解更多\",\"buttonColor\":\"yellow\"}}",
-      "preview_link": "/product/showcase/209d0fb6-ac0b-4d1a-b71b-ea864a06d03a",
+      "id": "be5417fc-ac1e-4033-b95d-6dbdd1957b3d",
+      "title": "2024年夏季新品-索羅斯耳機",
+      "description": "索羅斯耳機夏季強檔特賣，新產品進攻亞洲市場。",
+      "product_data": "{\"basicData\":{\"title\":\"2024年夏季新品-索羅斯耳機\",\"description\":\"索羅斯耳機夏季強檔特賣，新產品進攻亞洲市場。\"},\"prototypeData\":{\"position\":\"bottom\",\"title\":\"索羅斯耳機X 第三代\",\"description\":\"今夏炫風 | 聽覺饗宴\",\"image\":\"a-headphone-1.webp\",\"url\":\"https://www.example.com/headphone3/black\",\"buttonText\":\"了解更多\",\"buttonColor\":\"yellow\"}}",
+      "preview_link": "/product/showcase/be5417fc-ac1e-4033-b95d-6dbdd1957b3d",
       "prototype_id": "e415c8bd-a256-447f-a33a-9fbd7c3c06be",
       "prototype_title": "靜態展示",
       "prototype_version": "1.0.0",
       "status": 1,
-      "created_at": "2024/04/16 19:49:23",
-      "updated_at": "2024/04/16 19:49:23"
+      "created_at": "2024/04/15 22:03:17",
+      "updated_at": "2024/04/15 22:03:17"
     }
   ]
 }
