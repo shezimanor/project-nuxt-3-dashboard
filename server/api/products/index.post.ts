@@ -16,8 +16,6 @@ export default defineEventHandler(async (event) => {
   const prototype = prototypeData.list.find(
     (item: Prototype) => item.id === body.prototype_id
   );
-  console.log('prototype', prototype);
-  console.log('productData list', productData.list);
   if (!productData.list || !prototype) {
     throw createError({
       statusCode: 404,
@@ -38,6 +36,7 @@ export default defineEventHandler(async (event) => {
       updated_at: getCurrentFormattedDate()
     };
     // 新增 product
+    console.log('newProduct:', newProduct);
     productData.list.push(newProduct);
   }
 

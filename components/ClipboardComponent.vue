@@ -1,22 +1,29 @@
 <script setup>
 // 使用這個 component 用來複製 JSON schema 給 `product-prototypes.json` 做儲存
-import schemaObj from '~/data/product-schema-swiper.json';
-// 這裡因為在 JSON 中作為字串儲存，所以要先轉換成字串，並且把雙引號換成單引號，才不會有格式衝突
+import schemaSimple from '~/data/product-schema-simple.json';
+import schemaSwiper from '~/data/product-schema-swiper.json';
+// 教學: 這裡因為在 JSON 中作為字串儲存。手動存進JSON時，先把欄位改成 "schema": '', 讓編輯器自己轉換引號
 // 會在 api 中作轉換
-const schemaData = ref(JSON.stringify(schemaObj).replaceAll('"', "'"));
+const schemaSimpleData = ref(JSON.stringify(schemaSimple));
+const schemaSwiperData = ref(JSON.stringify(schemaSwiper));
 const { copy, copied, isSupported } = useClipboard({
-  source: schemaData,
   legacy: true
 });
 </script>
 <template>
-  <div class="border my-4 p-4 rounded-xl max-w-screen-md">
-    <h1>JSON Component</h1>
-    <div v-if="isSupported">
-      <UButton @click="copy(schemaData)">
+  <div class="border p-4 rounded-xl max-w-screen-md">
+    <div v-if="isSupported" class="flex flex-row gap-x-2 mb-2">
+      <UButton @click="copy(schemaSimpleData)">
+        Simple Data
+        <span v-if="!copied">Copy</span>
+        <span v-else>Copied!</span>
+      </UButton>
+      <UButton @click="copy(schemaSwiperData)">
+        Swiper Data
         <span v-if="!copied">Copy</span>
         <span v-else>Copied!</span>
       </UButton>
     </div>
+    <UTextarea :rows="20" />
   </div>
 </template>
