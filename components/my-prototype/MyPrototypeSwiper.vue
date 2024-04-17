@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-// Swiper Prototype
+// Swiper Prototype: 旋轉立方原型
 // import Swiper JS
 import Swiper from 'swiper';
 import { EffectCube } from 'swiper/modules';
@@ -21,7 +21,7 @@ const isVertical = computed(() =>
 
 onMounted(() => {
   // init Swiper: https://swiperjs.com/swiper-api#parameters
-  const swiper = new Swiper('.my-swiper', {
+  new Swiper('.my-swiper', {
     // configure Swiper to use modules
     modules: [EffectCube],
     // Optional parameters
@@ -39,7 +39,9 @@ onMounted(() => {
         const transformString = swiper.slidesEl.style.transform;
         const newTransformString = getTransformString(
           transformString,
-          isVertical.value
+          isVertical.value,
+          swiper.slidesEl.clientWidth - 2,
+          swiper.slidesEl.clientHeight - 2
         );
         swiper.slidesEl.style.transform = newTransformString;
       },

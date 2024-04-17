@@ -1,12 +1,14 @@
 export default function getTransformString(
   transformString: string = 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg)',
-  isVertical: boolean = false
+  isVertical: boolean = false,
+  width: number = 0,
+  height: number = 0
 ) {
   // 公式: value = sin2X
   const regex = new RegExp(`(translate3d\\(\\s*\\d+px,\\s*\\d+px,\\s*)\\d+px`);
   // root2: 根號 2
   const root2 = Math.sqrt(2);
-  const spacing = isVertical ? 256 : 160;
+  const spacing = isVertical ? height / 2 : width / 2;
   let match = isVertical
     ? transformString.match(/rotateX\((-?\d+\.?\d*)deg\)/)
     : transformString.match(/rotateY\((-?\d+\.?\d*)deg\)/);
