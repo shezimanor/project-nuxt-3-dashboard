@@ -13,7 +13,7 @@ const { data: productData, pending } = await useLazyAsyncData(
   () => $fetch(`/api/products/${$route.params.id}`)
 );
 const prototypeClassName = ref(
-  'relative border w-[258px] h-[450px] overflow-hidden sm:w-[344px] sm:h-[600px]'
+  'relative flex-shrink-0 border w-[258px] h-[450px] overflow-hidden sm:w-[344px] sm:h-[600px]'
 );
 const ProductComponent = computed(() => {
   if (!productData) return MyPrototypeUnknown;

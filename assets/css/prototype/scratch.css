@@ -1,0 +1,59 @@
+.scratch-container {
+  @apply w-full h-full;
+  background: rgb(229, 235, 238);
+  background: linear-gradient(
+    125deg,
+    rgba(209, 213, 215, 1) 0%,
+    rgba(142, 158, 169, 1) 100%
+  );
+}
+.scratch-card {
+  @apply w-4/5 mx-auto top-1/2 right-0 left-0 absolute z-50;
+  opacity: 0;
+  transform: translateY(250%);
+  background: rgba(0, 0, 0, 0.6);
+  transition: all 0.45s;
+}
+.scratch-card.animate-fade-in {
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+.scratch-console {
+  @apply absolute bottom-0 left-0 text-white bg-gray-900 w-full h-8 z-30;
+}
+.scratch-hint {
+  @apply origin-center;
+  animation: scratch 0.8s alternate infinite;
+  transform: translate3d(0, 0, 0) rotate(-30deg);
+}
+
+@keyframes scratch {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-30deg);
+  }
+  33% {
+    transform: translate3d(15px, -15px, 0) rotate(-20deg);
+  }
+  50% {
+    transform: translate3d(-5px, 5px, 0) rotate(-30deg);
+  }
+  67% {
+    transform: translate3d(10px, -10px, 0) rotate(-20deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-30deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(250%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
