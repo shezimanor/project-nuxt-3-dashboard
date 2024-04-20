@@ -1,0 +1,211 @@
+{
+  "type": "object",
+  "properties": {
+    "basicData": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "default": "刮刮樂_產品標題",
+          "ui": {
+            "label": "產品標題",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入產品標題"
+            }
+          },
+          "rules": {
+            "required": true,
+            "maxLength": 20
+          }
+        },
+        "description": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "label": "產品描述",
+            "widget": "textarea",
+            "widgetConfig": {
+              "placeholder": "請輸入產品描述(非必填)"
+            }
+          },
+          "rules": {
+            "maxLength": 80
+          }
+        }
+      },
+      "ui": {
+        "label": "基本資訊"
+      }
+    },
+    "prototypeData": {
+      "type": "object",
+      "properties": {
+        "buttonText": {
+          "type": "string",
+          "default": "立即領取",
+          "ui": {
+            "label": "按鈕文字",
+            "widget": "input",
+            "widgetConfig": {
+              "placeholder": "請輸入按鈕文字"
+            }
+          },
+          "rules": {
+            "required": true,
+            "maxLength": 6
+          }
+        },
+        "buttonColor": {
+          "type": "string",
+          "default": "yellow",
+          "ui": {
+            "label": "按鈕顏色",
+            "widget": "select",
+            "widgetConfig": {
+              "options": [
+                { "label": "紅色", "value": "red" },
+                { "label": "玫瑰紅", "value": "rose" },
+                { "label": "粉色", "value": "pink" },
+                { "label": "橙色", "value": "orange" },
+                { "label": "黃色", "value": "yellow" },
+                { "label": "琥珀色", "value": "amber" },
+                { "label": "檸檬色", "value": "lime" },
+                { "label": "綠色", "value": "green" },
+                { "label": "青色", "value": "cyan" },
+                { "label": "藍色", "value": "blue" },
+                { "label": "靛青色", "value": "indigo" },
+                { "label": "紫色", "value": "purple" },
+                { "label": "灰色", "value": "gray" }
+              ],
+              "placeholder": "請選擇顏色",
+              "searchablePlaceholder": "搜尋顏色",
+              "isColorMode": true
+            }
+          },
+          "rules": {
+            "required": true
+          }
+        },
+        "imageCover": {
+          "type": "string",
+          "default": "a-cover-1.jpg",
+          "ui": {
+            "label": "刮刮樂表面素材",
+            "widget": "select",
+            "widgetConfig": {
+              "options": [
+                { "label": "銀色表面", "value": "a-cover-1.jpg" },
+                { "label": "銅色表面", "value": "a-cover-2.jpg" }
+              ],
+              "placeholder": "請選擇現有圖片素材",
+              "searchable": false,
+              "isThumbnailMode": true
+            }
+          },
+          "rules": {
+            "required": true
+          }
+        },
+        "results": {
+          "type": "array",
+          "default": [
+            {
+              "title": "獲得籃球鞋折價券$300",
+              "image": "red.webp",
+              "url": "https://www.example.com/shoes/1"
+            }
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": "結果標題",
+                "ui": {
+                  "label": "結果標題",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入結果標題"
+                  }
+                },
+                "rules": {
+                  "required": true,
+                  "maxLength": 18
+                }
+              },
+              "image": {
+                "type": "string",
+                "default": "white.webp",
+                "ui": {
+                  "label": "結果素材",
+                  "widget": "select",
+                  "widgetConfig": {
+                    "options": [
+                      { "label": "白鞋", "value": "white.webp" },
+                      { "label": "紅鞋", "value": "red.webp" },
+                      { "label": "棕鞋", "value": "brown.webp" },
+                      { "label": "象牙色鞋", "value": "ivory.webp" },
+                      { "label": "黑鞋", "value": "black.webp" },
+                      { "label": "米色鞋", "value": "beige.webp" },
+                      { "label": "藍鞋", "value": "blue.webp" },
+                      { "label": "綠鞋", "value": "green.webp" },
+                      { "label": "炭灰色鞋", "value": "charcoal.webp" },
+                      { "label": "黃鞋", "value": "yellow.webp" },
+                      { "label": "栗色鞋", "value": "maroon.webp" },
+                      { "label": "銅色鞋", "value": "bronze.webp" },
+                      { "label": "紫鞋", "value": "purple.webp" },
+                      { "label": "灰鞋", "value": "gray.webp" },
+                      { "label": "海軍藍色鞋", "value": "navy.webp" },
+                      { "label": "耳機-黑", "value": "a-headphone-1.webp" },
+                      { "label": "耳機-紅", "value": "a-headphone-2.webp" },
+                      { "label": "耳機-橙", "value": "a-headphone-3.webp" },
+                      { "label": "耳機-綠", "value": "a-headphone-4.webp" },
+                      { "label": "耳機-青", "value": "a-headphone-5.webp" },
+                      { "label": "耳機-靛", "value": "a-headphone-6.webp" }
+                    ],
+                    "placeholder": "請選擇現有圖片素材",
+                    "searchablePlaceholder": "搜尋圖片素材",
+                    "isThumbnailMode": true
+                  }
+                },
+                "rules": {
+                  "required": true
+                }
+              },
+              "url": {
+                "type": "string",
+                "default": "https://www.example.com/shoes",
+                "ui": {
+                  "label": "外連網址",
+                  "widget": "input",
+                  "widgetConfig": {
+                    "placeholder": "請輸入外連網址"
+                  }
+                },
+                "rules": {
+                  "required": true,
+                  "url": true
+                }
+              }
+            }
+          },
+          "ui": {
+            "label": "結果列表",
+            "widget": "array-tabs"
+          },
+          "rules": {
+            "minLength": 1,
+            "maxLength": 5
+          }
+        }
+      },
+      "ui": {
+        "label": "產品資料"
+      }
+    }
+  },
+  "ui": {
+    "label": "產品表單"
+  }
+}
