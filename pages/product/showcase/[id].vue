@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import {
+  MyPrototypeScratch,
   MyPrototypeSimple,
   MyPrototypeSwiper,
   MyPrototypeUnknown
@@ -24,6 +25,8 @@ const ProductComponent = computed(() => {
       return MyPrototypeSimple;
     case '4dc207f2-2229-451a-aa9d-e29bb44acf84':
       return MyPrototypeSwiper;
+    case 'cddd2a94-cda9-496b-9ce7-848af5971f31':
+      return MyPrototypeScratch;
     default:
       return MyPrototypeUnknown;
   }
