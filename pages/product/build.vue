@@ -21,9 +21,10 @@ const { data: prototypeList, pending } = await useLazyAsyncData(
           <UPageCard
             v-for="prototypeItem in prototypeList.list"
             :key="prototypeItem.id"
-            :to="`/product/edit/create/${prototypeItem.id}`"
+            :icon="prototypeItem.icon"
             :ui="{
-              base: 'flex flex-col',
+              base: 'flex flex-col hover:ring-2 hover:ring-primary-500 dark:hover:ring-primary-400 hover:bg-gray-100/50 dark:hover:bg-gray-800/50',
+              title: 'mb-2',
               footer: {
                 base: '',
                 background: '',
@@ -35,8 +36,9 @@ const { data: prototypeList, pending } = await useLazyAsyncData(
               {{ prototypeItem.title }}
             </template>
             <template #description>
-              <div class="flex flex-row gap-x-2 mb-1">
-                <UBadge color="green" variant="subtle"
+              <div></div>
+              <div class="flex flex-row flex-wrap gap-x-2 gap-y-1 mb-1">
+                <UBadge color="green" variant="soft" class="flex-shrink-0"
                   >版本: {{ prototypeItem.version }}</UBadge
                 >
                 <UBadge
@@ -44,14 +46,32 @@ const { data: prototypeList, pending } = await useLazyAsyncData(
                   :key="index"
                   color="primary"
                   variant="soft"
+                  class="flex-shrink-0"
                   >{{ feature }}</UBadge
                 >
               </div>
+
               {{ prototypeItem.description }}
             </template>
             <template #footer>
               <div
-                class="flex flex-row justify-end text-xs text-gray-400 dark:text-gray-300"
+                class="flex flex-row flex-nowrap justify-stretch gap-x-1 mb-2"
+              >
+                <UTooltip text="產品預覽" :popper="{ placement: 'top' }">
+                  <UButton
+                    color="yellow"
+                    class="flex-grow-0 flex-shrink-0"
+                    icon="i-heroicons-play-20-solid"
+                  ></UButton>
+                </UTooltip>
+                <UButton
+                  class="flex-grow justify-center"
+                  :to="`/product/edit/create/${prototypeItem.id}`"
+                  >建立產品</UButton
+                >
+              </div>
+              <div
+                class="flex flex-row justify-end text-xs text-gray-400 dark:text-gray-500"
               >
                 更新時間: {{ prototypeItem.updated_at }}
               </div>

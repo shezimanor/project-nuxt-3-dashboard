@@ -1,6 +1,9 @@
 // 全域的設定：https://nuxt.com/docs/guide/directory-structure/app-config
 export default defineAppConfig({
   ui: {
+    icons: {
+      dynamic: true
+    },
     primary: 'cyan',
     gray: 'cool',
     notifications: {
