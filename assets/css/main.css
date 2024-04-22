@@ -1,3 +1,7 @@
 .layout-obj:not(:first-child) {
   @apply border-t-0;
 }
+
+.index-images {
+  @apply border rounded overflow-hidden;
+}
