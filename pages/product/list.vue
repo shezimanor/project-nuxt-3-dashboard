@@ -75,7 +75,7 @@ const activeList = computed(() => {
     !Object.prototype.hasOwnProperty.call(productList.value, 'list')
   )
     return [];
-  return productList.value.list.map((item: Product) => item.status === 1);
+  return productList.value.list.filter((item: Product) => item.status === 1);
 });
 
 // 刪除產品
