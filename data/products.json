@@ -41,9 +41,9 @@
     },
     {
       "id": "be5417fc-ac1e-4033-b95d-6dbdd1957b3d",
-      "title": "2024年夏季新品-索羅斯耳機",
+      "title": "夏季新品-索羅斯耳機-靜態展示",
       "description": "索羅斯耳機夏季強檔特賣，新產品進攻亞洲市場。",
-      "product_data": "{\"basicData\":{\"title\":\"2024年夏季新品-索羅斯耳機\",\"description\":\"索羅斯耳機夏季強檔特賣，新產品進攻亞洲市場。\"},\"prototypeData\":{\"position\":\"bottom\",\"title\":\"索羅斯耳機X 第三代\",\"description\":\"今夏炫風 | 聽覺饗宴\",\"image\":\"a-headphone-1.webp\",\"url\":\"https://www.example.com/headphone3/black\",\"buttonText\":\"了解更多\",\"buttonColor\":\"yellow\"}}",
+      "product_data": "{\"basicData\":{\"title\":\"夏季新品-索羅斯耳機-靜態展示\",\"description\":\"索羅斯耳機夏季強檔特賣，新產品進攻亞洲市場。\"},\"prototypeData\":{\"position\":\"bottom\",\"title\":\"索羅斯耳機X 第三代\",\"description\":\"今夏炫風 | 聽覺饗宴\",\"image\":\"a-headphone-1.webp\",\"url\":\"https://www.example.com/headphone3/black\",\"buttonText\":\"了解更多\",\"buttonColor\":\"yellow\"}}",
       "preview_link": "/product/showcase/be5417fc-ac1e-4033-b95d-6dbdd1957b3d",
       "prototype_id": "e415c8bd-a256-447f-a33a-9fbd7c3c06be",
       "prototype_title": "靜態展示",
@@ -51,6 +51,19 @@
       "status": 1,
       "created_at": "2024/04/18 22:03:17",
       "updated_at": "2024/04/18 22:03:17"
+    },
+    {
+      "id": "ffe06ddf-bb39-4803-aafe-1035672c99a1",
+      "title": "夏季新品-索羅斯耳機-旋轉立方",
+      "description": "索羅斯耳機夏季強檔特賣，新產品進攻亞洲市場。",
+      "product_data": "{\"basicData\":{\"title\":\"夏季新品-索羅斯耳機-旋轉立方\",\"description\":\"索羅斯耳機夏季強檔特賣，新產品進攻亞洲市場。\"},\"prototypeData\":{\"loop\":false,\"direction\":\"horizontal\",\"buttonText\":\"了解更多\",\"buttonColor\":\"purple\",\"slides\":[{\"title\":\"黑色款\",\"description\":\"\",\"image\":\"a-headphone-1.webp\",\"url\":\"https://www.example.com/headphone/1\"},{\"title\":\"橙色款\",\"description\":\"\",\"image\":\"a-headphone-3.webp\",\"url\":\"https://www.example.com/headphone/2\"},{\"title\":\"青色款\",\"description\":\"\",\"image\":\"a-headphone-5.webp\",\"url\":\"https://www.example.com/headphone/3\"},{\"title\":\"紅色款\",\"description\":\"\",\"image\":\"a-headphone-2.webp\",\"url\":\"https://www.example.com/headphone/4\"}]}}",
+      "preview_link": "/product/showcase/ffe06ddf-bb39-4803-aafe-1035672c99a1",
+      "prototype_id": "4dc207f2-2229-451a-aa9d-e29bb44acf84",
+      "prototype_title": "旋轉立方",
+      "prototype_version": "1.0.0",
+      "status": 1,
+      "created_at": "2024/04/22 15:53:04",
+      "updated_at": "2024/04/22 15:53:04"
     }
   ]
 }
