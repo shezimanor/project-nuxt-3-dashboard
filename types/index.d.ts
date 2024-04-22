@@ -16,6 +16,7 @@ export interface Prototype {
   id: string;
   title: string;
   description: string;
+  icon: string;
   version: string;
   features: string[];
   schema: string;

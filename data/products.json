@@ -28,14 +28,14 @@
     },
     {
       "id": "5061ab84-b57d-412f-99df-8ac2555442f3",
-      "title": "刮刮樂_產品標題",
+      "title": "[預覽]刮刮樂",
       "description": "",
-      "product_data": "{\"basicData\":{\"title\":\"刮刮樂_產品標題\",\"description\":\"\"},\"prototypeData\":{\"buttonText\":\"立即領取\",\"buttonColor\":\"yellow\",\"imageCover\":\"a-cover-1.jpg\",\"results\":[{\"title\":\"獲得籃球鞋折價券$300\",\"image\":\"red.webp\",\"url\":\"https://www.example.com/shoes/1\"}]}}",
+      "product_data": "{\"basicData\":{\"title\":\"[預覽]刮刮樂\",\"description\":\"\"},\"prototypeData\":{\"buttonText\":\"立即領取\",\"buttonColor\":\"yellow\",\"imageCover\":\"a-cover-1.jpg\",\"results\":[{\"title\":\"結果標題\",\"image\":\"red.webp\",\"url\":\"https://www.example.com/shoes/coupon1\"}]}}",
       "preview_link": "/product/showcase/5061ab84-b57d-412f-99df-8ac2555442f3",
       "prototype_id": "cddd2a94-cda9-496b-9ce7-848af5971f31",
       "prototype_title": "刮刮樂",
       "prototype_version": "1.0.0",
-      "status": 1,
+      "status": 0,
       "created_at": "2024/04/20 21:01:49",
       "updated_at": "2024/04/20 21:01:49"
     },
