@@ -168,7 +168,7 @@ async function removeAllItems() {
           v-show="mySchemaStore.state.testMode"
           color="amber"
           variant="outline"
-          :ui="{ base: 'self-start' }"
+          :ui="{ base: 'self-start mb-4' }"
           >Index: {{ index }}</UBadge
         >
         <div class="flex justify-between mb-2">

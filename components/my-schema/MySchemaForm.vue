@@ -211,37 +211,51 @@ onBeforeRouteLeave((to, from, next) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-4 max-w-screen-md" ref="targetElement">
+  <div
+    class="flex flex-col gap-y-4"
+    :class="{ 'max-w-screen-md': !testModeProxy }"
+    ref="targetElement"
+  >
     <div>
-      <UFormGroup label="測試模式">
+      <UFormGroup label="開發模式">
         <UToggle v-model="testModeProxy" />
       </UFormGroup>
     </div>
-    <div v-show="testModeProxy" class="border p-4 rounded-2xl">
-      <pre>state: {{ state }}</pre>
-      <pre>stateValidator: {{ stateValidator }}</pre>
-    </div>
-    <UAlert
-      v-if="!stateIsValid"
-      icon="i-heroicons-exclamation-triangle-20-solid"
-      color="rose"
-      variant="soft"
-      title="表單驗證失敗"
-      description="請檢查表單內容是否正確"
-    />
-    <form v-if="schema && !isEmptyObject(schema)" @submit="onSubmit">
-      <!-- 表單按鈕區域 -->
-      <div
-        class="p-4 sticky -top-0 justify-end md:fixed md:top-16 md:right-4 md:justify-start flex flex-row gap-x-2 bg-white dark:bg-gray-900 z-50"
-      >
-        <UButton type="button" variant="outline" @click="onCancel"
-          >取消</UButton
+    <div
+      class="grid grid-cols-1 gap-4"
+      :class="{ 'sm:grid-cols-2': testModeProxy }"
+    >
+      <form v-if="schema && !isEmptyObject(schema)" @submit="onSubmit">
+        <!-- 警示區 -->
+        <UAlert
+          v-if="!stateIsValid"
+          icon="i-heroicons-exclamation-triangle-20-solid"
+          color="rose"
+          variant="soft"
+          title="表單驗證失敗"
+          description="請檢查表單內容是否正確"
+          class="mb-4"
+        />
+        <!-- 表單按鈕區域 -->
+        <div
+          class="p-4 sticky -top-0 justify-end md:fixed md:top-16 md:right-4 md:justify-start flex flex-row gap-x-2 bg-white dark:bg-gray-900 z-50"
         >
-        <UButton type="submit">儲存</UButton>
+          <UButton type="button" variant="outline" @click="onCancel"
+            >取消</UButton
+          >
+          <UButton type="submit">儲存</UButton>
+        </div>
+        <!-- 表單內容區域 -->
+        <MySchemaFormItem :schema="schema" :state="state" :paths="paths" />
+      </form>
+      <div v-if="testModeProxy">
+        <h3 class="text-primary font-bold text-xl mb-1">表單狀態</h3>
+        <div class="p-4 border rounded-xl border-gray-200">
+          <pre>state: {{ state }}</pre>
+          <pre>stateValidator: {{ stateValidator }}</pre>
+        </div>
       </div>
-      <!-- 表單內容區域 -->
-      <MySchemaFormItem :schema="schema" :state="state" :paths="paths" />
-    </form>
+    </div>
     <!-- toTopButton -->
     <UButton
       class="fixed right-8 bottom-4 z-50"
