@@ -63,7 +63,7 @@ onMounted(() => {
         <div
           v-for="(slide, index) in prototypeData.slides"
           :key="`slide_${index}`"
-          class="swiper-slide relative bg-transparent"
+          class="swiper-slide relative"
         >
           <img
             :src="`/images/prototype/${slide.image}`"

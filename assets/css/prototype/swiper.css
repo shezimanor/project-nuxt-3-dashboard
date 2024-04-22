@@ -3,7 +3,7 @@
   @apply w-full h-full;
 }
 .swiper-slide {
-  @apply flex flex-col justify-center items-center text-xl font-bold bg-cyan-500 text-white;
+  @apply flex flex-col justify-center items-center text-xl font-bold bg-transparent text-white;
 }
 .swiper-slide-card {
   @apply w-4/5 mx-auto top-4 right-0 left-0 absolute z-50;

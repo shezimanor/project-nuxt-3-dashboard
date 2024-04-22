@@ -3,7 +3,7 @@
 import { MyPrototypeScratch } from '#components';
 
 const prototypeClassName = ref(
-  'relative flex-shrink-0 border w-[258px] h-[450px] overflow-hidden sm:w-[344px] sm:h-[600px]'
+  'relative flex-shrink-0 border w-[256px] h-[448px] overflow-hidden sm:w-[342px] sm:h-[598px]'
 );
 const currentPrototypeData = reactive({
   buttonColor: 'yellow',
