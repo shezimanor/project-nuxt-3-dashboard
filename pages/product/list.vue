@@ -13,7 +13,7 @@ const { data: productList, pending } = await useLazyAsyncData(
 const defaultColumns = [
   {
     key: 'title',
-    label: '標題'
+    label: '產品標題'
   },
   {
     key: 'prototype_title',
@@ -21,7 +21,7 @@ const defaultColumns = [
   },
   {
     key: 'prototype_version',
-    label: '版號'
+    label: '模型版號'
   },
   {
     key: 'updated_at',

@@ -1,8 +1,25 @@
 <script lang="ts" setup>
+const route = useRoute();
+const router = useRouter();
 const { data: prototypeList, pending } = await useLazyAsyncData(
   'getPrototypeList',
   () => $fetch('/api/prototypes')
 );
+
+// 控制子路由的顯示
+const isPreviewOpen = computed(() => {
+  return route.name === 'product-build-preview-id';
+});
+
+// 設定快捷鍵 `ESC` 關閉預覽視窗
+defineShortcuts({
+  escape: {
+    usingInput: true,
+    handler: () => {
+      router.push('/product/build');
+    }
+  }
+});
 </script>
 
 <template>
@@ -62,6 +79,7 @@ const { data: prototypeList, pending } = await useLazyAsyncData(
                     color="yellow"
                     class="flex-grow-0 flex-shrink-0"
                     icon="i-heroicons-play-20-solid"
+                    :to="`/product/build/preview/${prototypeItem.preview_id}`"
                   ></UButton>
                 </UTooltip>
                 <UButton
@@ -78,6 +96,10 @@ const { data: prototypeList, pending } = await useLazyAsyncData(
             </template>
           </UPageCard>
         </div>
+        <!-- Child Route: Preview -->
+        <template v-if="isPreviewOpen">
+          <NuxtPage :page-key="(route) => route.fullPath" />
+        </template>
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>
