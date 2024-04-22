@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { MyConfirmModal } from '#components';
+import type { Product } from '~/types';
 
 const toast = useToast();
 const modal = useModal();
@@ -68,6 +69,15 @@ const items = (row: any) => [
     }
   ]
 ];
+const activeList = computed(() => {
+  if (
+    !productList ||
+    !Object.prototype.hasOwnProperty.call(productList.value, 'list')
+  )
+    return [];
+  return productList.value.list.map((item: Product) => item.status === 1);
+});
+
 // 刪除產品
 function onDelete(id: string) {
   modal.open(MyConfirmModal, {
@@ -124,7 +134,7 @@ const refreshData = () => refreshNuxtData('getProductList');
       <UDashboardPanelContent>
         <UTable
           v-if="productList"
-          :rows="productList.list"
+          :rows="activeList"
           :columns="defaultColumns"
           :loading="pending"
           class="w-full"
@@ -132,14 +142,14 @@ const refreshData = () => refreshNuxtData('getProductList');
         >
           <template #actions-header>
             <UButton
-              v-if="productList.list.length > 0"
+              v-if="activeList.length > 0"
               icon="i-heroicons-plus-20-solid"
               label="建立產品"
               class="hidden md:inline-flex"
               to="/product/build"
             />
             <UButton
-              v-if="productList.list.length > 0"
+              v-if="activeList.length > 0"
               icon="i-heroicons-plus-20-solid"
               class="md:hidden"
               to="/product/build"
