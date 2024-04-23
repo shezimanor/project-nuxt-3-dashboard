@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
   }
 
   await new Promise(function (resolve) {
-    setTimeout(resolve, 300);
+    setTimeout(resolve, 10);
   });
 
   return {

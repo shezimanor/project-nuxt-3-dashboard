@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
       // 由 api 處理引號問題
       prototype.schema = prototype.schema.replaceAll("'", '"');
       await new Promise(function (resolve) {
-        setTimeout(resolve, 100);
+        setTimeout(resolve, 10);
       });
       return unref(prototype);
     }

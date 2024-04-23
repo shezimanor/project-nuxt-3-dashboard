@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const { productData }: any = useProduct();
 
   await new Promise(function (resolve) {
-    setTimeout(resolve, 100);
+    setTimeout(resolve, 10);
   });
 
   return unref(productData);

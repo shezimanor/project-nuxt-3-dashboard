@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
       productData.list.splice(productIndex, 1);
 
       await new Promise(function (resolve) {
-        setTimeout(resolve, 100);
+        setTimeout(resolve, 10);
       });
 
       return {
