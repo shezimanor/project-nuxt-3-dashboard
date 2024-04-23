@@ -6,6 +6,9 @@ export default {
     extend: {
       height: {
         '128': '32rem'
+      },
+      gridTemplateColumns: {
+        infolist: '84px 1fr'
       }
     }
   },

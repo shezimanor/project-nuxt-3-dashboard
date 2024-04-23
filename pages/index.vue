@@ -23,7 +23,8 @@
               label: '了解專案',
               trailingIcon: 'i-heroicons-arrow-small-right',
               color: 'gray',
-              size: 'md'
+              size: 'md',
+              disabled: true
             }
           ]"
           :ui="{ wrapper: 'py-20 sm:py-24 md:py-28 relative' }"

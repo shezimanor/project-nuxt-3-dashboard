@@ -47,13 +47,24 @@ const currentPrototypeData = computed(() => {
           <UColorModeToggle />
         </template>
       </UDashboardNavbar>
-      <UDashboardPanelContent class="flex items-center justify-center">
+      <UDashboardPanelContent class="flex items-center gap-y-4">
         <!-- 依據使用的 Prototype 來渲染對應的 Component -->
         <ProductComponent
           v-if="productData && !pending && currentPrototypeData"
           :class="prototypeClassName"
           :prototype-data="currentPrototypeData"
         />
+        <div class="w-full" v-if="productData && !pending">
+          <h3 class="text-primary font-bold text-xl mb-1">產品資訊</h3>
+          <dl class="product-info-list">
+            <dt>產品模型：</dt>
+            <dd>{{ productData.prototype_title }}</dd>
+            <dt>產品標題：</dt>
+            <dd>{{ productData.title }}</dd>
+            <dt>產品描述：</dt>
+            <dd>{{ productData.description }}</dd>
+          </dl>
+        </div>
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>

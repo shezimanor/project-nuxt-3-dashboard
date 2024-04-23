@@ -55,8 +55,14 @@ const items = (row: any) => [
       icon: 'i-heroicons-document-duplicate-20-solid',
       disabled: true,
       click() {
-        //TODO: copyProduct(row.id);
+        // TODO: copyProduct(row.id);
       }
+    },
+    {
+      label: '部署',
+      icon: 'i-heroicons-rocket-launch-20-solid',
+      disabled: true,
+      click() {}
     }
   ],
   [

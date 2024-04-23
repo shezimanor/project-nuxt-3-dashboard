@@ -5,3 +5,15 @@
 .index-images {
   @apply border rounded overflow-hidden;
 }
+
+.product-info-list {
+  @apply grid grid-cols-infolist gap-y-1;
+}
+
+.product-info-list dt {
+  @apply font-semibold;
+}
+
+.product-info-list dd {
+  @apply text-gray-500 dark:text-gray-400;
+}
