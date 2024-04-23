@@ -53,7 +53,6 @@ defineShortcuts({
               {{ prototypeItem.title }}
             </template>
             <template #description>
-              <div></div>
               <div class="flex flex-row flex-wrap gap-x-2 gap-y-1 mb-1">
                 <UBadge color="green" variant="soft" class="flex-shrink-0"
                   >版本: {{ prototypeItem.version }}</UBadge
@@ -67,7 +66,6 @@ defineShortcuts({
                   >{{ feature }}</UBadge
                 >
               </div>
-
               {{ prototypeItem.description }}
             </template>
             <template #footer>

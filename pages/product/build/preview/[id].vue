@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import {
+  MyPrototypeFourZeroFour,
   MyPrototypeScratch,
   MyPrototypeSimple,
-  MyPrototypeSwiper,
-  MyPrototypeUnknown
+  MyPrototypeSwiper
 } from '#components';
 import type { Product } from '~/types';
 
@@ -11,15 +11,18 @@ const $route = useRoute();
 const router = useRouter();
 
 // `useLazyAsyncData` 使用這個函數來取得資料，導航不會等待資料回應，會自行跑完導航作業，才不會有閒置頁面產生，`useAsyncData` 反之
-const { data: productData, pending } = await useLazyAsyncData(
-  'getProduct',
-  () => $fetch(`/api/products/${$route.params.id}`)
+const {
+  data: productData,
+  pending,
+  error
+} = await useLazyAsyncData('getProduct', () =>
+  $fetch(`/api/products/${$route.params.id}`)
 );
 const prototypeClassName = ref(
   'relative flex-shrink-0 border-none w-[256px] h-[448px] overflow-hidden sm:w-[342px] sm:h-[598px]'
 );
 const ProductComponent = computed(() => {
-  if (!productData) return MyPrototypeUnknown;
+  if (!productData) return MyPrototypeFourZeroFour;
   const targetData = productData.value as Product;
   // 依據 prototype_id 來決定要渲染的 Component
   switch (targetData.prototype_id) {
@@ -30,7 +33,7 @@ const ProductComponent = computed(() => {
     case 'cddd2a94-cda9-496b-9ce7-848af5971f31':
       return MyPrototypeScratch;
     default:
-      return MyPrototypeUnknown;
+      return MyPrototypeFourZeroFour;
   }
 });
 const currentPrototypeData = computed(() => {
@@ -75,6 +78,29 @@ function onClosePreviewModal() {
           <ProductComponent
             :class="prototypeClassName"
             :prototype-data="currentPrototypeData"
+          />
+        </div>
+        <div
+          class="relative text-left rtl:text-right flex flex-col bg-white dark:bg-gray-900 shadow-xl overflow-hidden w-[256px] sm:w-[342px] sm:my-8"
+          v-else-if="error && !pending"
+        >
+          <div class="flex items-center justify-between px-3 py-2">
+            <h3
+              class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
+            >
+              Oops!
+            </h3>
+            <UButton
+              color="gray"
+              variant="ghost"
+              icon="i-heroicons-x-mark-20-solid"
+              @click="onClosePreviewModal"
+            />
+          </div>
+          <!-- 404 -->
+          <MyPrototypeFourZeroFour
+            :class="prototypeClassName"
+            back-route="/product/build"
           />
         </div>
       </div>

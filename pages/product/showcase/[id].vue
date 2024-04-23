@@ -1,23 +1,26 @@
 <script lang="ts" setup>
 import {
+  MyPrototypeFourZeroFour,
   MyPrototypeScratch,
   MyPrototypeSimple,
-  MyPrototypeSwiper,
-  MyPrototypeUnknown
+  MyPrototypeSwiper
 } from '#components';
 import type { Product } from '~/types';
 
 const $route = useRoute();
 // `useLazyAsyncData` 使用這個函數來取得資料，導航不會等待資料回應，會自行跑完導航作業，才不會有閒置頁面產生，`useAsyncData` 反之
-const { data: productData, pending } = await useLazyAsyncData(
-  'getProduct',
-  () => $fetch(`/api/products/${$route.params.id}`)
+const {
+  data: productData,
+  pending,
+  error
+} = await useLazyAsyncData('getProduct', () =>
+  $fetch(`/api/products/${$route.params.id}`)
 );
 const prototypeClassName = ref(
   'relative flex-shrink-0 border w-[258px] h-[450px] overflow-hidden sm:w-[344px] sm:h-[600px]'
 );
 const ProductComponent = computed(() => {
-  if (!productData) return MyPrototypeUnknown;
+  if (!productData) return MyPrototypeFourZeroFour;
   const targetData = productData.value as Product;
   // 依據 prototype_id 來決定要渲染的 Component
   switch (targetData.prototype_id) {
@@ -28,7 +31,7 @@ const ProductComponent = computed(() => {
     case 'cddd2a94-cda9-496b-9ce7-848af5971f31':
       return MyPrototypeScratch;
     default:
-      return MyPrototypeUnknown;
+      return MyPrototypeFourZeroFour;
   }
 });
 const currentPrototypeData = computed(() => {
@@ -65,6 +68,12 @@ const currentPrototypeData = computed(() => {
             <dd>{{ productData.description }}</dd>
           </dl>
         </div>
+        <!-- 404 -->
+        <MyPrototypeFourZeroFour
+          v-if="!pending && error"
+          :class="prototypeClassName"
+          back-route="/product/list"
+        />
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>
