@@ -3,16 +3,17 @@ const $route = useRoute();
 const promiseAllArray = getPromiseAllArray($route.params.feature.toString());
 // useLazyAsyncData 這裡使用了 multiple $fetch requests
 // 來源: https://nuxt.com/docs/getting-started/data-fetching#uselazyasyncdata
-const { data: currentData, pending }: any = await useLazyAsyncData(
-  'getCurrentProductState',
-  async () => {
-    // productData 只有在 'update' 時才會有資料， 'create' 時為 null
-    const [prototypeData, productData = null] = await Promise.all(
-      promiseAllArray
-    );
-    return { prototypeData, productData };
-  }
-);
+const {
+  data: currentData,
+  pending,
+  error
+}: any = await useLazyAsyncData('getCurrentProductState', async () => {
+  // productData 只有在 'update' 時才會有資料， 'create' 時為 null
+  const [prototypeData, productData = null] = await Promise.all(
+    promiseAllArray
+  );
+  return { prototypeData, productData };
+});
 
 const currentRawSchema = computed(() => {
   if (currentData.value.prototypeData)
@@ -68,6 +69,23 @@ function getPromiseAllArray(feature: string) {
           :product-id="productId"
           :raw-schema="currentRawSchema"
           :raw-state="currentRawState"
+        />
+        <!-- 404 -->
+        <UAlert
+          v-if="error && !pending"
+          icon="i-heroicons-x-circle-20-solid"
+          color="rose"
+          variant="soft"
+          title="Oops！找不到表單"
+          description="找不到對應的表單，請確認連結是否正確。"
+          :actions="[
+            {
+              variant: 'solid',
+              color: 'primary',
+              label: '返回列表',
+              to: '/product/list'
+            }
+          ]"
         />
       </UDashboardPanelContent>
     </UDashboardPanel>
