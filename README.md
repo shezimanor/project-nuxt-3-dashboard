@@ -3,8 +3,6 @@
 > 使用 [Nuxt3](https://nuxt.com/docs/getting-started/introduction) 建置
 >
 > 使用 [NuxtUI](https://ui.nuxt.com/) 和付費版 [NuxtUI Pro](https://ui.nuxt.com/pro/pricing) 建置
->
-> 紀錄使用 framework 的過程為目標，所以會有很多細微的 commit
 
 ## 核心內容
 
@@ -20,10 +18,10 @@
 
 - [x] 使用者 -> 開始建立產品 -> 選擇產品原型 -> 編輯產品表單 -> 儲存產品 -> 查看產品結果 -> 至產品列表 -> 進行產品管理
 
-- [ ] 開發者 -> 開發產品原型 -> 建立原型結構化表單(Schema) -> 將原型上架 -> 儲存原型 -> 至原型列表 -> 進行原型管理
+- [ ] 開發者(這個鏈暫時不會實踐) -> 開發產品原型 -> 建立原型結構化表單(Schema) -> 將原型上架 -> 儲存原型 -> 至原型列表 -> 進行原型管理
 
 ## 開發筆記
 
 1. 使用 `vueuse` 要看一下[這裡](https://nuxt.com/modules/vueuse)，把 `@vueuse/core` 和 `@vueuse/nuxt` 直接裝在 `dependencies`。
 
-2. 使用 [Vuelidate](https://vuelidate-next.netlify.app/) 的規則做驗證基礎並進行擴充，並沒有使用他的驗證器。
+2. 使用 [Vuelidate](https://vuelidate-next.netlify.app/) 的規則做驗證基礎並進行擴充，並沒有使用他的驗證器，本站的驗證器 `State Validator` 是參考他的結構而撰寫的。
