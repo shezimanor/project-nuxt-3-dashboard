@@ -12,6 +12,7 @@ const { copy, copied, isSupported } = useClipboard({
   legacy: true
 });
 </script>
+
 <template>
   <div class="border p-4 rounded-xl max-w-screen-md">
     <div v-if="isSupported" class="flex flex-row gap-x-2 mb-2">
