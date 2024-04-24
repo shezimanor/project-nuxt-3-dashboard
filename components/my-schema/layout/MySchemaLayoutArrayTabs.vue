@@ -3,7 +3,6 @@
 import { useMySchemaStore } from '~/stores/mySchemaStore';
 // 使用 uuid 才能確保每次都是新的 key
 import { v4 as uuid } from 'uuid';
-import getUuids from '~/utils/getUuids';
 
 const mySchemaStore = useMySchemaStore();
 

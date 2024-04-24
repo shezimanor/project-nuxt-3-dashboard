@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Scratch } from '~/protos/scratch/scratch';
+import { Scratch } from '~/utils/scratch';
 // Scratch Prototype: 刮刮樂原型
 const { onCTA } = usePreview();
 

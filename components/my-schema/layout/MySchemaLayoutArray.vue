@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 // 有別於物件排版元件，這個「陣列排版元件」就會直接對 rootState 進行操作
 import { useMySchemaStore } from '~/stores/mySchemaStore';
-import traverseSchemaToState from '~/utils/traverseSchemaToState';
 // 使用 uuid 才能確保每次都是新的 key
 import { v4 as uuid } from 'uuid';
-import getUuids from '~/utils/getUuids';
 
 const mySchemaStore = useMySchemaStore();
 
