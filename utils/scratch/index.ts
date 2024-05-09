@@ -1,9 +1,9 @@
 import type { UseMouseEventExtractor } from '@vueuse/core';
-
+import type { ScratchData } from '~/types';
 interface ScratchConfig {
   containerRef: MaybeRef;
   containerId: string;
-  data: any;
+  data: ScratchData;
   height: number;
   width: number;
   on: ScratchHooks;
@@ -16,7 +16,7 @@ interface ScratchHooks {
 }
 
 export class Scratch {
-  data: any;
+  data: ScratchData;
   containerRef: MaybeRef;
   container: HTMLElement;
   // 刮刮樂圖層
@@ -55,7 +55,7 @@ export class Scratch {
   constructor({
     containerRef,
     containerId = 'myScratchContainer',
-    data = {},
+    data,
     height = 1024,
     width = 1792,
     on = {
@@ -70,8 +70,7 @@ export class Scratch {
     this.data = data;
     this.container = document.getElementById(containerId)!;
     // 確認資料是否正確
-    if (isEmptyObject(this.data) || !this.container)
-      throw new Error(`No data provided`);
+    if (!this.data || !this.container) throw new Error(`No data provided`);
     // 初始化 canvas
     this.canvasMain.className = 'w-full';
     this.canvasPath.className = 'w-full';

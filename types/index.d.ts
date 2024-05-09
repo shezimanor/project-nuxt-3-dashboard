@@ -25,3 +25,14 @@ export interface Prototype {
   created_at: string;
   updated_at: string;
 }
+
+export interface ScratchData {
+  buttonColor: string;
+  buttonText: string;
+  imageCover: string;
+  results: {
+    title: string;
+    image: string;
+    url: string;
+  }[];
+}

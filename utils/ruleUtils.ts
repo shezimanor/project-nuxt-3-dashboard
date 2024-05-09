@@ -26,7 +26,7 @@ const minLength = (min: number) =>
   helpers.withParams(
     { min },
     // 下面這個函數的參數是被 `useValidator.ts` 的 currentRulesObj[ruleKey].$validator(newValue, lastParent) 決定
-    (value: any) => value.length >= min
+    (value: string | unknown[]) => value.length >= min
   );
 
 // 定義一個映射，將規則名稱映射到對應的驗證器函數

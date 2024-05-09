@@ -58,7 +58,7 @@ const targetElement = ref(null);
 const { top } = useElementBounding(targetElement);
 
 // path 不需要響應式: 讓子元件可以接自己的路徑陣列，方便後續抓值
-const paths: any[] = [];
+const paths: (string | number)[] = [];
 
 watch(testModeProxy, (newValue) => {
   mySchemaStore.updateTestMode(newValue);

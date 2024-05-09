@@ -23,7 +23,7 @@ export const useValidator = (rawSchema: any, rawState: any) => {
   }
 
   // 更新狀態
-  function updateState(paths: any, newValue: any) {
+  function updateState(paths: (string | number)[], newValue: unknown) {
     console.log('updateState');
     // 使用 reduce 方法來找到最深層的父物件，但停止在最後一個路徑之前
     // 當遇到陣列的時候 path item 會是 `'i'`, i === 整數

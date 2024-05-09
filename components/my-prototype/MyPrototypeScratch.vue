@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import type { ScratchData } from '~/types';
 import { Scratch } from '~/utils/scratch';
+
 // Scratch Prototype: 刮刮樂原型
 const { onCTA } = usePreview();
 
@@ -19,10 +21,11 @@ const resultIndex = ref(-1);
 let scratch: Scratch;
 
 onMounted(() => {
+  console.log('data:', props.prototypeData);
   scratch = new Scratch({
     containerRef: scratchContainerElementRef,
     containerId: 'myScratchContainer',
-    data: props.prototypeData,
+    data: props.prototypeData as ScratchData,
     // width: 342,
     // height: 598,
     width: 1024,

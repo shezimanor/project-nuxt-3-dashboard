@@ -39,7 +39,7 @@ const defaultConfig = ref({
   isColorMode: false,
   isThumbnailMode: false
 });
-const mergedConfig: any = computed(() => {
+const mergedConfig = computed(() => {
   // target 物件會更新(first params)
   return Object.assign(defaultConfig.value, props.schema.ui.widgetConfig);
 });
