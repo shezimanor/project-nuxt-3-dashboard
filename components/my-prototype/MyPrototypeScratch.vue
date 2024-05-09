@@ -16,7 +16,7 @@ const props = defineProps({
 const isShowHint = ref(true);
 const isShowResult = ref(false);
 const resultIndex = ref(-1);
-let scratch: any = null;
+let scratch: Scratch;
 
 onMounted(() => {
   scratch = new Scratch({
@@ -41,7 +41,7 @@ onMounted(() => {
   });
 });
 onBeforeUnmount(() => {
-  scratch.destroy();
+  if (scratch) scratch.destroy();
 });
 </script>
 <template>

@@ -35,15 +35,15 @@ onMounted(() => {
     grabCursor: true,
     // Events
     on: {
-      setTranslate(swiper: any) {
-        const transformString = swiper.slidesEl.style.transform;
+      setTranslate(swiper) {
+        const transformString = swiper.wrapperEl.style.transform;
         const newTransformString = getTransformString(
           transformString,
           isVertical.value,
-          swiper.slidesEl.clientWidth - 2,
-          swiper.slidesEl.clientHeight - 2
+          swiper.wrapperEl.clientWidth - 2,
+          swiper.wrapperEl.clientHeight - 2
         );
-        swiper.slidesEl.style.transform = newTransformString;
+        swiper.wrapperEl.style.transform = newTransformString;
       },
       sliderFirstMove() {
         isShowHint.value = false;
