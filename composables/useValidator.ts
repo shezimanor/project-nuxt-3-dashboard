@@ -1,5 +1,4 @@
-export const useValidator = (rawSchema: any, rawState: any) => {
-  // TODO:當表單是編輯模式時，會有帶一個 state 做為參數，作為 state 的初始值
+export const useValidator = (rawSchema: any, rawState?: any) => {
   // toast
   const toast = useToast();
   // 核心狀態
