@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   extends: ['@nuxt/ui-pro'],
   modules: ['@vueuse/nuxt', '@pinia/nuxt', '@nuxt/ui'],
+  plugins: ['~/plugins/hook'],
   colorMode: {
     preference: 'dark'
   },
